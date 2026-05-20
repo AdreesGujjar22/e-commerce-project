@@ -154,13 +154,14 @@ export async function createOrderAction(formData: any) {
     }
 
     // 7. Inject Stripe-ready payment record
+    const isCOD = parsed.paymentMethod === "Cash on Delivery";
     const { error: paymentInsertError } = await supabase
       .from("payments")
       .insert({
         order_id: newOrder.id,
-        payment_method: "Credit Card (Escrow)",
-        payment_intent_id: `pi_mock_${Math.random().toString(36).substring(2, 12)}`,
-        status: "Paid",
+        payment_method: isCOD ? "Cash on Delivery" : "Credit Card (Escrow)",
+        payment_intent_id: isCOD ? "cod_receipt_pending" : `pi_mock_${Math.random().toString(36).substring(2, 12)}`,
+        status: isCOD ? "Pending" : "Paid",
         amount: verifiedTotalAmount,
       });
 

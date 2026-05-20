@@ -5,6 +5,7 @@ import { Product } from "../../types";
 import { useStore } from "../../store";
 import { Plus, Eye, Sparkles } from "lucide-react";
 import { Badge } from "../ui/Badge";
+import { MaisonImage } from "../ui/MaisonImage";
 
 interface ProductCardProps {
   product: Product;
@@ -25,7 +26,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
       {/* Product Image Frame */}
       <div className="w-full relative aspect-[4/5] overflow-hidden rounded-xl bg-neutral-50 mb-4.5">
-        <img
+        <MaisonImage
           src={product.image}
           alt={product.name}
           className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"

@@ -2,6 +2,7 @@ import { Product, Order, ChatMessage } from "../types";
 import {
   getProductsAction,
   createProductAction,
+  updateProductAction,
   deleteProductAction,
 } from "../actions/product.actions";
 import {
@@ -27,8 +28,11 @@ export const apiService = {
   },
 
   async updateProduct(id: string, productData: any): Promise<Product> {
-    // Currently fallback for compile safety since Admin Panel uses create/delete
-    throw new Error("Update product curation must be operated via administrative client actions.");
+    const res = await updateProductAction(id, productData);
+    if (!res.success || !res.product) {
+      throw new Error(res.error || "Failed to update product");
+    }
+    return res.product;
   },
 
   async deleteProduct(id: string): Promise<boolean> {

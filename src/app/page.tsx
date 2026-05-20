@@ -2,6 +2,7 @@ import React from "react";
 import { getProductsAction } from "../actions/product.actions";
 import { HeroSection } from "../components/hero/HeroSection";
 import { ProductGrid } from "../components/product/ProductGrid";
+import { FaqSection } from "../components/home/FaqSection";
 import Link from "next/link";
 import { ArrowLeftRight, Sparkles, Shield, Award, Sparkle } from "lucide-react";
 
@@ -21,18 +22,18 @@ export default async function HomePage() {
       {/* 2. Premium Grid Banner features */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 text-left">
         <h2 className="font-display text-[10px] uppercase tracking-[0.3em] text-neutral-400 font-bold mb-4 flex items-center">
-          <Sparkle className="h-3 w-3 mr-2 text-gold-500 fill-gold-500/20 fill-gold-500/20" />
+          <Sparkle className="h-3 w-3 mr-2 text-gold-500 fill-gold-500/20" />
           Maison Curator's Spotlight
         </h2>
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12.5 text-left">
           <h3 className="font-serif text-3xl md:text-4.5xl text-neutral-950 font-normal leading-tight max-w-xl">
-            Selected artifacts celebrating <span className="font-sans font-bold tracking-tight text-gold-700">organic lines</span> and Swiss machinery.
+            Selected products featuring <span className="font-sans font-bold tracking-tight text-gold-700">organic lines</span> and premium quality.
           </h3>
           <Link
             href="/collections"
-            className="mt-4 md:mt-0 font-display text-[9.5px] uppercase tracking-widest font-black text-neutral-900 border-b-2 border-gold-400 hover:border-neutral-900 pb-1 transition-colors"
+            className="mt-4 md:mt-0 font-display text-[11px] uppercase tracking-widest font-black text-neutral-900 border-b-2 border-gold-400 hover:border-neutral-900 pb-1 transition-colors"
           >
-            browse all curations →
+            browse all products →
           </Link>
         </div>
 
@@ -60,7 +61,7 @@ export default async function HomePage() {
                 Studio Kanso Travertines
               </h4>
               <p className="font-sans text-xs text-neutral-400 mt-2 leading-relaxed">
-                Sculpted in monolithic travertine modules that evoke deep geologic times. Unsealed and raw.
+                Sculptured travertine modules with classic finishes. Simple and clean.
               </p>
             </div>
           </div>
@@ -68,7 +69,7 @@ export default async function HomePage() {
           {/* Value propositions */}
           <div className="flex flex-col space-y-8">
             <h3 className="font-serif text-3.5xl md:text-5xl text-white font-light leading-none">
-              The Codes of <span className="font-sans font-bold text-gold-400 tracking-tight">Our Atelier</span>
+              The Code of <span className="font-sans font-bold text-gold-400 tracking-tight">Maison L'Étoile</span>
             </h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-4">
@@ -76,11 +77,11 @@ export default async function HomePage() {
                 <div className="w-10 h-10 rounded-full bg-neutral-900 border border-gold-900/30 flex items-center justify-center">
                   <Shield className="h-4 w-4 text-gold-400" />
                 </div>
-                <h4 className="font-display text-[10px] uppercase tracking-wider font-bold text-neutral-150">
-                  Certified Integrity
+                <h4 className="font-display text-[11px] uppercase tracking-wider font-bold text-neutral-150">
+                  Guaranteed Quality
                 </h4>
-                <p className="font-sans text-xs text-neutral-400 leading-normal leading-relaxed">
-                  Every vintage timepiece, sandblasted flacon, and woven garment includes a registered physical Certificate of Authentic Origin.
+                <p className="font-sans text-xs text-neutral-400 leading-relaxed">
+                  We verify each clothing article, premium watch, and fragrance before shipping to make sure you get pristine, fresh products.
                 </p>
               </div>
 
@@ -88,11 +89,11 @@ export default async function HomePage() {
                 <div className="w-10 h-10 rounded-full bg-neutral-900 border border-gold-900/30 flex items-center justify-center">
                   <Award className="h-4 w-4 text-gold-400" />
                 </div>
-                <h4 className="font-display text-[10px] uppercase tracking-wider font-bold text-neutral-150">
-                  Ethic Combing
+                <h4 className="font-display text-[11px] uppercase tracking-wider font-bold text-neutral-150">
+                  Ethic Selection
                 </h4>
-                <p className="font-sans text-xs text-neutral-400 leading-normal leading-relaxed">
-                  Our cashmere wraps are ethically combed from free-roaming organic livestock during natural spring molts, preventing fleece shedding.
+                <p className="font-sans text-xs text-neutral-400 leading-relaxed">
+                  Our cashmere wraps and clothes are made ethically using finest fibers, helping workers and preserving traditional weaving arts.
                 </p>
               </div>
             </div>
@@ -100,7 +101,10 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 4. Interactive Details Modal loader */}
+      {/* 4. Frequently Asked Questions Section */}
+      <FaqSection />
+
+      {/* 5. Interactive Details Modal loader */}
       <ProductGrid products={products} />
     </div>
   );

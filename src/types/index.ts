@@ -5,15 +5,16 @@ export interface Review {
   date: string;
 }
 
-export type ProductCategory = "apparel" | "decor" | "watches" | "fragrances";
+export type ProductCategory = string;
 
 export interface Product {
   id: string;
   name: string;
   designer: string;
-  category: ProductCategory;
+  category: string;
   price: number;
   image: string;
+  images?: string[];
   description: string;
   longDescription: string;
   details: string[];
@@ -21,6 +22,8 @@ export interface Product {
   featured: boolean;
   rating: number;
   reviews: Review[];
+  seoTitle?: string;
+  seoDescription?: string;
 }
 
 export interface CartItem {

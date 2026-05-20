@@ -3,14 +3,17 @@ import { z } from "zod";
 export const ProductSchema = z.object({
   name: z.string().min(2, "Product name must contain at least 2 characters"),
   designer: z.string().min(2, "Designer name must contain at least 2 characters"),
-  category: z.enum(["apparel", "decor", "watches", "fragrances"]),
+  category: z.string().min(1, "Please select or create a valid category"),
   price: z.number().min(0, "Price must be a positive number"),
   image: z.string().url("Must be a valid display image URL"),
+  images: z.array(z.string().url("Must be valid URL")).optional().default([]),
   description: z.string().min(5, "Brief description is too short"),
   longDescription: z.string().min(10, "Full description must be detailed"),
   details: z.array(z.string()).default([]),
   stock: z.number().int().min(0, "Stock must be a non-negative integer"),
   featured: z.boolean().default(false),
+  seoTitle: z.string().optional().default(""),
+  seoDescription: z.string().optional().default(""),
 });
 
 export const OrderItemSchema = z.object({
@@ -27,6 +30,7 @@ export const OrderSchema = z.object({
   shippingAddress: z.string().min(5, "A complete delivery address is required"),
   items: z.array(OrderItemSchema).min(1, "Ordered items list cannot be empty"),
   totalAmount: z.number().min(0),
+  paymentMethod: z.string().optional(),
 });
 
 export const CartItemInputSchema = z.object({

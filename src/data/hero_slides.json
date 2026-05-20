@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "image": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600",
+    "title": "L'ÉCORCE Silencieuse",
+    "subtitle": "An extraordinary collection pairing structured silk outerwear with hand-thrown mineral earth ceramics. Designed to transcend the seasons.",
+    "overlay_opacity": 35
+  },
+  {
+    "id": "2",
+    "image": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=1600",
+    "title": "LA SOIE D'ÉTERNITÉ",
+    "subtitle": "Spun Mulberry Silks and double-breasted dynamic outer coats designed for effortless draping and comfort.",
+    "overlay_opacity": 40
+  }
+]

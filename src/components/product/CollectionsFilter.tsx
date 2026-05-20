@@ -4,13 +4,14 @@ import React from "react";
 import { Product } from "../../types";
 import { useStore } from "../../store";
 import { ProductGrid } from "./ProductGrid";
-import { Grid, Sparkles, SlidersHorizontal, Tag } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 
 interface CollectionsFilterProps {
   products: Product[];
+  initialCategories?: any[];
 }
 
-export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({ products }) => {
+export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({ products, initialCategories }) => {
   const {
     selectedCategory,
     setSelectedCategory,
@@ -19,28 +20,37 @@ export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({ products }
     searchQuery,
   } = useStore();
 
-  const categories = [
+  // Dynamically map categories from database, fallback to built-in presets if none loaded
+  const categoriesList = [
     { id: "all", label: "All Curations" },
-    { id: "apparel", label: "Apparel & Outerwear" },
-    { id: "decor", label: "Geologic Decors" },
-    { id: "watches", label: "Fine Timekeepers" },
-    { id: "fragrances", label: "Prestige Fragrances" },
+    ...(initialCategories && initialCategories.length > 0
+      ? initialCategories.map((cat) => ({
+          id: cat.id,
+          label: cat.name,
+        }))
+      : [
+          { id: "apparel", label: "Apparel & Outerwear" },
+          { id: "decor", label: "Geologic Decors" },
+          { id: "watches", label: "Fine Timekeepers" },
+          { id: "fragrances", label: "Prestige Fragrances" },
+        ]),
   ];
 
   return (
-    <div className="flex flex-col space-y-8 w-full">
+    <div className="flex flex-col space-y-8 w-full" id="collections-filter-deck">
       {/* Filters and Sorting bar */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4.5 bg-neutral-50 border border-gold-150 rounded-2xl p-5 text-left">
         
         {/* Categories Tab list */}
         <div className="flex flex-wrap items-center gap-1.5 w-full lg:w-auto">
-          {categories.map((cat) => (
+          {categoriesList.map((cat) => (
             <button
               key={cat.id}
+              type="button"
               onClick={() => setSelectedCategory(cat.id)}
-              className={`font-display text-[9.5px] uppercase tracking-widest px-4.5 py-2.5 rounded-full border transition-all ${
+              className={`font-display text-[9.5px] uppercase tracking-widest px-4.5 py-2.5 rounded-full border transition-all cursor-pointer ${
                 selectedCategory === cat.id
-                  ? "bg-neutral-950 border-neutral-950 text-white font-bold"
+                  ? "bg-neutral-950 border-neutral-950 text-white font-extrabold shadow-sm scale-102"
                   : "bg-white border-gold-200 text-neutral-600 hover:border-gold-300"
               }`}
             >
@@ -58,7 +68,7 @@ export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({ products }
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="bg-white border border-gold-200 rounded-xl px-4 py-2.5 font-display text-[10px] uppercase tracking-wider text-neutral-800 focus:outline-none focus:ring-1 focus:ring-gold-400"
+            className="bg-white border border-gold-200 rounded-xl px-4 py-2.5 font-display text-[10px] uppercase tracking-wider text-neutral-800 focus:outline-none focus:ring-1 focus:ring-gold-450 cursor-pointer"
           >
             <option value="default">Release Relevance</option>
             <option value="price-low">Price: Low to High</option>
@@ -83,10 +93,11 @@ export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({ products }
             </span>
           )}
           <button
+            type="button"
             onClick={() => {
               setSelectedCategory("all");
             }}
-            className="text-neutral-500 hover:text-neutral-950 text-xs font-semibold underline decoration-dashed transition-colors"
+            className="text-neutral-500 hover:text-neutral-950 text-xs font-semibold underline decoration-dashed transition-colors cursor-pointer"
           >
             Clear filters
           </button>

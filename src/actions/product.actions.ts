@@ -3,11 +3,32 @@
 import { getSupabaseServerClient } from "../lib/supabase/server";
 import { ProductSchema } from "../validations";
 import { Product, Review } from "../types";
+import { deleteFromCloudinary } from "../lib/cloudinary";
 
 /**
  * Maps a database product entry into the clean Product frontend type
  */
 function mapProductDbToType(dbProduct: any): Product {
+  let parsedDesc = dbProduct.long_description || dbProduct.description;
+  let seoTitle = "";
+  let seoDescription = "";
+
+  if (parsedDesc && parsedDesc.startsWith("{")) {
+    try {
+      const parsed = JSON.parse(parsedDesc);
+      parsedDesc = parsed.description || "";
+      seoTitle = parsed.seoTitle || "";
+      seoDescription = parsed.seoDescription || "";
+    } catch (_) {
+      // safe fallback
+    }
+  }
+
+  // extract product gallery images if returned in product_images
+  const galleryImages = dbProduct.product_images
+    ? dbProduct.product_images.map((img: any) => img.image_url)
+    : [];
+
   return {
     id: dbProduct.id,
     name: dbProduct.name,
@@ -15,13 +36,16 @@ function mapProductDbToType(dbProduct: any): Product {
     category: dbProduct.category_id || dbProduct.category || "apparel",
     price: Number(dbProduct.price),
     image: dbProduct.image,
+    images: galleryImages.length > 0 ? galleryImages : [dbProduct.image],
     description: dbProduct.description,
-    longDescription: dbProduct.long_description || dbProduct.description,
+    longDescription: parsedDesc,
     details: dbProduct.details || [],
     stock: Number(dbProduct.stock),
     featured: Boolean(dbProduct.featured),
     rating: Number(dbProduct.rating || 5.0),
     reviews: dbProduct.reviews || [],
+    seoTitle,
+    seoDescription,
   };
 }
 
@@ -32,7 +56,7 @@ export async function getProductsAction(options?: {
   try {
     const supabase = await getSupabaseServerClient();
     
-    let query = supabase.from("products").select("*, reviews(*)");
+    let query = supabase.from("products").select("*, reviews(*), product_images(*)");
 
     if (options?.category && options.category !== "all") {
       query = query.eq("category_id", options.category);
@@ -79,7 +103,7 @@ export async function getProductByIdAction(id: string) {
     
     const { data: p, error } = await supabase
       .from("products")
-      .select("*, reviews(*)")
+      .select("*, reviews(*), product_images(*)")
       .eq("id", id)
       .maybeSingle();
 
@@ -132,6 +156,12 @@ export async function createProductAction(formData: any) {
     // 2. Validate using Zod schemas
     const parsed = ProductSchema.parse(formData);
 
+    const longDescSerialized = JSON.stringify({
+      description: parsed.longDescription,
+      seoTitle: parsed.seoTitle || "",
+      seoDescription: parsed.seoDescription || "",
+    });
+
     // 3. Insert product record
     const { data: newP, error: insertError } = await supabase
       .from("products")
@@ -142,7 +172,7 @@ export async function createProductAction(formData: any) {
         price: parsed.price,
         image: parsed.image,
         description: parsed.description,
-        long_description: parsed.longDescription,
+        long_description: longDescSerialized,
         details: parsed.details,
         stock: parsed.stock,
         featured: parsed.featured,
@@ -155,9 +185,102 @@ export async function createProductAction(formData: any) {
       return { success: false, error: insertError.message };
     }
 
-    return { success: true, product: mapProductDbToType(newP) };
+    // 4. Save supplementary gallery product image records
+    if (parsed.images && parsed.images.length > 0) {
+      const imageRows = parsed.images.map((imgUrl: string) => ({
+        product_id: newP.id,
+        image_url: imgUrl,
+        is_primary: imgUrl === parsed.image,
+      }));
+      await supabase.from("product_images").insert(imageRows);
+    }
+
+    return { success: true, product: mapProductDbToType({ ...newP, product_images: (parsed.images || []).map(url => ({ image_url: url })) }) };
   } catch (err: any) {
     return { success: false, error: err.message || "Failed to publish curated artifact." };
+  }
+}
+
+export async function updateProductAction(id: string, formData: any) {
+  try {
+    const supabase = await getSupabaseServerClient();
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return { success: false, error: "Access Denied." };
+
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+
+    if (profile?.role !== "admin") {
+      return { success: false, error: "Administration authorization needed." };
+    }
+
+    const parsed = ProductSchema.parse(formData);
+
+    const longDescSerialized = JSON.stringify({
+      description: parsed.longDescription,
+      seoTitle: parsed.seoTitle || "",
+      seoDescription: parsed.seoDescription || "",
+    });
+
+    const { data: updatedP, error: updateError } = await supabase
+      .from("products")
+      .update({
+        name: parsed.name,
+        designer: parsed.designer,
+        category_id: parsed.category,
+        price: parsed.price,
+        image: parsed.image,
+        description: parsed.description,
+        long_description: longDescSerialized,
+        details: parsed.details,
+        stock: parsed.stock,
+        featured: parsed.featured,
+      })
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (updateError) {
+      return { success: false, error: updateError.message };
+    }
+
+    // Get old images to detect unused and deleted from Cloudinary
+    const { data: oldImages } = await supabase
+      .from("product_images")
+      .select("image_url")
+      .eq("product_id", id);
+
+    const oldUrls = (oldImages || []).map((img: any) => img.image_url);
+    const newUrls = parsed.images || [];
+
+    const removedUrls = oldUrls.filter((url: string) => !newUrls.includes(url));
+    if (updatedP.image && !newUrls.includes(updatedP.image) && updatedP.image !== parsed.image) {
+      removedUrls.push(updatedP.image);
+    }
+
+    for (const url of removedUrls) {
+      await deleteFromCloudinary(url);
+    }
+
+    // Sync product images table
+    await supabase.from("product_images").delete().eq("product_id", id);
+
+    if (newUrls.length > 0) {
+      const imageRows = newUrls.map((imgUrl: string) => ({
+        product_id: id,
+        image_url: imgUrl,
+        is_primary: imgUrl === parsed.image,
+      }));
+      await supabase.from("product_images").insert(imageRows);
+    }
+
+    return { success: true, product: mapProductDbToType({ ...updatedP, product_images: newUrls.map(url => ({ image_url: url })) }) };
+  } catch (err: any) {
+    return { success: false, error: err.message || "Failed to update curated product." };
   }
 }
 
@@ -177,6 +300,26 @@ export async function deleteProductAction(id: string) {
 
     if (profile?.role !== "admin") {
       return { success: false, error: "Atelier admin permission required." };
+    }
+
+    // Fetch product display photo & its other images records for automatic deletion from Cloudinary
+    const { data: dbProd } = await supabase
+      .from("products")
+      .select("image, product_images(image_url)")
+      .eq("id", id)
+      .maybeSingle();
+
+    if (dbProd) {
+      const imagesToDelete = new Set<string>();
+      if (dbProd.image) {
+        imagesToDelete.add(dbProd.image);
+      }
+      if (dbProd.product_images) {
+        dbProd.product_images.forEach((img: any) => imagesToDelete.add(img.image_url));
+      }
+      for (const url of Array.from(imagesToDelete)) {
+        await deleteFromCloudinary(url);
+      }
     }
 
     const { error: deleteError } = await supabase
