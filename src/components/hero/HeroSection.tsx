@@ -6,7 +6,7 @@ import { useStore } from "../../store";
 import { Sparkles, Compass, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { getHeroSlidesAction, HeroSlide } from "../../actions/hero.actions";
-import { MaisonImage } from "../ui/MaisonImage";
+import { MaisonImage, optimizeCloudinaryUrl } from "../ui/MaisonImage";
 
 export const HeroSection: React.FC = () => {
   const { setChatOpen } = useStore();
@@ -29,6 +29,44 @@ export const HeroSection: React.FC = () => {
       active = false;
     };
   }, []);
+
+  // Preload remaining slide images in the background sequentially to avoid network congestion
+  useEffect(() => {
+    if (slides.length <= 1) return;
+
+    let isCancelled = false;
+
+    const preloadNextSlides = async () => {
+      // Start preloading from index 1, since index 0 is immediately requested by active render
+      for (let i = 1; i < slides.length; i++) {
+        if (isCancelled) break;
+        const rawUrl = slides[i].image;
+        if (!rawUrl) continue;
+
+        const optimizedUrl = optimizeCloudinaryUrl(rawUrl);
+
+        await new Promise<void>((resolve) => {
+          const img = new Image();
+          img.src = optimizedUrl;
+          img.onload = () => {
+            // Use 400ms interval cooldown to keep bandwidth fully clear for critical interactions
+            setTimeout(() => {
+              resolve();
+            }, 400);
+          };
+          img.onerror = () => {
+            resolve();
+          };
+        });
+      }
+    };
+
+    preloadNextSlides();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [slides]);
 
   // Manage Autoplay cycling
   useEffect(() => {

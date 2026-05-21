@@ -49,17 +49,19 @@ export async function getCategoriesAction() {
       throw error;
     }
 
-    const formatted = (categories || []).map((cat: any) => {
-      const meta = parseCategoryMeta(cat.banner_url);
-      return {
-        id: cat.id,
-        name: cat.name,
-        bannerUrl: meta.url,
-        seoTitle: meta.seo_title,
-        seoDescription: meta.seo_description,
-        createdAt: cat.created_at,
-      };
-    });
+    const formatted = (categories || [])
+      .filter((cat: any) => !cat.id.startsWith("system-"))
+      .map((cat: any) => {
+        const meta = parseCategoryMeta(cat.banner_url);
+        return {
+          id: cat.id,
+          name: cat.name,
+          bannerUrl: meta.url,
+          seoTitle: meta.seo_title,
+          seoDescription: meta.seo_description,
+          createdAt: cat.created_at,
+        };
+      });
 
     return { success: true, categories: formatted };
   } catch (err: any) {

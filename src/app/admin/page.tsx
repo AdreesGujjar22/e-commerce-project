@@ -134,6 +134,7 @@ export default function AdminPage() {
   const [contactEmail, setContactEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");
   const [contactAddress, setContactAddress] = useState("");
+  const [chatbotInstruction, setChatbotInstruction] = useState("");
   const [isSavingSettings, setIsSavingSettings] = useState(false);
 
   // Delete Confirmation Modal States
@@ -196,6 +197,7 @@ export default function AdminPage() {
         setContactEmail(sRes.settings.contact_email);
         setContactPhone(sRes.settings.contact_phone);
         setContactAddress(sRes.settings.contact_address);
+        setChatbotInstruction(sRes.settings.chatbot_instruction || "");
       }
 
       // 9. Load hero slides
@@ -564,6 +566,7 @@ export default function AdminPage() {
         contact_email: contactEmail,
         contact_phone: contactPhone,
         contact_address: contactAddress,
+        chatbot_instruction: chatbotInstruction,
       });
 
       if (res.success) {
@@ -579,63 +582,99 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 text-left bg-[#faf9f6]/40 min-h-screen">
+    <div className="max-w-7xl min-w-full lg:mx-auto px-4 md:px-8 py-12 text-left bg-[#faf9f6]/40 min-h-screen">
       
-      {/* Tab Navigation header */}
-      <div className="border-b border-gold-200 pb-6 mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 text-left">
-        <div>
-          <h1 className="font-display text-2xl md:text-3xl uppercase tracking-wider font-black text-neutral-950">
-            ATELIER MAISON <span className="font-serif italic font-light text-gold-650">Seller Deck</span>
-          </h1>
-          <p className="font-sans text-[11px] text-[#666] leading-relaxed mt-1.5 font-medium uppercase tracking-widest">
-            Daraz & Shopify inspired Pakistani Retail curation console
-          </p>
-        </div>
+      {/* 2-Column Responsive Sidebar Layout wrapper */}
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start w-full">
+        
+        {/* LEFT COMPONENT: STICKY NAVIGATION SIDEBAR */}
+        <aside className="w-full lg:w-72 flex-shrink-0 lg:sticky lg:top-8 z-30">
+          <div className="bg-white/85 backdrop-blur-sm border border-gold-200 p-6 rounded-2xl flex flex-col lg:min-h-[calc(100vh-140px)]">
+            
+            {/* Seller Deck Brand/Title Section */}
+            <div className="border-b border-gold-250 pb-5 mb-5 hidden lg:block">
+              <h1 className="font-display text-lg uppercase tracking-wider font-black text-neutral-950">
+                ATELIER MAISON
+              </h1>
+              <span className="font-serif italic font-light text-gold-650 text-sm block mt-0.5">
+                Seller Deck
+              </span>
+              <p className="font-sans text-[9px] text-[#666] leading-relaxed mt-2 uppercase tracking-widest font-semibold">
+                Pakistani Retail Console
+              </p>
+            </div>
 
-        {/* Reload button helper */}
-        <button
-          onClick={loadData}
-          className="inline-flex items-center text-[10px] uppercase font-display font-black tracking-widest text-[#151515] border border-gold-250 bg-white/55 px-4.5 py-2.5 rounded-lg hover:bg-gold-50/20 active:scale-95 transition-all text-left cursor-pointer shadow-sm"
-        >
-          <span className="h-3 w-3 mr-1.5">🔄</span> Reload server databases
-        </button>
-      </div>
+            {/* Sidebar Navigation - Horizontal wrap/scroll on mobile, vertical stack on desktop */}
+            <div className="flex flex-row overflow-x-auto lg:overflow-x-visible lg:flex-col gap-2.5 pb-3 lg:pb-0 scrollbar-none snap-x select-none w-full">
+              {[
+                { id: "orders", label: "📋 Orders Queue" },
+                { id: "products", label: "🛍️ Curated Products" },
+                { id: "categories", label: "🗂️ Category Suite" },
+                { id: "customers", label: "👥 Customer Base" },
+                { id: "reviews", label: "💬 Patron Reviews" },
+                { id: "coupons", label: "🎟️ Discount Vouchers" },
+                { id: "analytics", label: "📈 Ledger Analytics" },
+                { id: "settings", label: "⚙️ Store Settings" },
+                { id: "hero", label: "✨ Hero Slides" },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  className={`px-4.5 py-3 rounded-full lg:rounded-xl text-[11px] font-display font-extrabold uppercase tracking-widest transition-all cursor-pointer whitespace-nowrap lg:whitespace-normal text-left select-none flex-shrink-0 lg:flex-shrink ${
+                    activeTab === tab.id
+                      ? "bg-neutral-950 text-gold-300 shadow-md font-black scale-102 lg:scale-100"
+                      : "border border-gold-150 bg-white hover:bg-neutral-50 hover:border-gold-300 text-neutral-800"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
 
-      {/* Tabs list sidebar/rail style */}
-      <div className="flex flex-wrap gap-2 mb-10 border-b border-gold-150 pb-4 justify-start">
-        {[
-          { id: "orders", label: "📋 Orders Queue" },
-          { id: "products", label: "🛍️ Curated Products" },
-          { id: "categories", label: "🗂️ Category Suite" },
-          { id: "customers", label: "👥 Customer Base" },
-          { id: "reviews", label: "💬 Patron Reviews" },
-          { id: "coupons", label: "🎟️ Discount Vouchers" },
-          { id: "analytics", label: "📈 Ledger Analytics" },
-          { id: "settings", label: "⚙️ Store Settings" },
-          { id: "hero", label: "✨ Hero Slides" },
-        ].map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id as any)}
-            className={`px-4.5 py-3 rounded-full text-[11px] font-display font-extrabold uppercase tracking-widest transition-all cursor-pointer ${
-              activeTab === tab.id
-                ? "bg-neutral-950 text-gold-300 shadow-md font-black scale-102"
-                : "border border-gold-150 bg-white/80 hover:bg-neutral-50 hover:border-gold-300 text-neutral-800"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+            {/* Sidebar reload server/connection status */}
+            <div className="mt-auto pt-6 border-t border-gold-200 hidden lg:block">
+              <button
+                onClick={loadData}
+                className="w-full inline-flex items-center justify-center text-[10px] uppercase font-display font-black tracking-widest text-[#151515] border border-gold-250 bg-white/60 py-2.5 rounded-lg hover:bg-gold-50/20 active:scale-95 transition-all text-center cursor-pointer shadow-xs"
+              >
+                🔄 Reload Database
+              </button>
+            </div>
 
-      {isLoading ? (
-        <div className="py-24 text-center flex flex-col items-center justify-center space-y-4">
-          <Loader2 className="h-10 w-10 animate-spin text-gold-650" />
-          <p className="font-display text-[10px] font-bold text-neutral-500 uppercase tracking-widest">
-            Syncing Ledger Caches...
-          </p>
-        </div>
-      ) : activeTab === "orders" ? (
+          </div>
+        </aside>
+
+        {/* RIGHT COMPONENT: ACTIVE PANEL CONTENT AREA */}
+        <main className="flex-1 w-full">
+          
+          {/* Header block visible ONLY in mobile Viewports */}
+          <div className="lg:hidden border-b border-gold-200 pb-5 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 text-left">
+            <div>
+              <h1 className="font-display text-2xl uppercase tracking-wider font-black text-neutral-950">
+                ATELIER MAISON <span className="font-serif italic font-light text-gold-650 text-sm">Seller Deck</span>
+              </h1>
+              <p className="font-sans text-[11px] text-[#666] leading-relaxed mt-1 font-medium uppercase tracking-widest">
+                Pakistani Retail Console
+              </p>
+            </div>
+            
+            <button
+              onClick={loadData}
+              className="inline-flex items-center text-[10px] uppercase font-display font-black tracking-widest text-[#151515] border border-gold-250 bg-white/55 px-4.5 py-2.5 rounded-lg hover:bg-gold-50/20 active:scale-95 transition-all text-left cursor-pointer shadow-sm"
+            >
+              🔄 Reload Server
+            </button>
+          </div>
+
+          <div>
+            {isLoading ? (
+              <div className="py-24 text-center flex flex-col items-center justify-center space-y-4">
+                <Loader2 className="h-10 w-10 animate-spin text-gold-650" />
+                <p className="font-display text-[10px] font-bold text-neutral-500 uppercase tracking-widest">
+                  Syncing Ledger Caches...
+                </p>
+              </div>
+            ) : activeTab === "orders" ? (
         
         /* Orders queue visual dashboard */
         <div className="space-y-6">
@@ -1155,6 +1194,32 @@ export default function AdminPage() {
             </div>
           </div>
 
+          {/* Chatbot settings segment */}
+          <div className="bg-white border border-gold-150 p-6 md:p-8 rounded-2xl shadow-sm text-left space-y-6">
+            <h4 className="font-display text-sm uppercase tracking-wide text-neutral-950 font-black border-b border-neutral-100 pb-3 flex items-center">
+              <Sparkles className="h-4.5 w-4.5 mr-2 text-violet-650 animate-pulse" />
+              AI Chatbot Styling Concierge Instructions
+            </h4>
+
+            <div className="space-y-5 text-left">
+              <div>
+                <label className="block text-[10px] font-display font-semibold uppercase tracking-wide text-neutral-500 mb-1.5">
+                  System Context & Directives for Aura (AI Assistant Instructions)
+                </label>
+                <p className="text-[10px] text-neutral-400 mb-2 font-mono leading-relaxed">
+                  Provide custom instructions to control chatbot voice, store policies, brand narrative, and specific product focus keys.
+                </p>
+                <textarea
+                  rows={6}
+                  value={chatbotInstruction}
+                  onChange={(e) => setChatbotInstruction(e.target.value)}
+                  className="w-full bg-[#faf9f6] text-neutral-950 font-sans text-xs px-4 py-3.5 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-445 text-left leading-relaxed"
+                  placeholder="e.g. You are Aura, the private AI Styling Concierge for Maison L'Étoile..."
+                />
+              </div>
+            </div>
+          </div>
+
           <div className="flex justify-end pt-2">
             <Button variant="primary" size="lg" type="submit" isLoading={isSavingSettings} className="cursor-pointer bg-neutral-950 hover:bg-neutral-850">
               Save Store Configurations & Pages
@@ -1353,6 +1418,10 @@ export default function AdminPage() {
           </div>
         </div>
       )}
+
+          </div>
+        </main>
+      </div>
 
       {/* 5. Create or Edit Product Element Modal Popup */}
       {isAddModalOpen && (

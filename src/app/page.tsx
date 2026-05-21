@@ -1,10 +1,12 @@
 import React from "react";
 import { getProductsAction } from "../actions/product.actions";
+import { getCategoriesAction } from "../actions/category.actions";
 import { HeroSection } from "../components/hero/HeroSection";
 import { ProductGrid } from "../components/product/ProductGrid";
-import { FaqSection } from "../components/home/FaqSection";
+import { ShowcaseSection } from "../components/home/ShowcaseSection";
 import Link from "next/link";
 import { ArrowLeftRight, Sparkles, Shield, Award, Sparkle } from "lucide-react";
+import { FaqSection } from "../components/home/FaqSection";
 
 export const revalidate = 0; // Fresh load on each request
 
@@ -12,6 +14,9 @@ export default async function HomePage() {
   const res = await getProductsAction();
   const products = res.products || [];
   const featuredProducts = products.filter((p) => p.featured);
+
+  const catRes = await getCategoriesAction();
+  const categories = catRes.categories || [];
 
   return (
     <div className="flex flex-col w-full pb-20">
@@ -101,11 +106,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 4. Frequently Asked Questions Section */}
-      <FaqSection />
+      {/* 4. Luxury Curated Exhibition Showcase */}
+      <ShowcaseSection categories={categories} products={products} />
 
       {/* 5. Interactive Details Modal loader */}
-      <ProductGrid products={products} />
+      <FaqSection />
     </div>
   );
 }

@@ -8,8 +8,10 @@ import { CollectionsFilter } from "../../components/product/CollectionsFilter";
 export const revalidate = 0;
 
 export default async function CollectionsPage() {
-  const res = await getProductsAction();
-  const products = res.products || [];
+  const res = await getProductsAction({ page: 1, limit: 8 });
+  const initialProducts = res.products || [];
+  const initialTotalCount = res.totalCount || 0;
+  const initialTotalPages = res.totalPages || 1;
   
   const catRes = await getCategoriesAction();
   const initialCategories = catRes.categories || [];
@@ -34,7 +36,12 @@ export default async function CollectionsPage() {
       </div>
 
       {/* 2. Interactive Filtering controls and Product Grid */}
-      <CollectionsFilter products={products} initialCategories={initialCategories} />
+      <CollectionsFilter 
+        initialProducts={initialProducts} 
+        initialCategories={initialCategories}
+        initialTotalCount={initialTotalCount}
+        initialTotalPages={initialTotalPages}
+      />
     </div>
   );
 }

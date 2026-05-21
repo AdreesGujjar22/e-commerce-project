@@ -138,13 +138,45 @@ export const AuraChat: React.FC = () => {
                     )}
 
                     <div
-                      className={`max-w-[80%] rounded-2xl px-4 py-3 text-xs leading-relaxed ${
-                        isAssistant
+                      className={`max-w-[80%] rounded-2xl px-4 py-3 text-xs leading-relaxed ${isAssistant
                           ? "bg-[#faf9f6] text-neutral-950 border border-gold-150 rounded-tl-none font-sans"
                           : "bg-neutral-900 text-[#faf9f6] rounded-tr-none font-sans font-medium shadow-sm"
-                      }`}
+                        }`}
                     >
-                      {msg.content}
+                      {msg.content.split("\n").map((line, idx) => {
+                        const productMatch = line.match(/•\s(.+)\s-\s\$(\d+)\s\((\/products\/.+)\)/);
+
+                        if (productMatch) {
+                          const [, name, price, url] = productMatch;
+
+                          return (
+                            <div key={idx} className="mb-2">
+                              <div className="flex items-center justify-between gap-2">
+                                <span className="font-medium text-neutral-900">
+                                  {name}
+                                </span>
+
+                                <span className="text-gold-500 font-semibold">
+                                  ${price}
+                                </span>
+                              </div>
+
+                              <a
+                                href={url}
+                                className="text-[11px] text-blue-600 underline mt-0.5 inline-block"
+                              >
+                                View Product →
+                              </a>
+                            </div>
+                          );
+                        }
+
+                        return (
+                          <p key={idx} className="mb-1">
+                            {line}
+                          </p>
+                        );
+                      })}
                     </div>
 
                     {!isAssistant && (

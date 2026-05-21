@@ -52,11 +52,15 @@ function mapProductDbToType(dbProduct: any): Product {
 export async function getProductsAction(options?: {
   category?: string;
   featuredOnly?: boolean;
+  searchQuery?: string;
+  sortBy?: string;
+  page?: number;
+  limit?: number;
 }) {
   try {
     const supabase = await getSupabaseServerClient();
     
-    let query = supabase.from("products").select("*, reviews(*), product_images(*)");
+    let query = supabase.from("products").select("*, reviews(*), product_images(*)", { count: "exact" });
 
     if (options?.category && options.category !== "all") {
       query = query.eq("category_id", options.category);
@@ -66,14 +70,40 @@ export async function getProductsAction(options?: {
       query = query.eq("featured", true);
     }
 
-    // Sort newer products first
-    query = query.order("created_at", { ascending: false });
+    // Add search query support on server side
+    if (options?.searchQuery) {
+      const search = `%${options.searchQuery}%`;
+      query = query.or(`name.ilike.${search},description.ilike.${search},designer.ilike.${search}`);
+    }
 
-    const { data: dbProducts, error } = await query;
+    // Add sort support on server side
+    if (options?.sortBy) {
+      if (options.sortBy === "price-low") {
+        query = query.order("price", { ascending: true });
+      } else if (options.sortBy === "price-high") {
+        query = query.order("price", { ascending: false });
+      } else if (options.sortBy === "rating") {
+        query = query.order("rating", { ascending: false });
+      } else {
+        query = query.order("created_at", { ascending: false });
+      }
+    } else {
+      query = query.order("created_at", { ascending: false });
+    }
+
+    const limit = options?.limit || 8;
+    const page = options?.page;
+    if (page !== undefined) {
+      const from = (page - 1) * limit;
+      const to = from + limit - 1;
+      query = query.range(from, to);
+    }
+
+    const { data: dbProducts, error, count } = await query;
 
     if (error) {
       console.error("Supabase getProductsAction error:", error);
-      return { success: false, error: error.message, products: [] };
+      return { success: false, error: error.message, products: [], totalCount: 0, totalPages: 0 };
     }
 
     const products: Product[] = (dbProducts || []).map((p: any) => {
@@ -91,9 +121,23 @@ export async function getProductsAction(options?: {
       return mapProductDbToType({ ...p, reviews });
     });
 
-    return { success: true, products };
+    const finalCount = count !== null ? count : products.length;
+    const finalPages = page !== undefined ? Math.ceil(finalCount / limit) : 1;
+
+    return { 
+      success: true, 
+      products, 
+      totalCount: finalCount, 
+      totalPages: finalPages 
+    };
   } catch (err: any) {
-    return { success: false, error: err.message || "Failed reading storefront catalogs", products: [] };
+    return { 
+      success: false, 
+      error: err.message || "Failed reading storefront catalogs", 
+      products: [], 
+      totalCount: 0, 
+      totalPages: 0 
+    };
   }
 }
 

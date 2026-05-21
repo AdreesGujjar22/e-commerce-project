@@ -13,6 +13,7 @@ export interface StoreSettings {
   contact_email: string;
   contact_phone: string;
   contact_address: string;
+  chatbot_instruction?: string;
 }
 
 const DEFAULT_SETTINGS: StoreSettings = {
@@ -26,40 +27,30 @@ const DEFAULT_SETTINGS: StoreSettings = {
   contact_email: "support@maisonletoile.com",
   contact_phone: "+92 300 1234567",
   contact_address: "Maison Outlet Building, M.M. Alam Road, Gulberg III, Lahore, Pakistan",
+  chatbot_instruction: "You are Aura, the private AI Styling Concierge for Maison L'Étoile, a high-end ultra-premium e-commerce boutique selling silk apparel, Swiss timepieces, Kyoto clay vases, and rare organic sandalwood perfumes. Speak with extreme sophistication, courtesy, and storytelling style. Tailor recommendations to look editorial and high-prestige."
 };
 
 export async function getSettingsAction(): Promise<{ success: boolean; settings: StoreSettings; error?: string }> {
   try {
     const supabase = await getSupabaseServerClient();
     
-    // Attempt to select from "settings" table
-    const { data, error } = await supabase
-      .from("store_settings")
+    // Select from "categories" table where id is "system-store-settings"
+    const { data: catData, error: catError } = await supabase
+      .from("categories")
       .select("*")
-      .eq("id", "global")
+      .eq("id", "system-store-settings")
       .maybeSingle();
 
-    if (error) {
-      // If table doesn't exist, return default settings gracefully
-      console.warn("store_settings view or table missing, falling back to defaults:", error.message);
-      return { success: true, settings: DEFAULT_SETTINGS };
-    }
-
-    if (!data) {
-      // Table exists but no record, try to insert defaults
-      const { data: inserted, error: insertError } = await supabase
-        .from("store_settings")
-        .insert({ id: "global", ...DEFAULT_SETTINGS })
-        .select()
-        .maybeSingle();
-        
-      if (insertError) {
-        return { success: true, settings: DEFAULT_SETTINGS };
+    if (catData && catData.banner_url) {
+      try {
+        const parsed = JSON.parse(catData.banner_url);
+        return { success: true, settings: { ...DEFAULT_SETTINGS, ...parsed } };
+      } catch (e) {
+        // Fallback below
       }
-      return { success: true, settings: inserted || DEFAULT_SETTINGS };
     }
 
-    return { success: true, settings: data };
+    return { success: true, settings: DEFAULT_SETTINGS };
   } catch (err: any) {
     console.error("Failed to load settings from Supabase:", err);
     return { success: true, settings: DEFAULT_SETTINGS };
@@ -84,10 +75,20 @@ export async function updateSettingsAction(settings: Partial<StoreSettings>) {
       return { success: false, error: "Only admin can update store settings." };
     }
 
-    // Attempt to upsert/update
+    // Load current settings to perform merge
+    const currentRes = await getSettingsAction();
+    const mergedSettings = { ...currentRes.settings, ...settings };
+
+    // JSON serialize settings to save inside banner_url column
+    const serialized = JSON.stringify(mergedSettings);
+
     const { error } = await supabase
-      .from("store_settings")
-      .upsert({ id: "global", ...settings });
+      .from("categories")
+      .upsert({
+        id: "system-store-settings",
+        name: "System Store Settings Storage",
+        banner_url: serialized
+      });
 
     if (error) {
       console.error("Supabase upsert settings error:", error.message);

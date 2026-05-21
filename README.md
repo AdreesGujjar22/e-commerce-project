@@ -1,20 +1,66 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# 🛍️ Full Stack E-Commerce Store (Next.js + TypeScript)
 
-# Run and deploy your AI Studio app
+A modern, production-ready full stack e-commerce platform built with **Next.js App Router**, **TypeScript**, **Supabase**, **Tailwind CSS**, and **Gemini AI chatbot integration**.
 
-This contains everything you need to run your app locally.
+This project includes a powerful admin panel, dynamic product management, and an AI-powered sales chatbot for fashion/clothing stores.
 
-View your app in AI Studio: https://ai.studio/apps/5b3ff2df-51de-4d1f-97d5-249a1b9b8625
+---
 
-## Run Locally
+## 🚀 Features
 
-**Prerequisites:**  Node.js
+### 🛒 E-Commerce Core
+- Product listing with categories
+- Product detail pages
+- Size & color variants
+- Stock management
+- Discount & pricing system
+- Image upload (Cloudinary support)
+- Fast and responsive UI
 
+---
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### 🤖 AI Chatbot (Gemini Powered)
+- Real-time AI product assistant
+- Smart product recommendations
+- Natural language search (e.g. “black lawn suit under 5000”)
+- Context-aware conversations
+- Admin-controlled chatbot instructions
+- Dynamic store info injection (offers, contact, policies)
+
+---
+
+### 🧑‍💼 Admin Panel
+- Secure JWT authentication
+- Product CRUD operations
+- Upload products with images
+- Manage categories
+- Order management (optional extension)
+- AI chatbot settings panel:
+  - Store information
+  - Offers & announcements
+  - Contact details
+  - Delivery & return policy
+  - Chatbot behavior instructions
+
+---
+
+### ⚡ Backend API
+- Next.js App Router API routes
+- RESTful endpoints
+- Supabase
+- Secure server-side logic
+- AI integration using Gemini API
+
+---
+
+## 🧱 Tech Stack
+
+- **Frontend:** Next.js (App Router), React, TypeScript
+- **UI Library:** Tailwind CSS
+- **Backend:** Next.js API Routes
+- **Database:** Supabase
+- **AI:** Google Gemini API (`@google/genai`)
+- **Authentication:** JWT
+- **Storage:** Cloudinary (images)
+
+---

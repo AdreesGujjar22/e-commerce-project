@@ -70,7 +70,8 @@ export const MaisonImage: React.FC<MaisonImageProps> = ({
         />
       )}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      {currentSrc ? (
+        <img
         src={currentSrc}
         alt={alt}
         onLoad={handleLoad}
@@ -78,6 +79,7 @@ export const MaisonImage: React.FC<MaisonImageProps> = ({
         className={`${className} ${isLoading ? "opacity-0" : "opacity-100"} transition-opacity duration-300`}
         {...props}
       />
+      ) : null}
     </div>
   );
 };

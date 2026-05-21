@@ -126,7 +126,7 @@ export const FaqSection: React.FC = () => {
             <div
               key={index}
               className={`border-b border-neutral-100 last:border-b-0 pb-4 last:pb-0 transition-all ${
-                isOpen ? "bg-[#faf9f6]/40 p-4.5 rounded-2xl border-none" : ""
+                isOpen ? "bg-[#faf9f6]/40 rounded-2xl border-none" : ""
               }`}
               itemProp="mainEntity"
               itemScope

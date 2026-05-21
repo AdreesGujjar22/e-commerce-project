@@ -1,17 +1,25 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Product } from "../../types";
 import { useStore } from "../../store";
 import { ProductGrid } from "./ProductGrid";
 import { SlidersHorizontal } from "lucide-react";
+import { getProductsAction } from "../../actions/product.actions";
 
 interface CollectionsFilterProps {
-  products: Product[];
+  initialProducts: Product[];
   initialCategories?: any[];
+  initialTotalCount: number;
+  initialTotalPages: number;
 }
 
-export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({ products, initialCategories }) => {
+export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({
+  initialProducts,
+  initialCategories,
+  initialTotalCount,
+  initialTotalPages,
+}) => {
   const {
     selectedCategory,
     setSelectedCategory,
@@ -19,6 +27,69 @@ export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({ products, 
     setSortBy,
     searchQuery,
   } = useStore();
+
+  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalCount, setTotalCount] = useState<number>(initialTotalCount);
+  const [totalPages, setTotalPages] = useState<number>(initialTotalPages);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // Dynamic state keys reference to check updates and adjust pagination
+  const prevFiltersRef = useRef({ selectedCategory, sortBy, searchQuery });
+  const isFirstLoad = useRef(true);
+
+  useEffect(() => {
+    // Detect if filters changed: reset page index automatically
+    const filtersChanged =
+      prevFiltersRef.current.selectedCategory !== selectedCategory ||
+      prevFiltersRef.current.sortBy !== sortBy ||
+      prevFiltersRef.current.searchQuery !== searchQuery;
+
+    let targetPage = currentPage;
+    if (filtersChanged) {
+      targetPage = 1;
+      setCurrentPage(1);
+    }
+    prevFiltersRef.current = { selectedCategory, sortBy, searchQuery };
+
+    // Prevent redundant call on server-rendered page mount under default states
+    if (isFirstLoad.current) {
+      isFirstLoad.current = false;
+      if (
+        selectedCategory === "all" &&
+        sortBy === "default" &&
+        searchQuery === ""
+      ) {
+        return;
+      }
+    }
+
+    const fetchFilteredAndPaginatedProducts = async () => {
+      setIsLoading(true);
+      try {
+        const res = await getProductsAction({
+          category: selectedCategory,
+          searchQuery: searchQuery,
+          sortBy: sortBy,
+          page: targetPage,
+          limit: 8,
+        });
+        if (res.success) {
+          setProducts(res.products || []);
+          setTotalCount(res.totalCount || 0);
+          setTotalPages(res.totalPages || 1);
+        } else {
+          console.error("Backend failed fetching curations:", res.error);
+        }
+      } catch (err) {
+        console.error("Error calling getProductsAction client-side:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchFilteredAndPaginatedProducts();
+  }, [selectedCategory, sortBy, searchQuery, currentPage]);
 
   // Dynamically map categories from database, fallback to built-in presets if none loaded
   const categoriesList = [
@@ -104,8 +175,79 @@ export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({ products, 
         </div>
       )}
 
-      {/* Renders the actual grid listing */}
-      <ProductGrid products={products} />
+      {/* Renders the actual grid listing with pre-filtered server values */}
+      <div className={`transition-all duration-300 relative ${isLoading ? "opacity-50 pointer-events-none" : "opacity-100"}`}>
+        <ProductGrid products={products} bypassClientFiltering={true} />
+        
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white/20 z-10 backdrop-blur-[1px]">
+            <div className="flex flex-col items-center space-y-2 bg-white/80 p-6 rounded-2xl shadow-md border border-gold-100">
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gold-600"></div>
+              <span className="font-display text-[9px] uppercase tracking-wider text-neutral-500 font-bold">
+                Curation update active...
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Premium Minimalist Luxury Pagination controls */}
+      {totalPages > 1 && (
+        <div className="flex flex-col sm:flex-row items-center justify-between border-t border-gold-200 pt-8 mt-12 gap-4" id="gallery-showroom-pagination-curator">
+          {/* Status count indicator */}
+          <p className="font-sans text-xs text-neutral-500">
+            Showing <span className="font-semibold text-neutral-900">{products.length}</span> of <span className="font-semibold text-neutral-900">{totalCount}</span> exquisite designs
+          </p>
+
+          {/* Nav buttons */}
+          <div className="flex items-center space-x-2.5">
+            <button
+              type="button"
+              disabled={currentPage === 1 || isLoading}
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              className={`font-display text-[9.5px] uppercase tracking-[0.2em] px-4.5 py-2.5 border transition-all cursor-pointer ${
+                currentPage === 1
+                  ? "border-neutral-100 text-neutral-350 cursor-not-allowed bg-stone-50"
+                  : "border-gold-200 text-neutral-700 bg-white hover:border-neutral-950 hover:text-neutral-950 focus:outline-none"
+              }`}
+            >
+              PREVIOUS
+            </button>
+
+            {/* Numeric Indicators */}
+            <div className="flex items-center space-x-1">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((pNum) => (
+                <button
+                  key={pNum}
+                  type="button"
+                  disabled={isLoading}
+                  onClick={() => setCurrentPage(pNum)}
+                  className={`font-display w-9 h-9 flex items-center justify-center text-[10px] font-bold uppercase tracking-widest border transition-all rounded-full cursor-pointer ${
+                    currentPage === pNum
+                      ? "bg-neutral-950 border-neutral-950 text-white shadow-sm"
+                      : "border-gold-150 text-neutral-500 bg-white hover:border-gold-300 hover:text-neutral-900"
+                  }`}
+                >
+                  {pNum}
+                </button>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              disabled={currentPage === totalPages || isLoading}
+              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+              className={`font-display text-[9.5px] uppercase tracking-[0.2em] px-4.5 py-2.5 border transition-all cursor-pointer ${
+                currentPage === totalPages
+                  ? "border-neutral-100 text-neutral-350 cursor-not-allowed bg-stone-50"
+                  : "border-gold-200 text-neutral-700 bg-white hover:border-neutral-950 hover:text-neutral-950 focus:outline-none"
+              }`}
+            >
+              NEXT
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

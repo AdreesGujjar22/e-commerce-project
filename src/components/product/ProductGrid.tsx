@@ -8,30 +8,33 @@ import { Inbox } from "lucide-react";
 
 interface ProductGridProps {
   products: Product[];
+  bypassClientFiltering?: boolean;
 }
 
-export const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
+export const ProductGrid: React.FC<ProductGridProps> = ({ products, bypassClientFiltering = false }) => {
   const { searchQuery, selectedCategory, sortBy } = useStore();
 
   // Filter and sort products
-  const filteredProducts = products
-    .filter((product) => {
-      const matchSearch =
-        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.designer.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredProducts = bypassClientFiltering
+    ? products
+    : products
+        .filter((product) => {
+          const matchSearch =
+            product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            product.designer.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            product.description.toLowerCase().includes(searchQuery.toLowerCase());
 
-      const matchCategory =
-        selectedCategory === "all" || product.category === selectedCategory;
+          const matchCategory =
+            selectedCategory === "all" || product.category === selectedCategory;
 
-      return matchSearch && matchCategory;
-    })
-    .sort((a, b) => {
-      if (sortBy === "price-low") return a.price - b.price;
-      if (sortBy === "price-high") return b.price - a.price;
-      if (sortBy === "rating") return b.rating - a.rating;
-      return 0; // default order
-    });
+          return matchSearch && matchCategory;
+        })
+        .sort((a, b) => {
+          if (sortBy === "price-low") return a.price - b.price;
+          if (sortBy === "price-high") return b.price - a.price;
+          if (sortBy === "rating") return b.rating - a.rating;
+          return 0; // default order
+        });
 
   if (filteredProducts.length === 0) {
     return (
@@ -48,7 +51,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6.5 w-full">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 sm:gap-x-6 lg:gap-x-8 gap-y-12 sm:gap-y-16 w-full">
       {filteredProducts.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
