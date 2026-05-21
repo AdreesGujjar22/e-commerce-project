@@ -28,7 +28,7 @@ export default async function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 text-left">
         <h2 className="font-display text-[10px] uppercase tracking-[0.3em] text-neutral-400 font-bold mb-4 flex items-center">
           <Sparkle className="h-3 w-3 mr-2 text-gold-500 fill-gold-500/20" />
-          Maison Curator's Spotlight
+          Arooj Curator's Spotlight
         </h2>
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12.5 text-left">
           <h3 className="font-serif text-3xl md:text-4.5xl text-neutral-950 font-normal leading-tight max-w-xl">
@@ -74,7 +74,7 @@ export default async function HomePage() {
           {/* Value propositions */}
           <div className="flex flex-col space-y-8">
             <h3 className="font-serif text-3.5xl md:text-5xl text-white font-light leading-none">
-              The Code of <span className="font-sans font-bold text-gold-400 tracking-tight">Maison L'Étoile</span>
+              The Code of <span className="font-sans font-bold text-gold-400 tracking-tight">Arooj Arts</span>
             </h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-4">

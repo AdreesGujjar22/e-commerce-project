@@ -18,13 +18,13 @@ export function optimizeCloudinaryUrl(url: string | undefined): string {
   return url;
 }
 
-interface MaisonImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+interface ProductImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   fallbackSrc?: string;
 }
 
-export const MaisonImage: React.FC<MaisonImageProps> = ({
+export const ProductImage: React.FC<ProductImageProps> = ({
   src,
-  alt = "Maison Item",
+  alt = "Arooj Item",
   className = "",
   fallbackSrc = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=40",
   onLoad,
@@ -60,7 +60,7 @@ export const MaisonImage: React.FC<MaisonImageProps> = ({
   };
 
   return (
-    <div className="relative w-full h-full min-h-[inherit] overflow-hidden" id="maison-image-container">
+    <div className="relative w-full h-full min-h-[inherit] overflow-hidden" id="Arooj-image-container">
       {isLoading && (
         <div 
           className="absolute inset-0 bg-gradient-to-r from-stone-100 via-stone-200/50 to-stone-100 bg-[length:200%_100%] animate-pulse"

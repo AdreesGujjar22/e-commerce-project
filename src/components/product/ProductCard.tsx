@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Product } from "../../types";
 import { useStore } from "../../store";
-import { MaisonImage } from "../ui/MaisonImage";
+import { ProductImage } from "../ui/ProductImage";
 import { Eye, Plus } from "lucide-react";
 
 interface ProductCardProps {
@@ -23,7 +23,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     >
       {/* Product Image Panel with 2:3 Portrait Aspect Ratio */}
       <div className="w-full relative aspect-[2/3] overflow-hidden bg-neutral-50 mb-4 rounded-none">
-        <MaisonImage
+        <ProductImage
           src={product.image}
           alt={product.name}
           className="w-full h-full object-cover object-center transform scale-100 transition-transform duration-700 ease-out group-hover:scale-102"

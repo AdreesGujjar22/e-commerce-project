@@ -44,7 +44,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ products, bypassClient
           No curations match search query
         </h4>
         <p className="font-sans text-xs text-neutral-400 mt-2 max-w-sm">
-          Please adjust your selected filters, categories, or inquiry search key to display Maison items.
+          Please adjust your selected filters, categories, or inquiry search key to display Arooj items.
         </p>
       </div>
     );

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Sparkles, Facebook, Instagram, Youtube, MessageCircle, Music, Phone, Mail, MapPin } from "lucide-react";
 import { getSettingsAction, StoreSettings } from "../../actions/settings.actions";
+import Image from "next/image";
 
 export const Footer: React.FC = () => {
   const [settings, setSettings] = useState<StoreSettings | null>(null);
@@ -28,16 +29,18 @@ export const Footer: React.FC = () => {
   return (
     <footer className="bg-neutral-950 text-neutral-300 border-t border-neutral-900 pt-16 pb-12 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12 text-left">
-        
+
         {/* Brand Mission Column */}
         <div className="md:col-span-2">
           <Link href="/" className="group inline-block">
-            <span className="font-display text-lg tracking-[0.2em] uppercase font-bold text-white block">
-              MAISON L'ÉTOILE
-            </span>
-            <span className="font-sans text-[9px] tracking-[0.2em] text-gold-400 uppercase mt-1 block font-medium">
-              Premium Clothing & Accents
-            </span>
+            <div className="relative h-20 w-[140px]">
+              <Image
+                src="/logo-white.png"
+                alt="Logo"
+                fill
+                className="object-contain"
+              />
+            </div>
           </Link>
           <p className="mt-5 font-sans text-sm text-neutral-400 leading-relaxed max-w-sm">
             We provide high-quality clothes, linen, beautiful accents, watches, and perfumes. Our items are made with the best materials, designed to last long and look elegant. Great customer service and quick courier delivery across Pakistan!
@@ -131,7 +134,7 @@ export const Footer: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 pt-8 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between text-neutral-500 text-xs">
         <div>
-          <p>© {new Date().getFullYear()} Maison L'Étoile Store. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Arooj Arts Store. All rights reserved.</p>
         </div>
         <div className="mt-4 sm:mt-0 flex space-x-6 text-xs">
           <Link href="/terms" className="hover:text-neutral-300">Terms of Service</Link>

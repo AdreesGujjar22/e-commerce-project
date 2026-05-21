@@ -594,7 +594,7 @@ export default function AdminPage() {
             {/* Seller Deck Brand/Title Section */}
             <div className="border-b border-gold-250 pb-5 mb-5 hidden lg:block">
               <h1 className="font-display text-lg uppercase tracking-wider font-black text-neutral-950">
-                ATELIER MAISON
+                ATELIER Arooj
               </h1>
               <span className="font-serif italic font-light text-gold-650 text-sm block mt-0.5">
                 Seller Deck
@@ -651,7 +651,7 @@ export default function AdminPage() {
           <div className="lg:hidden border-b border-gold-200 pb-5 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 text-left">
             <div>
               <h1 className="font-display text-2xl uppercase tracking-wider font-black text-neutral-950">
-                ATELIER MAISON <span className="font-serif italic font-light text-gold-650 text-sm">Seller Deck</span>
+                ATELIER Arooj <span className="font-serif italic font-light text-gold-650 text-sm">Seller Deck</span>
               </h1>
               <p className="font-sans text-[11px] text-[#666] leading-relaxed mt-1 font-medium uppercase tracking-widest">
                 Pakistani Retail Console
@@ -1135,7 +1135,7 @@ export default function AdminPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-left">
               <Input
                 label="Support Contact Email"
-                placeholder="support@maisonletoile.com"
+                placeholder="support@Aroojletoile.com"
                 value={contactEmail}
                 onChange={(e) => setContactEmail(e.target.value)}
               />
@@ -1214,7 +1214,7 @@ export default function AdminPage() {
                   value={chatbotInstruction}
                   onChange={(e) => setChatbotInstruction(e.target.value)}
                   className="w-full bg-[#faf9f6] text-neutral-950 font-sans text-xs px-4 py-3.5 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-445 text-left leading-relaxed"
-                  placeholder="e.g. You are Aura, the private AI Styling Concierge for Maison L'Étoile..."
+                  placeholder="e.g. You are Aura, the private AI Styling Concierge for Arooj Arts..."
                 />
               </div>
             </div>
@@ -1541,7 +1541,7 @@ export default function AdminPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Input
                     label="Custom SEO Meta Title"
-                    placeholder="e.g. Designer Embroidered Silk Kurti | Maison L'Étoile"
+                    placeholder="e.g. Designer Embroidered Silk Kurti | Arooj Arts"
                     value={newSeoTitle}
                     onChange={(e) => setNewSeoTitle(e.target.value)}
                   />

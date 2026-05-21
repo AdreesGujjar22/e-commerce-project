@@ -24,7 +24,7 @@ export default async function CollectionsPage() {
         <div className="max-w-xl">
           <div className="inline-flex items-center space-x-2 bg-neutral-900 text-gold-300 text-[8px] font-display font-medium uppercase tracking-[0.2em] px-3.5 py-1.5 rounded mb-4">
             <Compass className="h-2.5 w-2.5" />
-            <span>Maison catalogue index</span>
+            <span>Arooj catalogue index</span>
           </div>
           <h1 className="font-display text-3xl md:text-5xl uppercase tracking-tight font-black text-neutral-950">
             THE GALLERY <span className="font-serif italic text-gold-600 font-light">Showroom</span>

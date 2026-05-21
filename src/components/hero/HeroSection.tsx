@@ -6,7 +6,7 @@ import { useStore } from "../../store";
 import { Sparkles, Compass, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { getHeroSlidesAction, HeroSlide } from "../../actions/hero.actions";
-import { MaisonImage, optimizeCloudinaryUrl } from "../ui/MaisonImage";
+import { ProductImage, optimizeCloudinaryUrl } from "../ui/ProductImage";
 
 export const HeroSection: React.FC = () => {
   const { setChatOpen } = useStore();
@@ -162,7 +162,7 @@ export const HeroSection: React.FC = () => {
             exit="exit"
             className="absolute inset-0 w-full h-full"
           >
-            <MaisonImage
+            <ProductImage
               src={activeSlide.image}
               alt={activeSlide.title}
               className="w-full h-full object-cover object-center transform scale-103"

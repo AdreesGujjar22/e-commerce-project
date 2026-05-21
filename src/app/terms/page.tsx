@@ -6,7 +6,7 @@ export const revalidate = 0; // Fresh load
 
 export default async function TermsPage() {
   const { settings } = await getSettingsAction();
-  const termsText = settings?.terms_conditions || "All orders placed on Maison L'Étoile are subject to product availability. We offer standard courier delivery within 3-5 working days across Pakistan. Cash on delivery checkup terms apply.";
+  const termsText = settings?.terms_conditions || "All orders placed on Arooj Arts are subject to product availability. We offer standard courier delivery within 3-5 working days across Pakistan. Cash on delivery checkup terms apply.";
 
   return (
     <div className="bg-neutral-50 min-h-screen py-16 text-left">

@@ -22,13 +22,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!product) {
     return {
-      title: "Curation Not Found | Maison l'Étoile",
+      title: "Curation Not Found | Arooj Arts",
       description: "The requested exhibition piece is not active in our catalog.",
     };
   }
 
-  const title = `${product.name} — ${product.designer} | Maison l'Étoile`;
-  const description = product.description || `Explore the exquisite ${product.name} by designer ${product.designer} at Maison l'Étoile.`;
+  const title = `${product.name} — ${product.designer} | Arooj Arts`;
+  const description = product.description || `Explore the exquisite ${product.name} by designer ${product.designer} at Arooj Arts.`;
   const canonicalUrl = `https://ais-dev-cgwlfgq4uevdr35b2ix4qe-922378778819.asia-southeast1.run.app/products/${product.id}`;
 
   return {
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title,
       description,
       url: canonicalUrl,
-      siteName: "Maison l'Étoile",
+      siteName: "Arooj Arts",
       images: [
         {
           url: product.image,

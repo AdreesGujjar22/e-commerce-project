@@ -116,7 +116,7 @@ function AuthForm() {
   };
 
   const handleAdminAutofill = () => {
-    const adminEmail = "admin@maisonletoile.com";
+    const adminEmail = "admin@Aroojletoile.com";
     setEmail(adminEmail);
     setPassword("securepassword123");
     setIsLogin(true);
@@ -130,7 +130,7 @@ function AuthForm() {
       <div className="text-center mb-10">
         <div className="inline-flex items-center space-x-1.5 bg-neutral-900 text-gold-300 text-[9px] font-display font-medium uppercase tracking-[0.25em] px-3.5 py-1.5 rounded mb-6">
           <Compass className="h-2.5 w-2.5" />
-          <span>Maison L'Étoile - Login</span>
+          <span>Arooj Arts - Login</span>
         </div>
         
         <h1 className="font-display text-2.5xl md:text-3xl uppercase tracking-tight text-neutral-950 font-black mb-2">

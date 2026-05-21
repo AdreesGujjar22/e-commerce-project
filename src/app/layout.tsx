@@ -11,20 +11,20 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   metadataBase: new URL("https://ais-dev-cgwlfgq4uevdr35b2ix4qe-922378778819.asia-southeast1.run.app"),
   title: {
-    default: "Maison l'Étoile — Premium Showroom & Curations",
-    template: "%s | Maison l'Étoile",
+    default: "Arooj Arts — Premium Showroom & Curations",
+    template: "%s | Arooj Arts",
   },
   description: "Curators of fine Italian silk trench coats, surgical steel timepieces, raw travertines, and exotic sandalwood extraits.",
   openGraph: {
-    title: "Maison l'Étoile — Showroom & Curations",
+    title: "Arooj Arts — Showroom & Curations",
     description: "Curators of fine Italian silk trench coats, surgical steel timepieces, raw travertines, and exotic sandalwood extraits.",
-    siteName: "Maison l'Étoile",
+    siteName: "Arooj Arts",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Maison l'Étoile — Showroom & Curations",
+    title: "Arooj Arts — Showroom & Curations",
     description: "Curators of fine Italian silk trench coats, surgical steel timepieces, raw travertines, and exotic sandalwood extraits.",
   },
   icons: {

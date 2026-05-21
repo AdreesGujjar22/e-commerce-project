@@ -47,7 +47,7 @@ export function extractPublicIdFromUrl(url: string): string | null {
 /**
  * Uploads an image either as a base64 string or image buffer, returning the secure URL.
  */
-export async function uploadToCloudinary(base64String: string, folderName = "maison_letoile"): Promise<string> {
+export async function uploadToCloudinary(base64String: string, folderName = "Arooj_letoile"): Promise<string> {
   ensureCloudinaryConfigured();
   
   // Clean prefix if present

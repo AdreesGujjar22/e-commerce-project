@@ -3,7 +3,7 @@
 import React from "react";
 import { Product } from "../../types";
 import { useStore } from "../../store";
-import { MaisonImage } from "../ui/MaisonImage";
+import { ProductImage } from "../ui/ProductImage";
 
 interface ShowcaseSectionProps {
   categories: {
@@ -127,7 +127,7 @@ export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({
               >
                 {/* Embedded Large Portrait Image */}
                 <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
-                  <MaisonImage
+                  <ProductImage
                     src={card.image}
                     alt={card.categoryName}
                     className="w-full h-full object-cover object-center transform scale-100 group-hover:scale-103 transition-transform duration-1000 ease-out"

@@ -22,7 +22,7 @@ async function verifyAdmin() {
   }
 }
 
-export async function uploadImageAction(base64String: string, folder = "maison_letoile") {
+export async function uploadImageAction(base64String: string, folder = "Arooj_letoile") {
   try {
     await verifyAdmin();
     const secureUrl = await uploadToCloudinary(base64String, folder);

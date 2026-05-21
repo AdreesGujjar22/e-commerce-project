@@ -8,7 +8,7 @@ export const revalidate = 0; // Fresh load
 
 // Define SEO metadata for Contact Page
 export const metadata: Metadata = {
-  title: "Contact Our Lead Curators | Maison l'Étoile",
+  title: "Contact Our Lead Curators | Arooj Arts",
   description: "Connect with our design, tailoring, and COD courier assistance desk. M.M. Alam Road Showroom, Lahore, Pakistan.",
   alternates: {
     canonical: "https://ais-dev-cgwlfgq4uevdr35b2ix4qe-922378778819.asia-southeast1.run.app/contact",
@@ -18,9 +18,9 @@ export const metadata: Metadata = {
 export default async function ContactPage() {
   const { settings } = await getSettingsAction();
   
-  const email = settings?.contact_email || "support@maisonletoile.com";
+  const email = settings?.contact_email || "support@Aroojletoile.com";
   const phone = settings?.contact_phone || "+92 300 1234567";
-  const address = settings?.contact_address || "Maison Outlet Building, M.M. Alam Road, Gulberg III, Lahore, Pakistan";
+  const address = settings?.contact_address || "Arooj Outlet Building, M.M. Alam Road, Gulberg III, Lahore, Pakistan";
   const whatsapp = settings?.whatsapp_number || "+923001234567";
 
   const waFormatted = whatsapp.startsWith("http") ? whatsapp : `https://wa.me/${whatsapp.replace(/[^0-9]/g, "")}`;
@@ -33,7 +33,7 @@ export default async function ContactPage() {
         <div className="mb-14 max-w-2xl border-b border-gold-150 pb-8">
           <div className="inline-flex items-center space-x-1.5 bg-neutral-900 text-gold-300 text-[8px] font-display font-medium uppercase tracking-[0.25em] px-3.5 py-1.5 rounded mb-4">
             <Sparkles className="h-3 w-3 text-gold-400" />
-            <span>Maison Communication Deck</span>
+            <span>Arooj Communication Deck</span>
           </div>
           <h1 className="font-display text-3xl sm:text-5xl font-black text-neutral-950 uppercase tracking-tight mb-4">
             Assistance Desk <span className="font-serif italic text-gold-600 font-light">& Support</span>
@@ -154,7 +154,7 @@ export default async function ContactPage() {
                 
                 <div className="flex items-center gap-2.5">
                   <a 
-                    href="https://facebook.com/maisonletoile" 
+                    href="https://facebook.com/Aroojletoile" 
                     target="_blank" 
                     rel="noreferrer"
                     className="flex items-center gap-2 text-[10.5px] text-neutral-300 font-display uppercase tracking-widest hover:text-gold-400 transition-colors bg-neutral-800/80 px-4 py-2.5 rounded-lg border border-neutral-800 hover:border-gold-950/20"
@@ -164,7 +164,7 @@ export default async function ContactPage() {
                   </a>
 
                   <a 
-                    href="https://instagram.com/maisonletoile" 
+                    href="https://instagram.com/Aroojletoile" 
                     target="_blank" 
                     rel="noreferrer"
                     className="flex items-center gap-2 text-[10.5px] text-neutral-300 font-display uppercase tracking-widest hover:text-gold-400 transition-colors bg-neutral-800/80 px-4 py-2.5 rounded-lg border border-neutral-800 hover:border-gold-950/20"
@@ -174,7 +174,7 @@ export default async function ContactPage() {
                   </a>
 
                   <a 
-                    href="https://pinterest.com/maisonletoile" 
+                    href="https://pinterest.com/Aroojletoile" 
                     target="_blank" 
                     rel="noreferrer"
                     className="flex items-center gap-2 text-[10.5px] text-neutral-300 font-display uppercase tracking-widest hover:text-gold-400 transition-colors bg-neutral-800/80 px-4 py-2.5 rounded-lg border border-neutral-800 hover:border-gold-950/20"

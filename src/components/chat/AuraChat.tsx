@@ -12,7 +12,7 @@ export const AuraChat: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: "assistant",
-      content: "Welcome to Maison L'Étoile, patron. I am Aura, your private AI Styling Concierge. I am expert in our silk garments, bespoke timepieces, luxury fragrances, and custom home stones. How may I tailormake your design experience today?",
+      content: "Welcome to Arooj Arts, patron. I am Aura, your private AI Styling Concierge. I am expert in our silk garments, bespoke timepieces, luxury fragrances, and custom home stones. How may I tailormake your design experience today?",
     },
   ]);
   const [inputVal, setInputVal] = useState("");

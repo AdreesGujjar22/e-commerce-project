@@ -121,7 +121,7 @@ export async function loginAction(formData: any) {
         if (!profile) {
           await supabase.from("profiles").insert({
             id: data.user.id,
-            full_name: validated.fullName || "Maison Patron",
+            full_name: validated.fullName || "Arooj Patron",
             role: "customer"
           });
         }
@@ -140,7 +140,7 @@ export async function loginAction(formData: any) {
       user: {
         id: data.user.id,
         email: data.user.email,
-        fullName: profile?.full_name || "Maison Patron",
+        fullName: profile?.full_name || "Arooj Patron",
         role: profile?.role || "customer",
       },
       session: data.session,
@@ -230,7 +230,7 @@ export async function getSessionUserAction() {
       user: {
         id: user.id,
         email: user.email,
-        fullName: profile?.full_name || user.user_metadata?.full_name || "Maison Patron",
+        fullName: profile?.full_name || user.user_metadata?.full_name || "Arooj Patron",
         role: profile?.role || "customer",
       },
     };

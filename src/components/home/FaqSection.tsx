@@ -50,10 +50,10 @@ export const FaqSection: React.FC = () => {
       answer: (
         <div className="space-y-2">
           <p className="font-sans text-xs sm:text-sm text-neutral-600 leading-relaxed">
-            Maison operations are entirely centered around **Cash on Delivery (COD)**. No advance payment or escrow cards are required during checkout. Simply remit the cash sum directly to our courier agent upon door-station handoff.
+            Arooj operations are entirely centered around **Cash on Delivery (COD)**. No advance payment or escrow cards are required during checkout. Simply remit the cash sum directly to our courier agent upon door-station handoff.
           </p>
           <p className="font-sans text-xs text-neutral-500">
-            For premium timepiece details, view our <Link href="/products/550e8400-e29b-41d4-a716-446655440007" className="text-gold-650 font-bold hover:underline">Maison Chronosphere Wristwatch</Link>.
+            For premium timepiece details, view our <Link href="/products/550e8400-e29b-41d4-a716-446655440007" className="text-gold-650 font-bold hover:underline">Arooj Chronosphere Wristwatch</Link>.
           </p>
         </div>
       ),

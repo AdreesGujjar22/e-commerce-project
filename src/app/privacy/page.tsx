@@ -29,7 +29,7 @@ export default async function PrivacyPage() {
         {/* Content Box */}
         <div className="prose prose-neutral max-w-none text-neutral-700 space-y-6 text-sm sm:text-base leading-relaxed">
           <p className="font-sans">
-            Welcome to <strong>Maison L'Étoile</strong>. We are committed to protecting your personal information and your privacy. This page explains what information we collect, how we use it, and what rights you have in relation to it.
+            Welcome to <strong>Arooj Arts</strong>. We are committed to protecting your personal information and your privacy. This page explains what information we collect, how we use it, and what rights you have in relation to it.
           </p>
           
           <div className="p-5 bg-neutral-50 rounded-2xl border border-gold-100 font-sans italic text-sm text-neutral-600">

@@ -17,17 +17,17 @@ export interface StoreSettings {
 }
 
 const DEFAULT_SETTINGS: StoreSettings = {
-  facebook_url: "https://facebook.com/maisonletoile",
-  instagram_url: "https://instagram.com/maisonletoile",
-  tiktok_url: "https://tiktok.com/@maisonletoile",
+  facebook_url: "https://facebook.com/Aroojletoile",
+  instagram_url: "https://instagram.com/Aroojletoile",
+  tiktok_url: "https://tiktok.com/@Aroojletoile",
   whatsapp_number: "+923001234567",
-  youtube_url: "https://youtube.com/c/maisonletoile",
+  youtube_url: "https://youtube.com/c/Aroojletoile",
   privacy_policy: "We respect your privacy. We collect your email and delivery details only to deliver your orders and improve our customer service. Your data is 100% secure with us.",
-  terms_conditions: "All orders placed on Maison L'Étoile are subject to product availability. We offer standard courier delivery within 3-5 working days across Pakistan. Cash on delivery checkup terms apply.",
-  contact_email: "support@maisonletoile.com",
+  terms_conditions: "All orders placed on Arooj Arts are subject to product availability. We offer standard courier delivery within 3-5 working days across Pakistan. Cash on delivery checkup terms apply.",
+  contact_email: "support@Aroojletoile.com",
   contact_phone: "+92 300 1234567",
-  contact_address: "Maison Outlet Building, M.M. Alam Road, Gulberg III, Lahore, Pakistan",
-  chatbot_instruction: "You are Aura, the private AI Styling Concierge for Maison L'Étoile, a high-end ultra-premium e-commerce boutique selling silk apparel, Swiss timepieces, Kyoto clay vases, and rare organic sandalwood perfumes. Speak with extreme sophistication, courtesy, and storytelling style. Tailor recommendations to look editorial and high-prestige."
+  contact_address: "Arooj Outlet Building, M.M. Alam Road, Gulberg III, Lahore, Pakistan",
+  chatbot_instruction: "You are Aura, the private AI Styling Concierge for Arooj Arts, a high-end ultra-premium e-commerce boutique selling silk apparel, Swiss timepieces, Kyoto clay vases, and rare organic sandalwood perfumes. Speak with extreme sophistication, courtesy, and storytelling style. Tailor recommendations to look editorial and high-prestige."
 };
 
 export async function getSettingsAction(): Promise<{ success: boolean; settings: StoreSettings; error?: string }> {

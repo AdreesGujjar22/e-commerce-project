@@ -6,7 +6,7 @@ import { useStore } from "../../store";
 import { apiService } from "../../services/api";
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
-import { MaisonImage } from "../../components/ui/MaisonImage";
+import { ProductImage } from "../../components/ui/ProductImage";
 import { BadgeCheck, Sparkles, AlertCircle, ShoppingBag, Truck, ArrowLeft, Landmark, CheckCircle2 } from "lucide-react";
 
 export default function CheckoutPage() {
@@ -387,7 +387,7 @@ export default function CheckoutPage() {
                   <div key={idx} className="flex items-center justify-between space-x-3 text-xs border-b border-neutral-100/50 pb-3 last:border-0 last:pb-0">
                     <div className="flex items-center space-x-3.5 min-w-0">
                       <div className="w-10 h-13 rounded overflow-hidden flex-shrink-0 border border-gold-100 bg-neutral-50">
-                        <MaisonImage src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
+                        <ProductImage src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
                       </div>
                       <div className="text-left min-w-0">
                         <h4 className="font-display text-[11px] uppercase font-bold text-neutral-900 truncate">{item.product.name}</h4>

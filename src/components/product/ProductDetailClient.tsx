@@ -5,7 +5,7 @@ import { Product } from "../../types";
 import { useStore } from "../../store";
 import { Star, ShieldAlert, Award, MessageSquarePlus, ChevronDown, ChevronUp } from "lucide-react";
 import { createReviewAction } from "../../actions/product.actions";
-import { MaisonImage } from "../ui/MaisonImage";
+import { ProductImage } from "../ui/ProductImage";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -126,7 +126,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
                       : "border-stone-200 hover:border-stone-400"
                   }`}
                 >
-                  <MaisonImage src={url} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover" />
+                  <ProductImage src={url} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover" />
                 </button>
               ))}
             </div>
@@ -134,7 +134,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
 
           {/* Large portrait focused image */}
           <div className="flex-1 relative aspect-[2/3] overflow-hidden bg-[#fbfbfb]">
-            <MaisonImage
+            <ProductImage
               src={activeImage}
               alt={product.name}
               className="w-full h-full object-cover object-center transition-all duration-700 ease-out"

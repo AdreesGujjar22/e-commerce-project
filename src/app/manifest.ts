@@ -2,8 +2,8 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Maison l'Étoile Showroom",
-    short_name: "Maison l'Étoile",
+    name: "Arooj Arts Showroom",
+    short_name: "Arooj Arts",
     description: "Prestige catalog showrooms and exclusive tactile curations. Spun Mulberry Silks, Geologic Accents, Fine Chronosphere Timekeepers, & Sandalwood Extraits.",
     start_url: "/",
     display: "standalone",
