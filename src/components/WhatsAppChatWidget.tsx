@@ -44,8 +44,8 @@ export default function WhatsAppChatWidget() {
                                 <Image
                                     src="/whatsapp-icon.png"
                                     alt="WhatsApp"
-                                    width={50}
-                                    height={50}
+                                    width={35}
+                                    height={35}
                                     className="object-contain"
                                     priority
                                 />
