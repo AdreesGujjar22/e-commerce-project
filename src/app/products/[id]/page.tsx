@@ -6,7 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { DynamicJsonLd } from "../../../components/seo/DynamicJsonLd";
 import { ProductDetailClient } from "../../../components/product/ProductDetailClient";
 
-export const revalidate = 60; // Cache product pages for 60 seconds
+export const dynamic = 'force-dynamic'; // Force dynamic rendering on Vercel
 
 interface PageProps {
   params: Promise<{ id: string }> | { id: string };
@@ -59,15 +59,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       images: [product.image],
     },
   };
-}
-
-// 2. Generate Static Params for build optimization & fast load times
-export async function generateStaticParams() {
-  const res = await getProductsAction();
-  const products = res.products || [];
-  return products.map((product) => ({
-    id: product.id,
-  }));
 }
 
 export default async function ProductDetailPage({ params }: PageProps) {
