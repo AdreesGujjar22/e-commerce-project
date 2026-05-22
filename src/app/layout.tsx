@@ -5,6 +5,7 @@ import { Footer } from "../components/layout/Footer";
 import { CartDrawer } from "../components/cart/CartDrawer";
 import { AuraChat } from "../components/chat/AuraChat";
 import { ProductDetailModal } from "../components/product/ProductDetailModal";
+import WhatsAppChatWidget from "../components/WhatsAppChatWidget";
 
 import { Metadata } from "next";
 
@@ -46,7 +47,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <body className="bg-[#faf9f6] text-neutral-900 font-sans min-h-screen flex flex-col antialiased selection:bg-gold-500/20 selection:text-neutral-900">
-        
+        <WhatsAppChatWidget />
         {/* Dynamic Navigations bar */}
         <Navbar />
 

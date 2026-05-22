@@ -681,7 +681,8 @@ export default function AdminPage() {
               onClick={loadData}
               className="inline-flex items-center text-[10px] uppercase font-display font-black tracking-widest text-[#151515] border border-gold-250 bg-white/55 px-4.5 py-2.5 rounded-lg hover:bg-gold-50/20 active:scale-95 transition-all text-left cursor-pointer shadow-sm"
             >
-              🔄 Reload Server
+                  <RefreshCw className="w-3.5 h-3.5 text-neutral-600 mr-2" />
+ Reload Server
             </button>
           </div>
 
