@@ -1,5 +1,12 @@
 "use client";
-
+import {
+  Package,
+  Grid3X3,
+  MessageSquareText,
+  LineChart,
+  Settings,
+  RefreshCw
+} from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { apiService } from "../../services/api";
 import { Product, Order } from "../../types";
@@ -96,7 +103,7 @@ export default function AdminPage() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isSubmittingProduct, setIsSubmittingProduct] = useState(false);
-  
+
   const [newName, setNewName] = useState("");
   const [newDesigner, setNewDesigner] = useState("");
   const [newCategory, setNewCategory] = useState("");
@@ -113,7 +120,7 @@ export default function AdminPage() {
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<any | null>(null);
   const [isSavingCategory, setIsSavingCategory] = useState(false);
-  
+
   const [catName, setCatName] = useState("");
   const [catBanner, setCatBanner] = useState<string[]>([]);
   const [catSeoTitle, setCatSeoTitle] = useState("");
@@ -226,7 +233,7 @@ export default function AdminPage() {
       const updated = await apiService.updateOrderStatus(id, nextStatus);
       setOrders((prev) => prev.map((o) => (o.id === id ? { ...o, status: updated.status } : o)));
       triggerNotification(`Courier dispatch order status elevated to ${nextStatus}.`);
-      
+
       setAnalytics((prev: any) => {
         let pendingAdjustment = 0;
         if (currentStatus === "Pending") pendingAdjustment = -1;
@@ -481,7 +488,7 @@ export default function AdminPage() {
     setIsSavingCategory(true);
     try {
       const bannerUrlStr = catBanner.length > 0 ? catBanner[0] : "";
-      
+
       if (editingCategory) {
         const res = await updateCategoryAction(
           editingCategory.id,
@@ -583,14 +590,14 @@ export default function AdminPage() {
 
   return (
     <div className="max-w-7xl min-w-full lg:mx-auto px-4 md:px-8 py-12 text-left bg-[#faf9f6]/40 min-h-screen">
-      
+
       {/* 2-Column Responsive Sidebar Layout wrapper */}
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start w-full">
-        
+
         {/* LEFT COMPONENT: STICKY NAVIGATION SIDEBAR */}
         <aside className="w-full lg:w-72 flex-shrink-0 lg:sticky lg:top-8 z-30">
           <div className="bg-white/85 backdrop-blur-sm border border-gold-200 p-6 rounded-2xl flex flex-col lg:min-h-[calc(100vh-140px)]">
-            
+
             {/* Seller Deck Brand/Title Section */}
             <div className="border-b border-gold-250 pb-5 mb-5 hidden lg:block">
               <h1 className="font-display text-lg uppercase tracking-wider font-black text-neutral-950">
@@ -605,30 +612,41 @@ export default function AdminPage() {
             </div>
 
             {/* Sidebar Navigation - Horizontal wrap/scroll on mobile, vertical stack on desktop */}
+
+
             <div className="flex flex-row overflow-x-auto lg:overflow-x-visible lg:flex-col gap-2.5 pb-3 lg:pb-0 scrollbar-none snap-x select-none w-full">
               {[
-                { id: "orders", label: "📋 Orders Queue" },
-                { id: "products", label: "🛍️ Curated Products" },
-                { id: "categories", label: "🗂️ Category Suite" },
-                { id: "customers", label: "👥 Customer Base" },
-                { id: "reviews", label: "💬 Patron Reviews" },
-                { id: "coupons", label: "🎟️ Discount Vouchers" },
-                { id: "analytics", label: "📈 Ledger Analytics" },
-                { id: "settings", label: "⚙️ Store Settings" },
-                { id: "hero", label: "✨ Hero Slides" },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id as any)}
-                  className={`px-4.5 py-3 rounded-full lg:rounded-xl text-[11px] font-display font-extrabold uppercase tracking-widest transition-all cursor-pointer whitespace-nowrap lg:whitespace-normal text-left select-none flex-shrink-0 lg:flex-shrink ${
-                    activeTab === tab.id
-                      ? "bg-neutral-950 text-gold-300 shadow-md font-black scale-102 lg:scale-100"
-                      : "border border-gold-150 bg-white hover:bg-neutral-50 hover:border-gold-300 text-neutral-800"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
+                { id: "orders", label: "Orders", icon: ClipboardList },
+                { id: "products", label: "Products", icon: Package },
+                { id: "categories", label: "Categories", icon: Grid3X3 },
+                { id: "customers", label: "Customers", icon: Users },
+                { id: "reviews", label: "Reviews", icon: MessageSquareText },
+                { id: "coupons", label: "Coupons", icon: Ticket },
+                { id: "analytics", label: "Analytics", icon: LineChart },
+                { id: "settings", label: "Settings", icon: Settings },
+                { id: "hero", label: "Hero Slides", icon: Sparkles },
+              ].map((tab) => {
+                const Icon = tab.icon;
+
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id as any)}
+                    className={`px-4.5 py-3 rounded-full lg:rounded-xl text-[11px] font-display font-extrabold uppercase tracking-widest transition-all cursor-pointer whitespace-nowrap lg:whitespace-normal text-left select-none flex-shrink-0 lg:flex-shrink ${activeTab === tab.id
+                        ? "bg-neutral-950 text-gold-300 shadow-md font-black scale-102 lg:scale-100"
+                        : "border border-gold-150 bg-white hover:bg-neutral-50 hover:border-gold-300 text-neutral-800"
+                      }`}
+                  >
+                    <span className="flex items-center gap-2">
+                      <Icon className={`w-4 h-4 ${activeTab === tab.id
+                        ? "text-gold-300"
+                        : "text-neutral-600"
+                      }`} />
+                      {tab.label}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
 
             {/* Sidebar reload server/connection status */}
@@ -637,7 +655,8 @@ export default function AdminPage() {
                 onClick={loadData}
                 className="w-full inline-flex items-center justify-center text-[10px] uppercase font-display font-black tracking-widest text-[#151515] border border-gold-250 bg-white/60 py-2.5 rounded-lg hover:bg-gold-50/20 active:scale-95 transition-all text-center cursor-pointer shadow-xs"
               >
-                🔄 Reload Database
+                    <RefreshCw className="w-3.5 h-3.5 mr-2 text-neutral-600" />
+                     Reload Database
               </button>
             </div>
 
@@ -646,7 +665,7 @@ export default function AdminPage() {
 
         {/* RIGHT COMPONENT: ACTIVE PANEL CONTENT AREA */}
         <main className="flex-1 w-full">
-          
+
           {/* Header block visible ONLY in mobile Viewports */}
           <div className="lg:hidden border-b border-gold-200 pb-5 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 text-left">
             <div>
@@ -657,7 +676,7 @@ export default function AdminPage() {
                 Pakistani Retail Console
               </p>
             </div>
-            
+
             <button
               onClick={loadData}
               className="inline-flex items-center text-[10px] uppercase font-display font-black tracking-widest text-[#151515] border border-gold-250 bg-white/55 px-4.5 py-2.5 rounded-lg hover:bg-gold-50/20 active:scale-95 transition-all text-left cursor-pointer shadow-sm"
@@ -675,749 +694,746 @@ export default function AdminPage() {
                 </p>
               </div>
             ) : activeTab === "orders" ? (
-        
-        /* Orders queue visual dashboard */
-        <div className="space-y-6">
-          <h3 className="font-display text-sm uppercase tracking-wider text-[#151515] font-black">
-            CUSTOMER DISPATCH QUEUE ({orders.length})
-          </h3>
 
-          {orders.length === 0 ? (
-            <div className="p-16 border border-gold-150 rounded-2xl bg-white text-center">
-              <p className="font-sans text-xs italic text-[#777]">No client checkout converted yet.</p>
-            </div>
-          ) : (
-            <div className="overflow-x-auto border border-gold-150 rounded-2xl bg-white shadow-sm scrollbar-thin">
-              <table className="w-full text-left border-collapse min-w-[950px]">
-                <thead>
-                  <tr className="bg-[#faf9f6]/95 border-b border-gold-150">
-                    <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">CHECKOUT ID</th>
-                    <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">PATRON PROFILE</th>
-                    <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">CURATED ELEMENTS</th>
-                    <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">TOTAL INVOICED</th>
-                    <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">COURIER DISPATCH</th>
-                    <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">CONTROLS</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gold-100">
-                  {orders.map((o) => (
-                    <tr key={o.id} className="hover:bg-neutral-50/40 transition-colors">
-                      <td className="p-5 font-mono text-xs text-neutral-400">
-                        {o.id.slice(0, 8)}...
-                      </td>
-                      <td className="p-5 text-left">
-                        <span className="block font-display text-xs uppercase font-extrabold text-neutral-950">{o.customerName}</span>
-                        <span className="block text-[11px] font-mono text-[#888] mt-0.5">{o.customerEmail}</span>
-                        <span className="block text-[10px] font-sans text-neutral-600 italic mt-1 max-w-[200px] truncate" title={o.shippingAddress}>📍 {o.shippingAddress}</span>
-                      </td>
-                      <td className="p-5">
-                        <div className="space-y-2 max-h-24 overflow-y-auto pr-2 scrollbar-thin">
-                          {o.items.map((item, idx) => (
-                            <div key={idx} className="flex items-center space-x-2.5 text-xs text-neutral-600">
-                              <img src={item.image} className="w-6.5 h-8.5 rounded border border-gold-100 object-cover flex-shrink-0" />
-                              <span className="truncate max-w-[125px] font-medium">{item.name}</span>
-                              <span className="font-bold text-neutral-900">x{item.quantity}</span>
+              /* Orders queue visual dashboard */
+              <div className="space-y-6">
+                <h3 className="font-display text-sm uppercase tracking-wider text-[#151515] font-black">
+                  CUSTOMER DISPATCH QUEUE ({orders.length})
+                </h3>
+
+                {orders.length === 0 ? (
+                  <div className="p-16 border border-gold-150 rounded-2xl bg-white text-center">
+                    <p className="font-sans text-xs italic text-[#777]">No client checkout converted yet.</p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto border border-gold-150 rounded-2xl bg-white shadow-sm scrollbar-thin">
+                    <table className="w-full text-left border-collapse min-w-[950px]">
+                      <thead>
+                        <tr className="bg-[#faf9f6]/95 border-b border-gold-150">
+                          <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">CHECKOUT ID</th>
+                          <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">PATRON PROFILE</th>
+                          <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">CURATED ELEMENTS</th>
+                          <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">TOTAL INVOICED</th>
+                          <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">COURIER DISPATCH</th>
+                          <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">CONTROLS</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gold-100">
+                        {orders.map((o) => (
+                          <tr key={o.id} className="hover:bg-neutral-50/40 transition-colors">
+                            <td className="p-5 font-mono text-xs text-neutral-400">
+                              {o.id.slice(0, 8)}...
+                            </td>
+                            <td className="p-5 text-left">
+                              <span className="block font-display text-xs uppercase font-extrabold text-neutral-950">{o.customerName}</span>
+                              <span className="block text-[11px] font-mono text-[#888] mt-0.5">{o.customerEmail}</span>
+                              <span className="block text-[10px] font-sans text-neutral-600 italic mt-1 max-w-[200px] truncate" title={o.shippingAddress}>📍 {o.shippingAddress}</span>
+                            </td>
+                            <td className="p-5">
+                              <div className="space-y-2 max-h-24 overflow-y-auto pr-2 scrollbar-thin">
+                                {o.items.map((item, idx) => (
+                                  <div key={idx} className="flex items-center space-x-2.5 text-xs text-neutral-600">
+                                    <img src={item.image} className="w-6.5 h-8.5 rounded border border-gold-100 object-cover flex-shrink-0" />
+                                    <span className="truncate max-w-[125px] font-medium">{item.name}</span>
+                                    <span className="font-bold text-neutral-900">x{item.quantity}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </td>
+                            <td className="p-5 font-serif italic font-bold text-neutral-900 text-sm">
+                              ${o.totalAmount.toLocaleString()}
+                            </td>
+                            <td className="p-5">
+                              <span className={`inline-flex items-center text-[10px] tracking-wider font-display font-extrabold uppercase px-2.5 py-1 rounded shadow-xs border ${o.status === "Delivered" ? "bg-teal-50 text-teal-850 border-teal-200" :
+                                  o.status === "Shipped" ? "bg-blue-50 text-blue-800 border-blue-200" :
+                                    o.status === "Processing" ? "bg-purple-50 text-purple-850 border-purple-200" :
+                                      "bg-gold-50 text-gold-950 border-gold-200"
+                                }`}>
+                                {o.status}
+                              </span>
+                            </td>
+                            <td className="p-5">
+                              <button
+                                onClick={() => handleUpdateOrderStatus(o.id, o.status)}
+                                className="inline-flex items-center font-display text-xs uppercase tracking-wider font-extrabold text-neutral-900 border-b border-neutral-950 pb-0.5 hover:text-gold-650 hover:border-gold-550 transition-colors focus:outline-none cursor-pointer"
+                              >
+                                advance status →
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            ) : activeTab === "products" ? (
+
+              /* Dynamic Catalog curation management */
+              <div className="space-y-6">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-left gap-4">
+                  <h3 className="font-display text-sm uppercase tracking-wider text-[#151515] font-black">
+                    CURATED ARTISAN CATALOG ({products.length})
+                  </h3>
+                  <button
+                    onClick={offerCreateProduct}
+                    className="inline-flex items-center bg-neutral-950 hover:bg-neutral-850 text-gold-300 font-display text-xs uppercase font-bold tracking-widest px-5.5 py-3 rounded-full shadow-md transition-all focus:outline-none cursor-pointer active:scale-95"
+                  >
+                    <Plus className="h-4 w-4 mr-1.5 text-gold-400" />
+                    <span>curate new product</span>
+                  </button>
+                </div>
+
+                <div className="overflow-x-auto border border-gold-150 rounded-2xl bg-white shadow-sm scrollbar-thin">
+                  <table className="w-full text-left border-collapse min-w-[850px]">
+                    <thead>
+                      <tr className="bg-[#faf9f6]/95 border-b border-gold-150">
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">IMAGE & DESIGNER</th>
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">PRODUCT TITLES</th>
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">CATEGORY</th>
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">PRICE</th>
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">STOCK LEVEL</th>
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">ACTIONS</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gold-100">
+                      {products.map((p) => (
+                        <tr key={p.id} className="hover:bg-neutral-50/40 transition-colors">
+                          <td className="p-5 flex items-center space-x-4">
+                            <img src={p.image} className="w-11 h-14 object-cover border border-gold-100 rounded-lg flex-shrink-0" />
+                            <div className="text-left font-sans">
+                              <span className="block font-display text-[9px] uppercase tracking-widest text-gold-600 font-bold">{p.designer}</span>
+                              <span className="block text-[10px] font-mono text-neutral-400 mt-0.5">ID: {p.id.slice(0, 8)}...</span>
                             </div>
-                          ))}
-                        </div>
-                      </td>
-                      <td className="p-5 font-serif italic font-bold text-neutral-900 text-sm">
-                        ${o.totalAmount.toLocaleString()}
-                      </td>
-                      <td className="p-5">
-                        <span className={`inline-flex items-center text-[10px] tracking-wider font-display font-extrabold uppercase px-2.5 py-1 rounded shadow-xs border ${
-                          o.status === "Delivered" ? "bg-teal-50 text-teal-850 border-teal-200" :
-                          o.status === "Shipped" ? "bg-blue-50 text-blue-800 border-blue-200" :
-                          o.status === "Processing" ? "bg-purple-50 text-purple-850 border-purple-200" :
-                          "bg-gold-50 text-gold-950 border-gold-200"
-                        }`}>
-                          {o.status}
-                        </span>
-                      </td>
-                      <td className="p-5">
-                        <button
-                          onClick={() => handleUpdateOrderStatus(o.id, o.status)}
-                          className="inline-flex items-center font-display text-xs uppercase tracking-wider font-extrabold text-neutral-900 border-b border-neutral-950 pb-0.5 hover:text-gold-650 hover:border-gold-550 transition-colors focus:outline-none cursor-pointer"
-                        >
-                          advance status →
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      ) : activeTab === "products" ? (
-        
-        /* Dynamic Catalog curation management */
-        <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-left gap-4">
-            <h3 className="font-display text-sm uppercase tracking-wider text-[#151515] font-black">
-              CURATED ARTISAN CATALOG ({products.length})
-            </h3>
-            <button
-              onClick={offerCreateProduct}
-              className="inline-flex items-center bg-neutral-950 hover:bg-neutral-850 text-gold-300 font-display text-xs uppercase font-bold tracking-widest px-5.5 py-3 rounded-full shadow-md transition-all focus:outline-none cursor-pointer active:scale-95"
-            >
-              <Plus className="h-4 w-4 mr-1.5 text-gold-400" />
-              <span>curate new product</span>
-            </button>
-          </div>
-
-          <div className="overflow-x-auto border border-gold-150 rounded-2xl bg-white shadow-sm scrollbar-thin">
-            <table className="w-full text-left border-collapse min-w-[850px]">
-              <thead>
-                <tr className="bg-[#faf9f6]/95 border-b border-gold-150">
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">IMAGE & DESIGNER</th>
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">PRODUCT TITLES</th>
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">CATEGORY</th>
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">PRICE</th>
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">STOCK LEVEL</th>
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">ACTIONS</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gold-100">
-                {products.map((p) => (
-                  <tr key={p.id} className="hover:bg-neutral-50/40 transition-colors">
-                    <td className="p-5 flex items-center space-x-4">
-                      <img src={p.image} className="w-11 h-14 object-cover border border-gold-100 rounded-lg flex-shrink-0" />
-                      <div className="text-left font-sans">
-                        <span className="block font-display text-[9px] uppercase tracking-widest text-gold-600 font-bold">{p.designer}</span>
-                        <span className="block text-[10px] font-mono text-neutral-400 mt-0.5">ID: {p.id.slice(0, 8)}...</span>
-                      </div>
-                    </td>
-                    <td className="p-5 text-left font-display text-xs uppercase font-extrabold text-neutral-950 max-w-[200px] truncate" title={p.name}>
-                      {p.name}
-                    </td>
-                    <td className="p-5 uppercase">
-                      <Badge variant="gold">{p.category}</Badge>
-                    </td>
-                    <td className="p-5 font-serif italic font-bold text-neutral-900 text-sm">
-                      ${p.price.toLocaleString()}
-                    </td>
-                    <td className="p-5">
-                      <span className={`font-mono text-xs font-bold ${p.stock <= 3 ? "text-red-650" : "text-neutral-700"}`}>
-                        {p.stock} units
-                      </span>
-                    </td>
-                    <td className="p-5 flex space-x-2.5 items-center mt-3">
-                      <button
-                        onClick={() => handleEditProduct(p)}
-                        className="text-neutral-500 hover:text-gold-750 transition-colors p-2 hover:bg-gold-50/30 rounded-full cursor-pointer focus:outline-none"
-                        title="Edit curated SKU"
-                      >
-                        <Edit className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => askDeleteProduct(p.id, p.name)}
-                        className="text-neutral-400 hover:text-red-650 transition-colors p-2 hover:bg-red-50 rounded-full cursor-pointer focus:outline-none"
-                        title="Delete product"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ) : activeTab === "categories" ? (
-        
-        /* 4.2.1 Dynamic Categories section */
-        <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-left gap-4">
-            <h3 className="font-display text-sm uppercase tracking-wider text-[#151515] font-black">
-              DYNAMIC CATEGORIES DIRECTORY ({categories.length})
-            </h3>
-            <button
-              onClick={offerCreateCategory}
-              className="inline-flex items-center bg-neutral-950 hover:bg-neutral-850 text-gold-300 font-display text-xs uppercase font-bold tracking-widest px-5.5 py-3 rounded-full shadow-md transition-all focus:outline-none cursor-pointer active:scale-95"
-            >
-              <Plus className="h-4 w-4 mr-1.5 text-gold-400" />
-              <span>curate category</span>
-            </button>
-          </div>
-
-          <div className="overflow-x-auto border border-gold-150 rounded-2xl bg-white shadow-sm scrollbar-thin">
-            <table className="w-full text-left border-collapse min-w-[850px]">
-              <thead>
-                <tr className="bg-[#faf9f6]/95 border-b border-gold-150">
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">IMAGE BANNER</th>
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">CATEGORY ID / SLUG</th>
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">CATEGORY TITLE NAME</th>
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">SEO TITLE META</th>
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">SEO DESCRIPTION</th>
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">ACTIONS</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gold-100">
-                {categories.map((c) => (
-                  <tr key={c.id} className="hover:bg-neutral-50/40 transition-colors">
-                    <td className="p-5">
-                      {c.bannerUrl ? (
-                        <img src={c.bannerUrl} className="w-16 h-10 object-cover border border-gold-100 rounded-lg flex-shrink-0" />
-                      ) : (
-                        <div className="w-16 h-10 bg-neutral-100 rounded-lg flex items-center justify-center text-[10px] text-neutral-400 font-medium">None</div>
-                      )}
-                    </td>
-                    <td className="p-5 font-mono text-xs text-neutral-700 font-bold">
-                      {c.id}
-                    </td>
-                    <td className="p-5 text-left font-display text-xs uppercase font-extrabold text-[#151515]">
-                      {c.name}
-                    </td>
-                    <td className="p-5 font-sans text-xs text-neutral-600 font-semibold italic">
-                      {c.seoTitle || <span className="text-neutral-300 font-normal">None configured</span>}
-                    </td>
-                    <td className="p-5 font-sans text-xs text-neutral-400 max-w-xs truncate" title={c.seoDescription}>
-                      {c.seoDescription || "None"}
-                    </td>
-                    <td className="p-5 flex space-x-2.5 items-center mt-1">
-                      <button
-                        onClick={() => handleEditCategory(c)}
-                        className="text-neutral-500 hover:text-gold-750 transition-colors p-2 hover:bg-gold-50/30 rounded-full cursor-pointer focus:outline-none"
-                        title="Edit curated category"
-                      >
-                        <Edit className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => askDeleteCategory(c.id, c.name)}
-                        className="text-neutral-400 hover:text-red-650 transition-colors p-2 hover:bg-red-50 rounded-full cursor-pointer focus:outline-none"
-                        title="Delete category"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ) : activeTab === "customers" ? (
-        
-        /* Account registration base directory */
-        <div className="space-y-6">
-          <h3 className="font-display text-sm uppercase tracking-wider text-[#151515] font-black">
-            REGISTERED ATELIER USERS BASE ({customers.length})
-          </h3>
-
-          <div className="overflow-x-auto border border-gold-150 rounded-2xl bg-white shadow-sm scrollbar-thin">
-            <table className="w-full text-left border-collapse min-w-[650px]">
-              <thead>
-                <tr className="bg-[#faf9f6]/95 border-b border-gold-150">
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">USER IDENTIFIER</th>
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">CUSTOMER FULL NAME</th>
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">ACCOUNT PRIVILEGES</th>
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">REGISTRY DATE</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gold-100">
-                {customers.map((c) => (
-                  <tr key={c.id} className="hover:bg-neutral-50/40 transition-colors">
-                    <td className="p-5 font-mono text-xs text-neutral-400">{c.id}</td>
-                    <td className="p-5 font-display text-xs uppercase font-extrabold text-neutral-950">
-                      {c.full_name || "Guest Patron"}
-                    </td>
-                    <td className="p-5">
-                      <span className={`inline-flex items-center text-[10px] tracking-wider font-display font-extrabold uppercase px-2.5 py-0.5 rounded ${
-                        c.role === "admin" ? "bg-amber-100 text-amber-800" : "bg-neutral-100 text-neutral-700"
-                      }`}>
-                        {c.role || "customer"}
-                      </span>
-                    </td>
-                    <td className="p-5 font-sans text-xs text-neutral-500">
-                      {new Date(c.created_at).toLocaleString()}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ) : activeTab === "reviews" ? (
-        
-        /* Reviews moderation panel */
-        <div className="space-y-6">
-          <h3 className="font-display text-sm uppercase tracking-wider text-[#151515] font-black">
-            PATRON TESTIMONIAL MODERATION LOGS ({reviews.length})
-          </h3>
-
-          <div className="overflow-x-auto border border-gold-150 rounded-2xl bg-white shadow-sm scrollbar-thin">
-            <table className="w-full text-left border-collapse min-w-[850px]">
-              <thead>
-                <tr className="bg-[#faf9f6]/95 border-b border-gold-150">
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">PRODUCT</th>
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">AUTHOR</th>
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">STARS</th>
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">FEEDBACK TRANSCRIPT</th>
-                  <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">MODERATION ACTION</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gold-100">
-                {reviews.map((r) => (
-                  <tr key={r.id} className="hover:bg-neutral-50/40 transition-colors">
-                    <td className="p-5 font-display text-xs uppercase font-extrabold text-neutral-900 max-w-[170px] truncate">
-                      {r.products?.name || "Unknown Product"}
-                    </td>
-                    <td className="p-5">
-                      <span className="block font-display text-xs uppercase font-bold text-neutral-950">{r.author_name}</span>
-                      <span className="block text-[11px] font-sans text-neutral-400 mt-0.5">ID: {r.user_id?.slice(0, 8) || "Guest"}</span>
-                    </td>
-                    <td className="p-5 font-bold text-gold-600 text-xs">
-                      {r.rating} / 5 Stars
-                    </td>
-                    <td className="p-5 font-sans text-xs text-neutral-500 max-w-xs leading-relaxed">
-                      "{r.text}"
-                    </td>
-                    <td className="p-5">
-                      <button
-                        onClick={() => askDeleteReview(r.id, r.author_name)}
-                        className="text-red-500 hover:text-red-750 transition-colors p-1.5 rounded-full hover:bg-red-50 cursor-pointer focus:outline-none"
-                        title="Delete customer feedback"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ) : activeTab === "coupons" ? (
-        
-        /* Coupons voucher curation panel */
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 text-left">
-          
-          {/* Coupon creation form */}
-          <form onSubmit={handleCreateCoupon} className="lg:col-span-4 bg-white border border-gold-150 p-6 rounded-2xl shadow-sm text-left space-y-4">
-            <h4 className="font-display text-[11px] uppercase tracking-wider text-neutral-900 font-bold border-b border-gold-100 pb-2 mb-4">
-              CREATE DISCOUNT COUPON
-            </h4>
-            
-            <Input
-              label="Promotional Code"
-              placeholder="e.g. SAVE20"
-              required
-              value={newCouponCode}
-              onChange={(e) => setNewCouponCode(e.target.value)}
-            />
-
-            <div>
-              <label className="block text-[10px] font-display font-semibold uppercase tracking-wider text-neutral-500 mb-1.5">
-                Discount Percentage (%)
-              </label>
-              <select
-                value={newCouponDiscount}
-                onChange={(e) => setNewCouponDiscount(Number(e.target.value))}
-                className="w-full bg-white text-neutral-900 font-sans text-xs px-3.5 py-3 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-450"
-              >
-                <option value={10}>10% Off checkout</option>
-                <option value={15}>15% Off checkout</option>
-                <option value={20}>20% Off checkout</option>
-                <option value={30}>30% Off checkout</option>
-                <option value={50}>50% Off checkout</option>
-              </select>
-            </div>
-
-            <Button type="submit" size="sm" className="w-full h-11 cursor-pointer">
-              Publish Code Voucher
-            </Button>
-          </form>
-
-          {/* List existing active coupons */}
-          <div className="lg:col-span-8 space-y-4 text-left">
-            <h4 className="font-display text-[11px] uppercase tracking-wider text-[#666] font-bold mb-4">
-              ACTIVE VOUCHER CERTIFICATES ({coupons.length})
-            </h4>
-
-            <div className="border border-gold-150 rounded-2xl bg-white overflow-hidden shadow-sm scrollbar-thin overflow-x-auto">
-              <table className="w-full text-left border-collapse min-w-[500px]">
-                <thead>
-                  <tr className="bg-[#faf9f6] border-b border-gold-150">
-                    <th className="font-display text-[10px] uppercase tracking-wider text-neutral-600 p-4 font-bold">CODE</th>
-                    <th className="font-display text-[10px] uppercase tracking-wider text-neutral-600 p-4 font-bold">PERCENTAGE</th>
-                    <th className="font-display text-[10px] uppercase tracking-wider text-neutral-600 p-4 font-bold">REDEEMABLE STATE</th>
-                    <th className="font-display text-[10px] uppercase tracking-wider text-neutral-600 p-4 font-bold">CONTROLS</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gold-100">
-                  {coupons.map((c) => (
-                    <tr key={c.id} className="hover:bg-neutral-50/30 font-sans text-xs">
-                      <td className="p-4 uppercase font-bold text-neutral-900 tracking-wider">
-                        🎟️ {c.code}
-                      </td>
-                      <td className="p-4 font-serif italic font-bold text-[#8c6b30]">
-                        {c.discount_percent}% off orders
-                      </td>
-                      <td className="p-4">
-                        <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide ${
-                          c.active ? "bg-teal-50 text-teal-850" : "bg-neutral-100 text-neutral-400"
-                        }`}>
-                          {c.active ? "Active" : "Disabled"}
-                        </span>
-                      </td>
-                      <td className="p-4">
-                        <button
-                          type="button"
-                          onClick={() => handleToggleCoupon(c.id, c.active)}
-                          className="font-display text-[10px] uppercase font-bold tracking-wider hover:underline text-neutral-900 cursor-pointer"
-                        >
-                          {c.active ? "Disable" : "Enable"}
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      ) : activeTab === "settings" ? (
-        
-        /* Editable store configurations */
-        <form onSubmit={handleSaveSettings} className="space-y-8 text-left max-w-4xl">
-          
-          {/* Social settings segment */}
-          <div className="bg-white border border-gold-150 p-6 md:p-8 rounded-2xl shadow-sm text-left space-y-6">
-            <h4 className="font-display text-sm uppercase tracking-wide text-neutral-950 font-black border-b border-neutral-100 pb-3 flex items-center">
-              <Facebook className="h-5 w-5 mr-2 text-blue-600 animate-pulse" />
-              Social Media Links (Footer Profiles)
-            </h4>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-left">
-              <Input
-                label="Facebook Fanpage URL"
-                placeholder="https://facebook.com/yourbrand"
-                value={fbUrl}
-                onChange={(e) => setFbUrl(e.target.value)}
-              />
-              <Input
-                label="Instagram Creator URL"
-                placeholder="https://instagram.com/yourbrand"
-                value={igUrl}
-                onChange={(e) => setIgUrl(e.target.value)}
-              />
-              <Input
-                label="TikTok Profile Link"
-                placeholder="https://tiktok.com/@yourbrand"
-                value={ttUrl}
-                onChange={(e) => setTtUrl(e.target.value)}
-              />
-              <Input
-                label="WhatsApp Business Number"
-                placeholder="+923001234567"
-                value={waNum}
-                onChange={(e) => setWaNum(e.target.value)}
-              />
-              <div className="md:col-span-2">
-                <Input
-                  label="YouTube Hub Channel URL"
-                  placeholder="https://youtube.com/c/yourbrand"
-                  value={ytUrl}
-                  onChange={(e) => setYtUrl(e.target.value)}
-                />
+                          </td>
+                          <td className="p-5 text-left font-display text-xs uppercase font-extrabold text-neutral-950 max-w-[200px] truncate" title={p.name}>
+                            {p.name}
+                          </td>
+                          <td className="p-5 uppercase">
+                            <Badge variant="gold">{p.category}</Badge>
+                          </td>
+                          <td className="p-5 font-serif italic font-bold text-neutral-900 text-sm">
+                            ${p.price.toLocaleString()}
+                          </td>
+                          <td className="p-5">
+                            <span className={`font-mono text-xs font-bold ${p.stock <= 3 ? "text-red-650" : "text-neutral-700"}`}>
+                              {p.stock} units
+                            </span>
+                          </td>
+                          <td className="p-5 flex space-x-2.5 items-center mt-3">
+                            <button
+                              onClick={() => handleEditProduct(p)}
+                              className="text-neutral-500 hover:text-gold-750 transition-colors p-2 hover:bg-gold-50/30 rounded-full cursor-pointer focus:outline-none"
+                              title="Edit curated SKU"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </button>
+                            <button
+                              onClick={() => askDeleteProduct(p.id, p.name)}
+                              className="text-neutral-400 hover:text-red-650 transition-colors p-2 hover:bg-red-50 rounded-full cursor-pointer focus:outline-none"
+                              title="Delete product"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-          </div>
+            ) : activeTab === "categories" ? (
 
-          {/* Contact settings segment */}
-          <div className="bg-white border border-gold-150 p-6 md:p-8 rounded-2xl shadow-sm text-left space-y-6">
-            <h4 className="font-display text-sm uppercase tracking-wide text-neutral-950 font-black border-b border-neutral-100 pb-3 flex items-center">
-              <Phone className="h-5 w-5 mr-2 text-teal-650" />
-              Store Helpline Contacts & Location
-            </h4>
+              /* 4.2.1 Dynamic Categories section */
+              <div className="space-y-6">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-left gap-4">
+                  <h3 className="font-display text-sm uppercase tracking-wider text-[#151515] font-black">
+                    DYNAMIC CATEGORIES DIRECTORY ({categories.length})
+                  </h3>
+                  <button
+                    onClick={offerCreateCategory}
+                    className="inline-flex items-center bg-neutral-950 hover:bg-neutral-850 text-gold-300 font-display text-xs uppercase font-bold tracking-widest px-5.5 py-3 rounded-full shadow-md transition-all focus:outline-none cursor-pointer active:scale-95"
+                  >
+                    <Plus className="h-4 w-4 mr-1.5 text-gold-400" />
+                    <span>curate category</span>
+                  </button>
+                </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-left">
-              <Input
-                label="Support Contact Email"
-                placeholder="support@Aroojletoile.com"
-                value={contactEmail}
-                onChange={(e) => setContactEmail(e.target.value)}
-              />
-              <Input
-                label="Helpline Phone"
-                placeholder="+92 300 1234567"
-                value={contactPhone}
-                onChange={(e) => setContactPhone(e.target.value)}
-              />
-              <div className="md:col-span-2 text-left">
-                <label className="block text-[10px] font-display font-semibold uppercase tracking-wide text-neutral-500 mb-1.5">
-                  Showroom Physical Address
-                </label>
-                <textarea
-                  rows={2}
-                  placeholder="Street Address, City, Pakistan"
-                  value={contactAddress}
-                  onChange={(e) => setContactAddress(e.target.value)}
-                  className="w-full bg-white text-neutral-950 font-sans text-xs px-4 py-3 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-450 text-left"
-                />
+                <div className="overflow-x-auto border border-gold-150 rounded-2xl bg-white shadow-sm scrollbar-thin">
+                  <table className="w-full text-left border-collapse min-w-[850px]">
+                    <thead>
+                      <tr className="bg-[#faf9f6]/95 border-b border-gold-150">
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">IMAGE BANNER</th>
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">CATEGORY ID / SLUG</th>
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">CATEGORY TITLE NAME</th>
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">SEO TITLE META</th>
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">SEO DESCRIPTION</th>
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">ACTIONS</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gold-100">
+                      {categories.map((c) => (
+                        <tr key={c.id} className="hover:bg-neutral-50/40 transition-colors">
+                          <td className="p-5">
+                            {c.bannerUrl ? (
+                              <img src={c.bannerUrl} className="w-16 h-10 object-cover border border-gold-100 rounded-lg flex-shrink-0" />
+                            ) : (
+                              <div className="w-16 h-10 bg-neutral-100 rounded-lg flex items-center justify-center text-[10px] text-neutral-400 font-medium">None</div>
+                            )}
+                          </td>
+                          <td className="p-5 font-mono text-xs text-neutral-700 font-bold">
+                            {c.id}
+                          </td>
+                          <td className="p-5 text-left font-display text-xs uppercase font-extrabold text-[#151515]">
+                            {c.name}
+                          </td>
+                          <td className="p-5 font-sans text-xs text-neutral-600 font-semibold italic">
+                            {c.seoTitle || <span className="text-neutral-300 font-normal">None configured</span>}
+                          </td>
+                          <td className="p-5 font-sans text-xs text-neutral-400 max-w-xs truncate" title={c.seoDescription}>
+                            {c.seoDescription || "None"}
+                          </td>
+                          <td className="p-5 flex space-x-2.5 items-center mt-1">
+                            <button
+                              onClick={() => handleEditCategory(c)}
+                              className="text-neutral-500 hover:text-gold-750 transition-colors p-2 hover:bg-gold-50/30 rounded-full cursor-pointer focus:outline-none"
+                              title="Edit curated category"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </button>
+                            <button
+                              onClick={() => askDeleteCategory(c.id, c.name)}
+                              className="text-neutral-400 hover:text-red-650 transition-colors p-2 hover:bg-red-50 rounded-full cursor-pointer focus:outline-none"
+                              title="Delete category"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-          </div>
+            ) : activeTab === "customers" ? (
 
-          {/* Policies editor segment */}
-          <div className="bg-white border border-gold-150 p-6 md:p-8 rounded-2xl shadow-sm text-left space-y-6">
-            <h4 className="font-display text-sm uppercase tracking-wide text-neutral-950 font-black border-b border-neutral-100 pb-3 flex items-center">
-              <Mail className="h-4.5 w-4.5 mr-2 text-amber-600" />
-              Privacy Policy and Shipping Terms Content
-            </h4>
+              /* Account registration base directory */
+              <div className="space-y-6">
+                <h3 className="font-display text-sm uppercase tracking-wider text-[#151515] font-black">
+                  REGISTERED ATELIER USERS BASE ({customers.length})
+                </h3>
 
-            <div className="space-y-5 text-left">
-              <div>
-                <label className="block text-[10px] font-display font-semibold uppercase tracking-wide text-neutral-500 mb-1.5">
-                  Privacy Policy Core Extract (Customer Data Guarantee)
-                </label>
-                <textarea
-                  rows={4}
-                  value={privacyText}
-                  onChange={(e) => setPrivacyText(e.target.value)}
-                  className="w-full bg-white text-neutral-950 font-sans text-xs px-4 py-3.5 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-445 text-left"
-                />
+                <div className="overflow-x-auto border border-gold-150 rounded-2xl bg-white shadow-sm scrollbar-thin">
+                  <table className="w-full text-left border-collapse min-w-[650px]">
+                    <thead>
+                      <tr className="bg-[#faf9f6]/95 border-b border-gold-150">
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">USER IDENTIFIER</th>
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">CUSTOMER FULL NAME</th>
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">ACCOUNT PRIVILEGES</th>
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">REGISTRY DATE</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gold-100">
+                      {customers.map((c) => (
+                        <tr key={c.id} className="hover:bg-neutral-50/40 transition-colors">
+                          <td className="p-5 font-mono text-xs text-neutral-400">{c.id}</td>
+                          <td className="p-5 font-display text-xs uppercase font-extrabold text-neutral-950">
+                            {c.full_name || "Guest Patron"}
+                          </td>
+                          <td className="p-5">
+                            <span className={`inline-flex items-center text-[10px] tracking-wider font-display font-extrabold uppercase px-2.5 py-0.5 rounded ${c.role === "admin" ? "bg-amber-100 text-amber-800" : "bg-neutral-100 text-neutral-700"
+                              }`}>
+                              {c.role || "customer"}
+                            </span>
+                          </td>
+                          <td className="p-5 font-sans text-xs text-neutral-500">
+                            {new Date(c.created_at).toLocaleString()}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-              
-              <div>
-                <label className="block text-[10px] font-display font-semibold uppercase tracking-wide text-neutral-500 mb-1.5">
-                  Terms and Conditions Core Extract (Exchange and Shipping rules)
-                </label>
-                <textarea
-                  rows={4}
-                  value={termsText}
-                  onChange={(e) => setTermsText(e.target.value)}
-                  className="w-full bg-white text-neutral-950 font-sans text-xs px-4 py-3.5 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-445 text-left"
-                />
+            ) : activeTab === "reviews" ? (
+
+              /* Reviews moderation panel */
+              <div className="space-y-6">
+                <h3 className="font-display text-sm uppercase tracking-wider text-[#151515] font-black">
+                  PATRON TESTIMONIAL MODERATION LOGS ({reviews.length})
+                </h3>
+
+                <div className="overflow-x-auto border border-gold-150 rounded-2xl bg-white shadow-sm scrollbar-thin">
+                  <table className="w-full text-left border-collapse min-w-[850px]">
+                    <thead>
+                      <tr className="bg-[#faf9f6]/95 border-b border-gold-150">
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">PRODUCT</th>
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">AUTHOR</th>
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">STARS</th>
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">FEEDBACK TRANSCRIPT</th>
+                        <th className="font-display text-xs uppercase tracking-wider text-[#555] p-5 font-extrabold">MODERATION ACTION</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gold-100">
+                      {reviews.map((r) => (
+                        <tr key={r.id} className="hover:bg-neutral-50/40 transition-colors">
+                          <td className="p-5 font-display text-xs uppercase font-extrabold text-neutral-900 max-w-[170px] truncate">
+                            {r.products?.name || "Unknown Product"}
+                          </td>
+                          <td className="p-5">
+                            <span className="block font-display text-xs uppercase font-bold text-neutral-950">{r.author_name}</span>
+                            <span className="block text-[11px] font-sans text-neutral-400 mt-0.5">ID: {r.user_id?.slice(0, 8) || "Guest"}</span>
+                          </td>
+                          <td className="p-5 font-bold text-gold-600 text-xs">
+                            {r.rating} / 5 Stars
+                          </td>
+                          <td className="p-5 font-sans text-xs text-neutral-500 max-w-xs leading-relaxed">
+                            "{r.text}"
+                          </td>
+                          <td className="p-5">
+                            <button
+                              onClick={() => askDeleteReview(r.id, r.author_name)}
+                              className="text-red-500 hover:text-red-750 transition-colors p-1.5 rounded-full hover:bg-red-50 cursor-pointer focus:outline-none"
+                              title="Delete customer feedback"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-          </div>
+            ) : activeTab === "coupons" ? (
 
-          {/* Chatbot settings segment */}
-          <div className="bg-white border border-gold-150 p-6 md:p-8 rounded-2xl shadow-sm text-left space-y-6">
-            <h4 className="font-display text-sm uppercase tracking-wide text-neutral-950 font-black border-b border-neutral-100 pb-3 flex items-center">
-              <Sparkles className="h-4.5 w-4.5 mr-2 text-violet-650 animate-pulse" />
-              AI Chatbot Styling Concierge Instructions
-            </h4>
+              /* Coupons voucher curation panel */
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 text-left">
 
-            <div className="space-y-5 text-left">
-              <div>
-                <label className="block text-[10px] font-display font-semibold uppercase tracking-wide text-neutral-500 mb-1.5">
-                  System Context & Directives for Aura (AI Assistant Instructions)
-                </label>
-                <p className="text-[10px] text-neutral-400 mb-2 font-mono leading-relaxed">
-                  Provide custom instructions to control chatbot voice, store policies, brand narrative, and specific product focus keys.
-                </p>
-                <textarea
-                  rows={6}
-                  value={chatbotInstruction}
-                  onChange={(e) => setChatbotInstruction(e.target.value)}
-                  className="w-full bg-[#faf9f6] text-neutral-950 font-sans text-xs px-4 py-3.5 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-445 text-left leading-relaxed"
-                  placeholder="e.g. You are Aura, the private AI Styling Concierge for Arooj Arts..."
-                />
+                {/* Coupon creation form */}
+                <form onSubmit={handleCreateCoupon} className="lg:col-span-4 bg-white border border-gold-150 p-6 rounded-2xl shadow-sm text-left space-y-4">
+                  <h4 className="font-display text-[11px] uppercase tracking-wider text-neutral-900 font-bold border-b border-gold-100 pb-2 mb-4">
+                    CREATE DISCOUNT COUPON
+                  </h4>
+
+                  <Input
+                    label="Promotional Code"
+                    placeholder="e.g. SAVE20"
+                    required
+                    value={newCouponCode}
+                    onChange={(e) => setNewCouponCode(e.target.value)}
+                  />
+
+                  <div>
+                    <label className="block text-[10px] font-display font-semibold uppercase tracking-wider text-neutral-500 mb-1.5">
+                      Discount Percentage (%)
+                    </label>
+                    <select
+                      value={newCouponDiscount}
+                      onChange={(e) => setNewCouponDiscount(Number(e.target.value))}
+                      className="w-full bg-white text-neutral-900 font-sans text-xs px-3.5 py-3 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-450"
+                    >
+                      <option value={10}>10% Off checkout</option>
+                      <option value={15}>15% Off checkout</option>
+                      <option value={20}>20% Off checkout</option>
+                      <option value={30}>30% Off checkout</option>
+                      <option value={50}>50% Off checkout</option>
+                    </select>
+                  </div>
+
+                  <Button type="submit" size="sm" className="w-full h-11 cursor-pointer">
+                    Publish Code Voucher
+                  </Button>
+                </form>
+
+                {/* List existing active coupons */}
+                <div className="lg:col-span-8 space-y-4 text-left">
+                  <h4 className="font-display text-[11px] uppercase tracking-wider text-[#666] font-bold mb-4">
+                    ACTIVE VOUCHER CERTIFICATES ({coupons.length})
+                  </h4>
+
+                  <div className="border border-gold-150 rounded-2xl bg-white overflow-hidden shadow-sm scrollbar-thin overflow-x-auto">
+                    <table className="w-full text-left border-collapse min-w-[500px]">
+                      <thead>
+                        <tr className="bg-[#faf9f6] border-b border-gold-150">
+                          <th className="font-display text-[10px] uppercase tracking-wider text-neutral-600 p-4 font-bold">CODE</th>
+                          <th className="font-display text-[10px] uppercase tracking-wider text-neutral-600 p-4 font-bold">PERCENTAGE</th>
+                          <th className="font-display text-[10px] uppercase tracking-wider text-neutral-600 p-4 font-bold">REDEEMABLE STATE</th>
+                          <th className="font-display text-[10px] uppercase tracking-wider text-neutral-600 p-4 font-bold">CONTROLS</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gold-100">
+                        {coupons.map((c) => (
+                          <tr key={c.id} className="hover:bg-neutral-50/30 font-sans text-xs">
+                            <td className="p-4 uppercase font-bold text-neutral-900 tracking-wider">
+                              🎟️ {c.code}
+                            </td>
+                            <td className="p-4 font-serif italic font-bold text-[#8c6b30]">
+                              {c.discount_percent}% off orders
+                            </td>
+                            <td className="p-4">
+                              <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide ${c.active ? "bg-teal-50 text-teal-850" : "bg-neutral-100 text-neutral-400"
+                                }`}>
+                                {c.active ? "Active" : "Disabled"}
+                              </span>
+                            </td>
+                            <td className="p-4">
+                              <button
+                                type="button"
+                                onClick={() => handleToggleCoupon(c.id, c.active)}
+                                className="font-display text-[10px] uppercase font-bold tracking-wider hover:underline text-neutral-900 cursor-pointer"
+                              >
+                                {c.active ? "Disable" : "Enable"}
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            ) : activeTab === "settings" ? (
 
-          <div className="flex justify-end pt-2">
-            <Button variant="primary" size="lg" type="submit" isLoading={isSavingSettings} className="cursor-pointer bg-neutral-950 hover:bg-neutral-850">
-              Save Store Configurations & Pages
-            </Button>
-          </div>
-        </form>
-      ) : activeTab === "hero" ? (
-        
-        /* Hero Carousel Management Tab */
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 text-left">
-          
-          {/* Create/Edit slide form */}
-          <form onSubmit={handleSaveHero} className="lg:col-span-5 bg-white border border-gold-150 p-6 md:p-8 rounded-2xl shadow-sm text-left space-y-5">
-            <h4 className="font-display text-[11px] uppercase tracking-wider text-neutral-900 font-bold border-b border-gold-100 pb-2 flex justify-between items-center">
-              <span>{editingHero ? "EDIT HERO EXHIBITION SLIDE" : "CREATE HERO SLIDE"}</span>
-              {editingHero && (
-                <button 
-                  type="button" 
-                  onClick={clearHeroForm}
-                  className="text-neutral-400 hover:text-neutral-950 text-[10px] uppercase font-bold tracking-wider"
-                >
-                  cancel edit
-                </button>
-              )}
-            </h4>
+              /* Editable store configurations */
+              <form onSubmit={handleSaveSettings} className="space-y-8 text-left max-w-4xl">
 
-            <Input
-              label="Slide Display Heading (Title)"
-              placeholder="e.g. L'ÉCORCE Silencieuse"
-              required
-              value={heroTitle}
-              onChange={(e) => setHeroTitle(e.target.value)}
-            />
+                {/* Social settings segment */}
+                <div className="bg-white border border-gold-150 p-6 md:p-8 rounded-2xl shadow-sm text-left space-y-6">
+                  <h4 className="font-display text-sm uppercase tracking-wide text-neutral-950 font-black border-b border-neutral-100 pb-3 flex items-center">
+                    <Facebook className="h-5 w-5 mr-2 text-blue-600 animate-pulse" />
+                    Social Media Links (Footer Profiles)
+                  </h4>
 
-            <div className="text-left">
-              <label className="block text-[10px] font-display font-semibold uppercase tracking-wider text-neutral-500 mb-1.5">
-                Slide Narrative Subtitle
-              </label>
-              <textarea
-                required
-                rows={3}
-                placeholder="Narrate slide details and context seamlessly..."
-                value={heroSubtitle}
-                onChange={(e) => setHeroSubtitle(e.target.value)}
-                className="w-full bg-white text-neutral-950 placeholder-neutral-400 font-sans text-xs px-4 py-3 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-450 text-left font-medium"
-              />
-            </div>
-
-            {/* Cloudinary single image upload */}
-            <div className="border-t border-gold-150/40 pt-4">
-              <ImageUpload
-                images={heroImages}
-                onChange={setHeroImages}
-                maxImages={1}
-                label="Exhibition Slide Background"
-              />
-            </div>
-
-            <div>
-              <label className="block text-[10px] font-display font-semibold uppercase tracking-wider text-neutral-500 mb-1.5">
-                Overlay shadow Opacity (%)
-              </label>
-              <select
-                value={heroOpacity}
-                onChange={(e) => setHeroOpacity(Number(e.target.value))}
-                className="w-full bg-white text-neutral-900 font-sans text-xs px-3.5 py-3 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-450"
-              >
-                <option value={10}>10% Overlay Opacity (Brighter)</option>
-                <option value={20}>20% Overlay Opacity</option>
-                <option value={30}>30% Overlay Opacity</option>
-                <option value={35}>35% Overlay Opacity (Recommended)</option>
-                <option value={40}>40% Overlay Opacity</option>
-                <option value={50}>50% Overlay Opacity (Darker/Higher Contrast)</option>
-                <option value={60}>60% Overlay Opacity</option>
-              </select>
-            </div>
-
-            <Button type="submit" size="sm" className="w-full h-11 cursor-pointer bg-neutral-950 hover:bg-neutral-850 animate-fade-in" isLoading={isSavingHero}>
-              {editingHero ? "Save Slide Changes" : "Append Slide to Exhibitions"}
-            </Button>
-          </form>
-
-          {/* List existing hero slides in rotation */}
-          <div className="lg:col-span-7 space-y-4 text-left">
-            <h4 className="font-display text-[11px] uppercase tracking-wider text-[#666] font-bold">
-              SLIDES CURRENT ROTATION ({heroSlides.length})
-            </h4>
-
-            {heroSlides.length === 0 ? (
-              <div className="p-8 border border-gold-150 rounded-2xl bg-white text-center text-stone-400 text-xs">
-                No active hero slides inside the collection database.
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 gap-4">
-                {heroSlides.map((slide) => (
-                  <div key={slide.id} className="bg-white border border-gold-150 rounded-2xl p-4.5 flex gap-4 shadow-sm items-center text-left">
-                    <div className="w-20 h-20 rounded-xl overflow-hidden border border-gold-100 flex-shrink-0 bg-neutral-100">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
-                    </div>
-                    <div className="flex-grow min-w-0 space-y-1">
-                      <h5 className="font-display font-black text-xs text-neutral-950 uppercase truncate">
-                        {slide.title || "Untitled slide Title"}
-                      </h5>
-                      <p className="font-sans text-[10.5px] text-neutral-400 line-clamp-2 leading-relaxed font-semibold">
-                        {slide.subtitle || "No subtitle statement added."}
-                      </p>
-                      <div className="flex items-center space-x-2 pt-1">
-                        <span className="text-[10px] font-mono text-neutral-400 bg-neutral-50 border border-neutral-150 px-2.5 py-0.5 rounded-full font-semibold">
-                          Opacity: {slide.overlay_opacity}%
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center space-x-2">
-                      <button
-                        type="button"
-                        onClick={() => handleEditHero(slide)}
-                        className="h-8.5 w-8.5 rounded-full bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 hover:border-gold-300 text-neutral-700 hover:text-gold-700 flex items-center justify-center transition-all cursor-pointer"
-                        title="Edit Slide specs"
-                      >
-                        <Edit className="h-4 w-4" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleDeleteHero(slide.id)}
-                        className="h-8.5 w-8.5 rounded-full bg-neutral-50 hover:bg-red-50 border border-neutral-200 hover:border-red-200 text-neutral-700 hover:text-red-650 flex items-center justify-center transition-all cursor-pointer"
-                        title="Delete exhibition slide"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-left">
+                    <Input
+                      label="Facebook Fanpage URL"
+                      placeholder="https://facebook.com/yourbrand"
+                      value={fbUrl}
+                      onChange={(e) => setFbUrl(e.target.value)}
+                    />
+                    <Input
+                      label="Instagram Creator URL"
+                      placeholder="https://instagram.com/yourbrand"
+                      value={igUrl}
+                      onChange={(e) => setIgUrl(e.target.value)}
+                    />
+                    <Input
+                      label="TikTok Profile Link"
+                      placeholder="https://tiktok.com/@yourbrand"
+                      value={ttUrl}
+                      onChange={(e) => setTtUrl(e.target.value)}
+                    />
+                    <Input
+                      label="WhatsApp Business Number"
+                      placeholder="+923001234567"
+                      value={waNum}
+                      onChange={(e) => setWaNum(e.target.value)}
+                    />
+                    <div className="md:col-span-2">
+                      <Input
+                        label="YouTube Hub Channel URL"
+                        placeholder="https://youtube.com/c/yourbrand"
+                        value={ytUrl}
+                        onChange={(e) => setYtUrl(e.target.value)}
+                      />
                     </div>
                   </div>
-                ))}
+                </div>
+
+                {/* Contact settings segment */}
+                <div className="bg-white border border-gold-150 p-6 md:p-8 rounded-2xl shadow-sm text-left space-y-6">
+                  <h4 className="font-display text-sm uppercase tracking-wide text-neutral-950 font-black border-b border-neutral-100 pb-3 flex items-center">
+                    <Phone className="h-5 w-5 mr-2 text-teal-650" />
+                    Store Helpline Contacts & Location
+                  </h4>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-left">
+                    <Input
+                      label="Support Contact Email"
+                      placeholder="support@Aroojletoile.com"
+                      value={contactEmail}
+                      onChange={(e) => setContactEmail(e.target.value)}
+                    />
+                    <Input
+                      label="Helpline Phone"
+                      placeholder="+92 300 1234567"
+                      value={contactPhone}
+                      onChange={(e) => setContactPhone(e.target.value)}
+                    />
+                    <div className="md:col-span-2 text-left">
+                      <label className="block text-[10px] font-display font-semibold uppercase tracking-wide text-neutral-500 mb-1.5">
+                        Showroom Physical Address
+                      </label>
+                      <textarea
+                        rows={2}
+                        placeholder="Street Address, City, Pakistan"
+                        value={contactAddress}
+                        onChange={(e) => setContactAddress(e.target.value)}
+                        className="w-full bg-white text-neutral-950 font-sans text-xs px-4 py-3 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-450 text-left"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Policies editor segment */}
+                <div className="bg-white border border-gold-150 p-6 md:p-8 rounded-2xl shadow-sm text-left space-y-6">
+                  <h4 className="font-display text-sm uppercase tracking-wide text-neutral-950 font-black border-b border-neutral-100 pb-3 flex items-center">
+                    <Mail className="h-4.5 w-4.5 mr-2 text-amber-600" />
+                    Privacy Policy and Shipping Terms Content
+                  </h4>
+
+                  <div className="space-y-5 text-left">
+                    <div>
+                      <label className="block text-[10px] font-display font-semibold uppercase tracking-wide text-neutral-500 mb-1.5">
+                        Privacy Policy Core Extract (Customer Data Guarantee)
+                      </label>
+                      <textarea
+                        rows={4}
+                        value={privacyText}
+                        onChange={(e) => setPrivacyText(e.target.value)}
+                        className="w-full bg-white text-neutral-950 font-sans text-xs px-4 py-3.5 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-445 text-left"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-display font-semibold uppercase tracking-wide text-neutral-500 mb-1.5">
+                        Terms and Conditions Core Extract (Exchange and Shipping rules)
+                      </label>
+                      <textarea
+                        rows={4}
+                        value={termsText}
+                        onChange={(e) => setTermsText(e.target.value)}
+                        className="w-full bg-white text-neutral-950 font-sans text-xs px-4 py-3.5 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-445 text-left"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Chatbot settings segment */}
+                <div className="bg-white border border-gold-150 p-6 md:p-8 rounded-2xl shadow-sm text-left space-y-6">
+                  <h4 className="font-display text-sm uppercase tracking-wide text-neutral-950 font-black border-b border-neutral-100 pb-3 flex items-center">
+                    <Sparkles className="h-4.5 w-4.5 mr-2 text-violet-650 animate-pulse" />
+                    AI Chatbot Styling Concierge Instructions
+                  </h4>
+
+                  <div className="space-y-5 text-left">
+                    <div>
+                      <label className="block text-[10px] font-display font-semibold uppercase tracking-wide text-neutral-500 mb-1.5">
+                        System Context & Directives for Aura (AI Assistant Instructions)
+                      </label>
+                      <p className="text-[10px] text-neutral-400 mb-2 font-mono leading-relaxed">
+                        Provide custom instructions to control chatbot voice, store policies, brand narrative, and specific product focus keys.
+                      </p>
+                      <textarea
+                        rows={6}
+                        value={chatbotInstruction}
+                        onChange={(e) => setChatbotInstruction(e.target.value)}
+                        className="w-full bg-[#faf9f6] text-neutral-950 font-sans text-xs px-4 py-3.5 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-445 text-left leading-relaxed"
+                        placeholder="e.g. You are Aura, the private AI Styling Concierge for Arooj Arts..."
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex justify-end pt-2">
+                  <Button variant="primary" size="lg" type="submit" isLoading={isSavingSettings} className="cursor-pointer bg-neutral-950 hover:bg-neutral-850">
+                    Save Store Configurations & Pages
+                  </Button>
+                </div>
+              </form>
+            ) : activeTab === "hero" ? (
+
+              /* Hero Carousel Management Tab */
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 text-left">
+
+                {/* Create/Edit slide form */}
+                <form onSubmit={handleSaveHero} className="lg:col-span-5 bg-white border border-gold-150 p-6 md:p-8 rounded-2xl shadow-sm text-left space-y-5">
+                  <h4 className="font-display text-[11px] uppercase tracking-wider text-neutral-900 font-bold border-b border-gold-100 pb-2 flex justify-between items-center">
+                    <span>{editingHero ? "EDIT HERO EXHIBITION SLIDE" : "CREATE HERO SLIDE"}</span>
+                    {editingHero && (
+                      <button
+                        type="button"
+                        onClick={clearHeroForm}
+                        className="text-neutral-400 hover:text-neutral-950 text-[10px] uppercase font-bold tracking-wider"
+                      >
+                        cancel edit
+                      </button>
+                    )}
+                  </h4>
+
+                  <Input
+                    label="Slide Display Heading (Title)"
+                    placeholder="e.g. L'ÉCORCE Silencieuse"
+                    required
+                    value={heroTitle}
+                    onChange={(e) => setHeroTitle(e.target.value)}
+                  />
+
+                  <div className="text-left">
+                    <label className="block text-[10px] font-display font-semibold uppercase tracking-wider text-neutral-500 mb-1.5">
+                      Slide Narrative Subtitle
+                    </label>
+                    <textarea
+                      required
+                      rows={3}
+                      placeholder="Narrate slide details and context seamlessly..."
+                      value={heroSubtitle}
+                      onChange={(e) => setHeroSubtitle(e.target.value)}
+                      className="w-full bg-white text-neutral-950 placeholder-neutral-400 font-sans text-xs px-4 py-3 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-450 text-left font-medium"
+                    />
+                  </div>
+
+                  {/* Cloudinary single image upload */}
+                  <div className="border-t border-gold-150/40 pt-4">
+                    <ImageUpload
+                      images={heroImages}
+                      onChange={setHeroImages}
+                      maxImages={1}
+                      label="Exhibition Slide Background"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-display font-semibold uppercase tracking-wider text-neutral-500 mb-1.5">
+                      Overlay shadow Opacity (%)
+                    </label>
+                    <select
+                      value={heroOpacity}
+                      onChange={(e) => setHeroOpacity(Number(e.target.value))}
+                      className="w-full bg-white text-neutral-900 font-sans text-xs px-3.5 py-3 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-450"
+                    >
+                      <option value={10}>10% Overlay Opacity (Brighter)</option>
+                      <option value={20}>20% Overlay Opacity</option>
+                      <option value={30}>30% Overlay Opacity</option>
+                      <option value={35}>35% Overlay Opacity (Recommended)</option>
+                      <option value={40}>40% Overlay Opacity</option>
+                      <option value={50}>50% Overlay Opacity (Darker/Higher Contrast)</option>
+                      <option value={60}>60% Overlay Opacity</option>
+                    </select>
+                  </div>
+
+                  <Button type="submit" size="sm" className="w-full h-11 cursor-pointer bg-neutral-950 hover:bg-neutral-850 animate-fade-in" isLoading={isSavingHero}>
+                    {editingHero ? "Save Slide Changes" : "Append Slide to Exhibitions"}
+                  </Button>
+                </form>
+
+                {/* List existing hero slides in rotation */}
+                <div className="lg:col-span-7 space-y-4 text-left">
+                  <h4 className="font-display text-[11px] uppercase tracking-wider text-[#666] font-bold">
+                    SLIDES CURRENT ROTATION ({heroSlides.length})
+                  </h4>
+
+                  {heroSlides.length === 0 ? (
+                    <div className="p-8 border border-gold-150 rounded-2xl bg-white text-center text-stone-400 text-xs">
+                      No active hero slides inside the collection database.
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 gap-4">
+                      {heroSlides.map((slide) => (
+                        <div key={slide.id} className="bg-white border border-gold-150 rounded-2xl p-4.5 flex gap-4 shadow-sm items-center text-left">
+                          <div className="w-20 h-20 rounded-xl overflow-hidden border border-gold-100 flex-shrink-0 bg-neutral-100">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
+                          </div>
+                          <div className="flex-grow min-w-0 space-y-1">
+                            <h5 className="font-display font-black text-xs text-neutral-950 uppercase truncate">
+                              {slide.title || "Untitled slide Title"}
+                            </h5>
+                            <p className="font-sans text-[10.5px] text-neutral-400 line-clamp-2 leading-relaxed font-semibold">
+                              {slide.subtitle || "No subtitle statement added."}
+                            </p>
+                            <div className="flex items-center space-x-2 pt-1">
+                              <span className="text-[10px] font-mono text-neutral-400 bg-neutral-50 border border-neutral-150 px-2.5 py-0.5 rounded-full font-semibold">
+                                Opacity: {slide.overlay_opacity}%
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center space-x-2">
+                            <button
+                              type="button"
+                              onClick={() => handleEditHero(slide)}
+                              className="h-8.5 w-8.5 rounded-full bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 hover:border-gold-300 text-neutral-700 hover:text-gold-700 flex items-center justify-center transition-all cursor-pointer"
+                              title="Edit Slide specs"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteHero(slide.id)}
+                              className="h-8.5 w-8.5 rounded-full bg-neutral-50 hover:bg-red-50 border border-neutral-200 hover:border-red-200 text-neutral-700 hover:text-red-650 flex items-center justify-center transition-all cursor-pointer"
+                              title="Delete exhibition slide"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+              </div>
+            ) : (
+
+              /* Ledger Analytics financial view */
+              <div className="space-y-8 text-left">
+                <div className="bg-[#faf9f6]/92 border border-gold-200 rounded-2xl p-6 text-left shadow-xs">
+                  <h4 className="font-display text-xs uppercase tracking-wider text-[#151515] font-black mb-4 flex items-center">
+                    <TrendingUp className="h-4.5 w-4.5 mr-2 text-gold-650 font-bold" />
+                    FINANCIAL PERFORMANCE AGGREGATION
+                  </h4>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="p-5.5 bg-white border border-gold-100 rounded-xl shadow-xs">
+                      <span className="font-sans text-stone-500 text-xs font-semibold">Gross Invoiced Volume</span>
+                      <p className="font-serif italic text-3xl font-black text-neutral-950 mt-2">${analytics.totalRevenue.toLocaleString()}</p>
+                    </div>
+                    <div className="p-5.5 bg-white border border-gold-100 rounded-xl shadow-xs">
+                      <span className="font-sans text-stone-500 text-xs font-semibold">Total Courier Shipments</span>
+                      <p className="font-serif italic text-3xl font-black text-neutral-950 mt-2">{analytics.orderCount} conversions</p>
+                    </div>
+                    <div className="p-5.5 bg-white border border-gold-100 rounded-xl shadow-xs">
+                      <span className="font-sans text-stone-500 text-xs font-semibold">Average Checkout ticket value</span>
+                      <p className="font-serif italic text-3xl font-black text-neutral-950 mt-2">${analytics.averageTicket.toLocaleString()}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                  <div className="border border-gold-150 rounded-2xl p-6.5 bg-white shadow-xs space-y-4">
+                    <h5 className="font-display text-[10px] uppercase tracking-widest font-black text-neutral-900">
+                      L'ÉTOILE DATABASE DISPATCH LOGS
+                    </h5>
+                    <div className="space-y-3.5 text-xs font-medium">
+                      <div className="flex justify-between items-center py-2 border-b border-gold-100">
+                        <span className="text-neutral-500">Database Connection:</span>
+                        <span className="text-teal-650 font-bold uppercase text-[10px]">Active (Online PostgreSQL)</span>
+                      </div>
+                      <div className="flex justify-between items-center py-2 border-b border-gold-100">
+                        <span className="text-neutral-500">Current SSL Configuration:</span>
+                        <span className="text-neutral-900 font-bold font-mono">Enabled (AES-256)</span>
+                      </div>
+                      <div className="flex justify-between items-center py-2 border-b border-gold-100">
+                        <span className="text-neutral-500">Total Catalog SKU Density:</span>
+                        <span className="text-neutral-900 font-bold">{products.length} cataloged SKUs</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="border border-gold-150 rounded-2xl p-6.5 bg-white shadow-xs flex flex-col justify-center text-center py-8">
+                    <ShieldCheck className="h-10 w-10 text-teal-650 mx-auto mb-3" />
+                    <h5 className="font-display text-[11px] uppercase tracking-widest font-black text-neutral-900">
+                      AUDIT COMPLIANCE SECURED
+                    </h5>
+                    <p className="font-sans text-[11px] text-neutral-400 max-w-xs mx-auto leading-relaxed mt-2 font-medium">
+                      All status modifications and product curation additions are digitally signed inside profile records using PostgreSQL Row-Level-Security (RLS).
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
-          </div>
-
-        </div>
-      ) : (
-        
-        /* Ledger Analytics financial view */
-        <div className="space-y-8 text-left">
-          <div className="bg-[#faf9f6]/92 border border-gold-200 rounded-2xl p-6 text-left shadow-xs">
-            <h4 className="font-display text-xs uppercase tracking-wider text-[#151515] font-black mb-4 flex items-center">
-              <TrendingUp className="h-4.5 w-4.5 mr-2 text-gold-650 font-bold" />
-              FINANCIAL PERFORMANCE AGGREGATION
-            </h4>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="p-5.5 bg-white border border-gold-100 rounded-xl shadow-xs">
-                <span className="font-sans text-stone-500 text-xs font-semibold">Gross Invoiced Volume</span>
-                <p className="font-serif italic text-3xl font-black text-neutral-950 mt-2">${analytics.totalRevenue.toLocaleString()}</p>
-              </div>
-              <div className="p-5.5 bg-white border border-gold-100 rounded-xl shadow-xs">
-                <span className="font-sans text-stone-500 text-xs font-semibold">Total Courier Shipments</span>
-                <p className="font-serif italic text-3xl font-black text-neutral-950 mt-2">{analytics.orderCount} conversions</p>
-              </div>
-              <div className="p-5.5 bg-white border border-gold-100 rounded-xl shadow-xs">
-                <span className="font-sans text-stone-500 text-xs font-semibold">Average Checkout ticket value</span>
-                <p className="font-serif italic text-3xl font-black text-neutral-950 mt-2">${analytics.averageTicket.toLocaleString()}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-            <div className="border border-gold-150 rounded-2xl p-6.5 bg-white shadow-xs space-y-4">
-              <h5 className="font-display text-[10px] uppercase tracking-widest font-black text-neutral-900">
-                L'ÉTOILE DATABASE DISPATCH LOGS
-              </h5>
-              <div className="space-y-3.5 text-xs font-medium">
-                <div className="flex justify-between items-center py-2 border-b border-gold-100">
-                  <span className="text-neutral-500">Database Connection:</span>
-                  <span className="text-teal-650 font-bold uppercase text-[10px]">Active (Online PostgreSQL)</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gold-100">
-                  <span className="text-neutral-500">Current SSL Configuration:</span>
-                  <span className="text-neutral-900 font-bold font-mono">Enabled (AES-256)</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gold-100">
-                  <span className="text-neutral-500">Total Catalog SKU Density:</span>
-                  <span className="text-neutral-900 font-bold">{products.length} cataloged SKUs</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="border border-gold-150 rounded-2xl p-6.5 bg-white shadow-xs flex flex-col justify-center text-center py-8">
-              <ShieldCheck className="h-10 w-10 text-teal-650 mx-auto mb-3" />
-              <h5 className="font-display text-[11px] uppercase tracking-widest font-black text-neutral-900">
-                AUDIT COMPLIANCE SECURED
-              </h5>
-              <p className="font-sans text-[11px] text-neutral-400 max-w-xs mx-auto leading-relaxed mt-2 font-medium">
-                All status modifications and product curation additions are digitally signed inside profile records using PostgreSQL Row-Level-Security (RLS).
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
 
           </div>
         </main>
@@ -1427,11 +1443,11 @@ export default function AdminPage() {
       {isAddModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div onClick={() => setIsAddModalOpen(false)} className="fixed inset-0 bg-neutral-950/70 backdrop-blur-xs cursor-pointer" />
-          
+
           <div className="relative bg-[#faf9f6] w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-gold-200 z-10 flex flex-col max-h-[90vh]">
             <div className="flex items-center justify-between px-6 py-5 border-b border-gold-150 bg-neutral-950 text-white">
               <h3 className="font-display text-xs uppercase tracking-widest font-black text-gold-300 flex items-center">
-                <PlusCircle className="h-4.5 w-4.5 mr-2" /> 
+                <PlusCircle className="h-4.5 w-4.5 mr-2" />
                 {editingProduct ? "EDIT CURATED ATELIER SKU" : "CURATE NEW LAUNCH PRODUCT"}
               </h3>
               <button type="button" onClick={() => setIsAddModalOpen(false)} className="text-neutral-400 hover:text-white transition-colors p-1 cursor-pointer">
@@ -1571,11 +1587,11 @@ export default function AdminPage() {
       {isCategoryModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div onClick={() => setIsCategoryModalOpen(false)} className="fixed inset-0 bg-neutral-950/70 backdrop-blur-xs cursor-pointer" />
-          
+
           <div className="relative bg-[#faf9f6]/95 w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-gold-200 z-10 flex flex-col max-h-[85vh]">
             <div className="flex items-center justify-between px-6 py-5 border-b border-gold-150 bg-neutral-950 text-white">
               <h3 className="font-display text-xs uppercase tracking-widest font-black text-gold-300 flex items-center">
-                <Layers className="h-4.5 w-4.5 mr-2" /> 
+                <Layers className="h-4.5 w-4.5 mr-2" />
                 {editingCategory ? "EDIT BRAND CATALOG CATEGORY" : "CURATE NEW ATELIER CATEGORY"}
               </h3>
               <button type="button" onClick={() => setIsCategoryModalOpen(false)} className="text-neutral-400 hover:text-white transition-colors p-1 cursor-pointer">
@@ -1644,7 +1660,7 @@ export default function AdminPage() {
       {isConfirmDeleteOpen && (
         <div className="fixed inset-0 z-55 flex items-center justify-center p-4">
           <div onClick={() => setIsConfirmDeleteOpen(false)} className="fixed inset-0 bg-neutral-950/70 backdrop-blur-xs transition-opacity cursor-pointer" />
-          
+
           <div className="relative bg-white w-full max-w-md rounded-2xl shadow-2xl border border-neutral-150 z-10 p-6 text-left">
             <div className="flex items-center space-x-3 text-red-650 mb-4">
               <div className="bg-red-50 p-2.5 rounded-full">
