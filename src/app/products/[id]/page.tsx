@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = `${product.name} — ${product.designer} | Arooj Arts`;
   const description = product.description || `Explore the exquisite ${product.name} by designer ${product.designer} at Arooj Arts.`;
-  const canonicalUrl = `https://ais-dev-cgwlfgq4uevdr35b2ix4qe-922378778819.asia-southeast1.run.app/products/${product.id}`;
+  const canonicalUrl = `${process.env.NEXT_APP_SITE_URL}/products/${product.id}`;
 
   return {
     title,
@@ -105,7 +105,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
       "price": product.price,
       "itemCondition": "https://schema.org/NewCondition",
       "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-      "url": `https://ais-dev-cgwlfgq4uevdr35b2ix4qe-922378778819.asia-southeast1.run.app/products/${product.id}`,
+      "url": `${process.env.NEXT_APP_SITE_URL}/products/${product.id}`,
     },
     "aggregateRating": {
       "@type": "AggregateRating",

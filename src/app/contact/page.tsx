@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "Contact Our Lead Curators | Arooj Arts",
   description: "Connect with our design, tailoring, and COD courier assistance desk. M.M. Alam Road Showroom, Lahore, Pakistan.",
   alternates: {
-    canonical: "https://ais-dev-cgwlfgq4uevdr35b2ix4qe-922378778819.asia-southeast1.run.app/contact",
+    canonical: `${process.env.NEXT_APP_SITE_URL}/contact`,
   },
 };
 

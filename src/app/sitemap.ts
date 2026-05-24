@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { getProductsAction } from "../actions/product.actions";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = "https://ais-dev-cgwlfgq4uevdr35b2ix4qe-922378778819.asia-southeast1.run.app";
+  const siteUrl = process.env.NEXT_APP_SITE_URL;;
 
   // Static pages core list
   const staticPages: MetadataRoute.Sitemap = [
