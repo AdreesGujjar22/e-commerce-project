@@ -31,7 +31,7 @@ export default function WhatsAppChatWidget() {
         <>
             {/* Chat Popup */}
             <div
-                className={`fixed bottom-24 right-4 z-[9999] transition-all duration-500 ${isOpen
+                className={`fixed bottom-24 right-4 z-[999] transition-all duration-500 ${isOpen
                         ? "opacity-100 translate-y-0"
                         : "opacity-0 translate-y-4 pointer-events-none"
                     }`}
@@ -40,13 +40,13 @@ export default function WhatsAppChatWidget() {
                     {/* Header */}
                     <div className="bg-[#075E54] px-4 py-3 flex items-start justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center ">
                                 <Image
                                     src="/whatsapp-icon.png"
                                     alt="WhatsApp"
-                                    width={35}
-                                    height={35}
-                                    className="object-contain"
+                                    width={30}
+                                    height={30}
+                                    className="object-contain hover:cursor-pointer"
                                     priority
                                 />
                             </div>
@@ -102,7 +102,7 @@ export default function WhatsAppChatWidget() {
             {/* Floating Button */}
             <button
                 onClick={() => setIsOpen((prev) => !prev)}
-                className="fixed bottom-5 right-4 z-[9999] w-14 h-14 rounded-full bg-[#075E54] hover:bg-[#097467] shadow-2xl flex items-center justify-center transition-all active:scale-95"
+                className="fixed bottom-5 right-4 z-[9999] w-14 h-14 rounded-full bg-[#075E54] hover:bg-[#097467] shadow-2xl flex items-center justify-center transition-all active:scale-95 hover:cursor-pointer"
             >
                 <Image
                     src="/whatsapp-icon.png"

@@ -94,7 +94,7 @@ export const Navbar: React.FC = () => {
             </Link>
             <button
               onClick={() => setChatOpen(true)}
-              className="font-display text-sm uppercase tracking-[0.15em] font-extrabold text-neutral-700 transition-colors hover:text-gold-600 flex items-center space-x-1.5"
+              className="font-display text-sm uppercase tracking-[0.15em] font-extrabold text-neutral-700 transition-colors hover:text-gold-600 flex items-center space-x-1.5 hover:cursor-pointer"
             >
               <Sparkles className="h-4.5 w-4.5 text-gold-500 animate-pulse" />
               <span>AI Style Chatbot</span>
@@ -236,7 +236,7 @@ export const Navbar: React.FC = () => {
               setIsMobileMenuOpen(false);
               setChatOpen(true);
             }}
-            className="w-full text-left font-display text-xs uppercase tracking-wider text-neutral-800 font-bold flex items-center space-x-2"
+            className="w-full text-left font-display text-xs uppercase tracking-wider text-neutral-800 font-bold flex items-center space-x-2 hover:cursor-pointer"
           >
             <Sparkles className="h-4 w-4 text-gold-500" />
             <span>AI Style Chatbot</span>

@@ -12,7 +12,7 @@ export const AuraChat: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: "assistant",
-      content: "Welcome to Arooj Arts, patron. I am Aura, your private AI Styling Concierge. I am expert in our silk garments, bespoke timepieces, luxury fragrances, and custom home stones. How may I tailormake your design experience today?",
+      content: "Welcome to Arooj Arts. How can I help you today?",
     },
   ]);
   const [inputVal, setInputVal] = useState("");
@@ -67,7 +67,7 @@ export const AuraChat: React.FC = () => {
   return (
     <AnimatePresence>
       {isChatOpen && (
-        <div className="fixed bottom-6 right-6 z-55 w-full max-w-md h-[580px] px-4 sm:px-0">
+        <div className="fixed bottom-6 right-6 z-[99999] w-full max-w-md h-[580px] px-4 sm:px-0">
           <motion.div
             initial={{ opacity: 0, y: 30, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -92,7 +92,7 @@ export const AuraChat: React.FC = () => {
               </div>
               <button
                 onClick={() => setChatOpen(false)}
-                className="text-neutral-400 hover:text-white transition-colors p-1"
+                className="text-neutral-400 hover:text-white transition-colors p-1 hover:cursor-pointer"
                 aria-label="Minimise AI dialogue"
               >
                 <X className="h-4.5 w-4.5" />

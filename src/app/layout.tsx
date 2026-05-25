@@ -10,33 +10,44 @@ import WhatsAppChatWidget from "../components/WhatsAppChatWidget";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  metadataBase: process.env.NEXT_APP_SITE_URL,
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+  ),
+
   title: {
-    default: "Arooj Arts — Premium Showroom & Curations",
+    default: "Arooj Arts — Premium Fashion Store",
     template: "%s | Arooj Arts",
   },
-  description: "Curators of fine Italian silk trench coats, surgical steel timepieces, raw travertines, and exotic sandalwood extraits.",
+
+  description:
+    "Arooj Arts is a premium fashion showroom offering elegant ladies clothing, luxury fabrics, and modern curated styles.",
+
   openGraph: {
-    title: "Arooj Arts — Showroom & Curations",
-    description: "Curators of fine Italian silk trench coats, surgical steel timepieces, raw travertines, and exotic sandalwood extraits.",
+    title: "Arooj Arts — Premium Fashion Store",
+    description:
+      "Elegant ladies fashion, curated collections, and premium styles by Arooj Arts.",
     siteName: "Arooj Arts",
     locale: "en_US",
     type: "website",
+
     images: [
       {
-        url: '/meta-logo.jpg',
+        url: "/meta-logo.jpg",
         width: 1200,
         height: 630,
-        alt: `arooj arts web logo`,
+        alt: "Arooj Arts Logo",
       },
     ],
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "Arooj Arts — Showroom & Curations",
-    description: "Curators of fine Italian silk trench coats, surgical steel timepieces, raw travertines, and exotic sandalwood extraits.",
-    images: ['/meta-logo.jpg'],
+    title: "Arooj Arts — Premium Fashion Store",
+    description:
+      "Elegant ladies fashion and curated collections by Arooj Arts.",
+    images: ["/meta-logo.jpg"],
   },
+
   icons: {
     icon: "/fav-icon.png",
   },
