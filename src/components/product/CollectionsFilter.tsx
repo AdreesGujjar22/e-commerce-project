@@ -93,14 +93,14 @@ export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({
 
   // Dynamically map categories from database, fallback to built-in presets if none loaded
   const categoriesList = [
-    { id: "all", label: "All Curations" },
+    { id: "all", label: "All Products" },
     ...(initialCategories && initialCategories.length > 0
       ? initialCategories.map((cat) => ({
           id: cat.id,
           label: cat.name,
         }))
       : [
-          { id: "apparel", label: "Apparel & Outerwear" },
+          { id: "apparel", label: "Clothing" },
           { id: "decor", label: "Geologic Decors" },
           { id: "watches", label: "Fine Timekeepers" },
           { id: "fragrances", label: "Prestige Fragrances" },
@@ -141,10 +141,10 @@ export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({
             onChange={(e) => setSortBy(e.target.value)}
             className="bg-white border border-gold-200 rounded-xl px-4 py-2.5 font-display text-[10px] uppercase tracking-wider text-neutral-800 focus:outline-none focus:ring-1 focus:ring-gold-450 cursor-pointer"
           >
-            <option value="default">Release Relevance</option>
+            <option value="default">Default</option>
             <option value="price-low">Price: Low to High</option>
             <option value="price-high">Price: High to Low</option>
-            <option value="rating">Top Rated Patrons Choice</option>
+            <option value="rating">Top Rated </option>
           </select>
         </div>
       </div>
@@ -152,7 +152,7 @@ export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({
       {/* Active filters feedback info */}
       {(selectedCategory !== "all" || searchQuery) && (
         <div className="flex items-center space-x-2.5 text-xs text-neutral-500 font-sans mt-2">
-          <span>Actively showing filters for:</span>
+          <span>Filters</span>
           {selectedCategory !== "all" && (
             <span className="bg-gold-100/60 border border-gold-200 text-gold-900 rounded-full px-3 py-1 text-[10px] uppercase font-display font-medium">
               Category: {selectedCategory}
@@ -160,7 +160,7 @@ export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({
           )}
           {searchQuery && (
             <span className="bg-gold-100/60 border border-gold-200 text-gold-900 rounded-full px-3 py-1 text-[10px] uppercase font-display font-medium">
-              Inquiry: "{searchQuery}"
+              Applied: "{searchQuery}"
             </span>
           )}
           <button
@@ -170,7 +170,7 @@ export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({
             }}
             className="text-neutral-500 hover:text-neutral-950 text-xs font-semibold underline decoration-dashed transition-colors cursor-pointer"
           >
-            Clear filters
+            Clear all
           </button>
         </div>
       )}
@@ -184,7 +184,7 @@ export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({
             <div className="flex flex-col items-center space-y-2 bg-white/80 p-6 rounded-2xl shadow-md border border-gold-100">
               <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gold-600"></div>
               <span className="font-display text-[9px] uppercase tracking-wider text-neutral-500 font-bold">
-                Curation update active...
+                Loading products...
               </span>
             </div>
           </div>
@@ -196,7 +196,7 @@ export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({
         <div className="flex flex-col sm:flex-row items-center justify-between border-t border-gold-200 pt-8 mt-12 gap-4" id="gallery-showroom-pagination-curator">
           {/* Status count indicator */}
           <p className="font-sans text-xs text-neutral-500">
-            Showing <span className="font-semibold text-neutral-900">{products.length}</span> of <span className="font-semibold text-neutral-900">{totalCount}</span> exquisite designs
+            Showing <span className="font-semibold text-neutral-900">{products.length}</span> of <span className="font-semibold text-neutral-900">{totalCount}</span> products
           </p>
 
           {/* Nav buttons */}

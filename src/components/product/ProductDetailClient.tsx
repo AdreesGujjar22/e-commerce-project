@@ -97,7 +97,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
         triggerNotification(res.error || "Failed to submit review.");
       }
     } catch (err: any) {
-      triggerNotification(err.message || "Failed to publish review.");
+      triggerNotification(err.message || "Failed to Submit Review.");
     } finally {
       setIsSubmittingReview(false);
     }
@@ -164,7 +164,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
                 {/* 1. SUIT TYPE SELECTION */}
                 <div className="space-y-2">
                   <span className="block font-sans text-[11px] tracking-wider text-neutral-600 font-light select-none">
-                    Type:
+                    Choose Fabric Type:
                   </span>
                   <div className="flex gap-3">
                     {["Unstitched", "Stitched"].map((type) => (
@@ -187,7 +187,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
                 {/* 2. LINING SELECTION */}
                 <div className="space-y-2">
                   <span className="block font-sans text-[11px] tracking-wider text-neutral-600 font-light select-none">
-                    Size:
+                    Lining Option:
                   </span>
                   <div className="flex gap-3">
                     {["Without Lining", "With Lining"].map((val) => (
@@ -211,7 +211,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
                 {selectedType === "Stitched" && (
                   <div className="space-y-2 pt-1 animate-fadeIn">
                     <span className="block font-sans text-[11px] tracking-wider text-neutral-600 font-light select-none">
-                      Fits size option:
+                      Select Your Size:
                     </span>
                     <div className="flex flex-wrap gap-2">
                       {["XS", "S", "M", "L", "XL"].map((sz) => (
@@ -244,7 +244,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
 
                   {isSizeChartOpen && (
                     <div className="mt-3 p-4 border border-stone-200 bg-neutral-50 text-[11px] font-sans text-neutral-600 leading-relaxed max-w-sm animate-fadeIn">
-                      <p className="font-bold text-neutral-800 mb-1.5 uppercase tracking-wider">LAtelier Standard Measurements</p>
+                      <p className="font-bold text-neutral-800 mb-1.5 uppercase tracking-wider">Standard Size Guide</p>
                       <ul className="space-y-1 font-mono">
                         <li>XS: Chest 34" | Waist 26" | Hips 36"</li>
                         <li>S: Chest 36" | Waist 28" | Hips 38"</li>
@@ -263,11 +263,11 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
             {!["apparel"].includes(product.category) && (
               <div className="space-y-2">
                 <span className="block font-sans text-[11px] tracking-wider text-neutral-600 font-light select-none">
-                  Bespoke Monogram / Brass Engraving
+                  Custom Text (Optional)
                 </span>
                 <input
                   type="text"
-                  placeholder="Enter custom initials (Max 15 chars)"
+                  placeholder="Enter initials or name (max 15 characters)"
                   maxLength={15}
                   value={engravingText}
                   onChange={(e) => setEngravingText(e.target.value)}
@@ -279,7 +279,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
             {/* QUANTITY PICKER ELEMENT */}
             <div className="space-y-2 pt-1">
               <span className="block font-sans text-[11px] tracking-wider text-neutral-600 font-light select-none">
-                Quantity:
+                Quantity
               </span>
               <div className="inline-flex items-center border border-stone-200 rounded-none bg-white">
                 <button
@@ -333,13 +333,13 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
             {product.stock <= 3 && product.stock > 0 && (
               <div className="flex items-center gap-1.5 text-amber-600 font-sans text-[11px] font-light mt-1">
                 <ShieldAlert className="h-4 w-4" />
-                <span>Atelier limitation: only {product.stock} items remaining securely in vault.</span>
+                <span>Only {product.stock} items left in stock.</span>
               </div>
             )}
             {product.stock === 0 && (
               <div className="inline-flex items-center gap-1.5 text-red-600 font-sans text-[11px] font-light mt-1">
                 <ShieldAlert className="h-4 w-4" />
-                <span>Unfortuantely this masterpiece curation has been entirely sold out.</span>
+                <span>This product is currently sold out.</span>
               </div>
             )}
 
@@ -348,14 +348,14 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
           {/* Accordion List Segment */}
           <div className="border-t border-stone-200 mt-8 pt-2">
             
-            {/* 1. DESCRIPTION */}
+            {/* 1. Product Details */}
             <div className="border-b border-stone-200">
               <button
                 type="button"
                 className="w-full py-4.5 flex items-center justify-between font-sans text-[11px] tracking-[0.18em] text-neutral-900 font-medium uppercase focus:outline-none cursor-pointer"
                 onClick={() => toggleAccordion("description")}
               >
-                <span>DESCRIPTION</span>
+                <span>Product Details</span>
                 {accordions.description ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
               </button>
               {accordions.description && (
@@ -375,14 +375,14 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
               )}
             </div>
 
-            {/* 2. MODEL SIZE */}
+            {/* 2. Model Info */}
             <div className="border-b border-stone-200">
               <button
                 type="button"
                 className="w-full py-4.5 flex items-center justify-between font-sans text-[11px] tracking-[0.18em] text-neutral-900 font-medium uppercase focus:outline-none cursor-pointer"
                 onClick={() => toggleAccordion("modelSize")}
               >
-                <span>MODEL SIZE</span>
+                <span>Model Info</span>
                 {accordions.modelSize ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
               </button>
               {accordions.modelSize && (
@@ -393,14 +393,14 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
               )}
             </div>
 
-            {/* 3. PLEASE NOTE */}
+            {/* 3. Important Information */}
             <div className="border-b border-stone-200">
               <button
                 type="button"
                 className="w-full py-4.5 flex items-center justify-between font-sans text-[11px] tracking-[0.18em] text-neutral-900 font-medium uppercase focus:outline-none cursor-pointer"
                 onClick={() => toggleAccordion("pleaseNote")}
               >
-                <span>PLEASE NOTE</span>
+                <span>Important Information</span>
                 {accordions.pleaseNote ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
               </button>
               {accordions.pleaseNote && (
@@ -411,14 +411,14 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
               )}
             </div>
 
-            {/* 4. DELIVERY INFORMATION */}
+            {/* 4. Delivery Details */}
             <div className="border-b border-stone-200">
               <button
                 type="button"
                 className="w-full py-4.5 flex items-center justify-between font-sans text-[11px] tracking-[0.18em] text-neutral-900 font-medium uppercase focus:outline-none cursor-pointer"
                 onClick={() => toggleAccordion("delivery")}
               >
-                <span>DELIVERY INFORMATION</span>
+                <span>Delivery Details</span>
                 {accordions.delivery ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
               </button>
               {accordions.delivery && (
@@ -429,14 +429,14 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
               )}
             </div>
 
-            {/* 5. EXCHANGE */}
+            {/* 5. Returns & Exchange */}
             <div className="border-b border-stone-200">
               <button
                 type="button"
                 className="w-full py-4.5 flex items-center justify-between font-sans text-[11px] tracking-[0.18em] text-neutral-900 font-medium uppercase focus:outline-none cursor-pointer"
                 onClick={() => toggleAccordion("exchange")}
               >
-                <span>EXCHANGE</span>
+                <span>Returns & Exchange</span>
                 {accordions.exchange ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
               </button>
               {accordions.exchange && (
@@ -455,7 +455,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
       {/* Dynamic Patron Reviews Logs (Database data unchanged) */}
       <div className="border-t border-stone-200 mt-20 pt-16" id={`productDetailClient-reviews-${product.id}`}>
         <h3 className="font-sans text-base sm:text-lg uppercase tracking-[0.2em] text-neutral-900 font-normal mb-8 text-center sm:text-left">
-          PROPRIETARY AUDITS <span className="font-serif italic text-stone-500 font-light">Patron feedback</span>
+          Customer Reviews <span className="font-serif italic text-stone-500 font-light">Customer feedback</span>
         </h3>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
@@ -465,13 +465,13 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
             <form onSubmit={handleAddReview} className="bg-neutral-50 border border-stone-200 p-6">
               <h4 className="font-sans text-[11px] uppercase tracking-wider font-medium text-neutral-800 mb-4 flex items-center">
                 <MessageSquarePlus className="h-4 w-4 text-stone-700 mr-2" />
-                WRITE AN ATELIER TESTIMONIAL
+                Write a review
               </h4>
               
               <div className="space-y-4 mb-4">
                 <div>
                   <label className="block text-[9px] font-sans uppercase tracking-widest text-neutral-400 mb-1.5">
-                    Patron/Guest Name
+                    Your Name
                   </label>
                   <input
                     type="text"
@@ -505,7 +505,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
                   <textarea
                     required
                     rows={3}
-                    placeholder="Describe your tactile observation of this curated artifact..."
+                    placeholder="Write your honest experience with this product..."
                     value={reviewText}
                     onChange={(e) => setReviewText(e.target.value)}
                     className="w-full bg-white text-neutral-950 placeholder-stone-400 font-sans text-xs px-3.5 py-2.5 border border-stone-200 focus:outline-none focus:border-stone-550"
@@ -518,7 +518,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
                 disabled={isSubmittingReview}
                 className="w-full bg-neutral-950 hover:bg-neutral-900 disabled:opacity-40 text-white font-sans text-[10px] uppercase tracking-widest font-medium py-3 border border-neutral-950 transition-colors cursor-pointer"
               >
-                {isSubmittingReview ? "PUBLISHING..." : "PUBLISH REVIEW"}
+                {isSubmittingReview ? "PUBLISHING..." : "Submit Review"}
               </button>
             </form>
           </div>
@@ -527,7 +527,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
           <div className="lg:col-span-8 space-y-6 max-h-[500px] overflow-y-auto pr-2 scrollbar-thin">
             {localReviews.length === 0 ? (
               <div className="py-12 border border-dashed border-stone-200 bg-[#fbfbfb] flex flex-col items-center justify-center p-6 text-center">
-                <p className="font-sans text-xs italic text-neutral-400">Be the first patron to share a feedback on this curation.</p>
+                <p className="font-sans text-xs italic text-neutral-400">No reviews yet. Be the first to review this product.</p>
               </div>
             ) : (
               localReviews.map((review, rIdx) => (

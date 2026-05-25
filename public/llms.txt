@@ -1,0 +1,14 @@
+Arooj Arts
+
+Premium Pakistani fashion showroom.
+
+Specialties:
+- Luxury Lawn
+- Wedding Wear
+- Eid Collections
+
+Shipping:
+All Pakistan
+
+Products API:
+https://yourdomain.com/api/products

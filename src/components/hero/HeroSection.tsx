@@ -191,7 +191,7 @@ export const HeroSection: React.FC = () => {
         >
           <Sparkles className="h-3 w-3 text-gold-400 animate-pulse" />
           <span className="font-display text-[9px] uppercase tracking-[0.22em] font-semibold text-gold-300">
-            introducing our curations
+            Latest Collection
           </span>
         </motion.div>
 
@@ -230,7 +230,7 @@ export const HeroSection: React.FC = () => {
             className="inline-flex items-center justify-center bg-[#faf9f6]/95 hover:bg-[#eae8e4] text-neutral-950 font-display text-[10px] uppercase font-bold tracking-[0.2em] px-8 py-4 rounded-full transition-all duration-300 shadow-lg active:scale-97"
           >
             <Compass className="h-3.5 w-3.5 mr-2" />
-            <span>inquire showroom</span>
+            <span>View Products</span>
           </Link>
 
           <button
@@ -238,7 +238,7 @@ export const HeroSection: React.FC = () => {
             className="inline-flex items-center justify-center bg-neutral-950/40 hover:bg-neutral-950/70 border border-gold-400/35 hover:border-gold-400/75 text-[#faf9f6] font-display text-[10px] uppercase font-bold tracking-[0.2em] px-8 py-4 rounded-full backdrop-blur-subtle transition-all duration-300 shadow-md active:scale-97"
           >
             <Sparkles className="h-3.5 w-3.5 mr-2 text-gold-400" />
-            <span>ai styling chatbot</span>
+            <span>Ask Stylist AI</span>
           </button>
         </motion.div>
 
@@ -250,7 +250,7 @@ export const HeroSection: React.FC = () => {
           <button
             onClick={handlePrev}
             className="absolute left-6 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full border border-white/10 bg-black/20 hover:bg-black/45 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all active:scale-90 cursor-pointer hover:border-gold-400/30 backdrop-blur-subtle"
-            aria-label="Previous exhibition slide"
+            aria-label="Previous slide"
           >
             <ChevronLeft className="h-5 w-5 text-neutral-200 hover:text-white" />
           </button>
@@ -258,7 +258,7 @@ export const HeroSection: React.FC = () => {
           <button
             onClick={handleNext}
             className="absolute right-6 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full border border-white/10 bg-black/20 hover:bg-black/45 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all active:scale-90 cursor-pointer hover:border-gold-400/30 backdrop-blur-subtle"
-            aria-label="Next exhibition slide"
+            aria-label="Next slide"
           >
             <ChevronRight className="h-5 w-5 text-neutral-200 hover:text-white" />
           </button>

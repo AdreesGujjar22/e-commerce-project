@@ -1906,7 +1906,7 @@ export default function AdminPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Input
                     label="Custom SEO Meta Title"
-                    placeholder="e.g. Designer Embroidered Silk Kurti | Maison L'Étoile"
+                    placeholder="e.g. Designer Embroidered Silk Kurti | Arooj Arts"
                     value={newSeoTitle}
                     onChange={(e) => setNewSeoTitle(e.target.value)}
                   />

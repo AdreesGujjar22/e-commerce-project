@@ -19,7 +19,7 @@ export default function CheckoutPage() {
   const [customCity, setCustomCity] = useState("");
   const [province, setProvince] = useState("Punjab");
   const [orderNotes, setOrderNotes] = useState("");
-  
+
   const [phoneError, setPhoneError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [placedOrder, setPlacedOrder] = useState<any>(null);
@@ -126,21 +126,21 @@ export default function CheckoutPage() {
         <div className="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-400 mx-auto flex items-center justify-center mb-8">
           <BadgeCheck className="h-8 w-8 text-gold-500 animate-pulse" />
         </div>
-        
+
         <span className="font-display text-[10px] uppercase tracking-[0.25em] font-black text-gold-600 block mb-1">
-          COD courier scheduled
+          Order Confirmed
         </span>
         <h1 className="font-display text-2xl md:text-3.5xl uppercase tracking-tight text-neutral-950 font-bold mb-4">
-          LEDGER ORDER PLACED SECURELY
+          Your order has been placed successfully
         </h1>
         <p className="font-sans text-xs text-neutral-500 max-w-sm mx-auto leading-relaxed">
-          Praise for your fine taste, <strong>{placedOrder.customerName}</strong>. Your custom order <span className="font-mono text-[11px] font-bold text-neutral-900 bg-gold-100 rounded px-1.5 py-0.5">#{placedOrder.id}</span> is successfully queued on **Cash on Delivery (COD)**.
+          Thank you for your order, <strong>{placedOrder.customerName}</strong>. Your order <span className="font-mono text-[11px] font-bold text-neutral-900 bg-gold-100 rounded px-1.5 py-0.5">#{placedOrder.id}</span> has been confirmed and will be delivered on Cash on Delivery (COD).
         </p>
 
         <div className="bg-[#faf9f6] border border-gold-150 rounded-2xl p-6.5 my-10 text-left">
           <h4 className="font-display text-[9.5px] uppercase tracking-widest text-neutral-900 font-black border-b border-gold-150 pb-3 mb-4 flex items-center justify-between">
-            <span>OFFICIAL COD COURIER INVOICE</span>
-            <span className="text-gold-600 text-[8.5px] font-mono tracking-normal bg-gold-100/60 px-2 py-0.5 rounded font-bold">IN PROCESS</span>
+            <span>OFFICIAL ORDER SUMMARY</span>
+            <span className="text-gold-600 text-[8.5px] font-mono tracking-normal bg-gold-100/60 px-2 py-0.5 rounded font-bold">Status: Processing</span>
           </h4>
           <div className="space-y-2.5 text-xs">
             <p className="text-neutral-500 flex justify-between">
@@ -156,7 +156,7 @@ export default function CheckoutPage() {
               <span className="text-neutral-950 font-mono font-medium">{placedOrder.phone || phone}</span>
             </p>
             <p className="text-neutral-500 flex justify-between">
-              <span>Consolidated Location:</span>
+              <span>Delivery Details:</span>
               <span className="text-neutral-950 font-medium text-right font-display text-[11px] uppercase tracking-wider">
                 {placedOrder.city || city}, {placedOrder.province || province}
               </span>
@@ -180,7 +180,7 @@ export default function CheckoutPage() {
               </span>
             </p>
             <p className="text-neutral-500 flex justify-between pt-3 text-sm font-semibold">
-              <span>Due on Delivery:</span>
+              <span>Total Amount:</span>
               <span className="font-serif italic text-neutral-950 font-extrabold text-[#151515]">
                 ${placedOrder.totalAmount.toLocaleString()}
               </span>
@@ -192,7 +192,7 @@ export default function CheckoutPage() {
           href="/collections"
           className="inline-flex items-center justify-center bg-neutral-950 hover:bg-neutral-800 text-white font-display text-[10px] uppercase font-bold tracking-[0.2em] px-8 py-4 px-10 rounded-full transition-all"
         >
-          continue gallery catalog viewing
+          Continue Shopping
         </Link>
       </div>
     );
@@ -214,34 +214,34 @@ export default function CheckoutPage() {
           <span>Pakistan Cash On Delivery Enabled</span>
         </div>
         <h1 className="font-display text-2.5xl md:text-4.5xl uppercase tracking-tight text-neutral-950 font-black mb-4">
-          SECURE REGISTER <span className="font-serif italic font-light text-gold-600">COD Shipping</span>
+          Checkout <span className="font-serif italic font-light text-gold-600">Cash on Delivery (COD)</span>
         </h1>
         <p className="font-sans text-xs text-neutral-500 leading-relaxed mb-12">
-          Verify your credentials below. Cash will be collected by our secure couriers when they hand over your custom luxury parcel at your doorstep. No prepayment is needed.
+          Fill in your details to place your order.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-        
+
         {/* Left Column: Checkout Inputs Form */}
         <form onSubmit={handlePlaceOrder} className="lg:col-span-7 space-y-8 text-left">
-          
+
           {/* Customer Credentials */}
           <section className="space-y-5 shadow-sm border border-gold-150 rounded-2xl p-6.5 bg-white">
             <h3 className="font-display text-[9.5px] uppercase tracking-[0.2em] text-[#151515] font-black border-b border-gold-150 pb-3 mb-6">
-              1. CUSTOMER IDENTITY CERTIFICATE
+              1. Customer Details
             </h3>
             <Input
-              label="Recipient Full Name"
-              placeholder="e.g. Hammad Malik"
+              label="Full Name"
+              placeholder="Full Name"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <Input
-              label="Recipient Alert Email"
+              label="Email Address"
               type="email"
-              placeholder="e.g. hammad@company.com.pk"
+              placeholder="Email Address"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -251,7 +251,7 @@ export default function CheckoutPage() {
           {/* Shipping Details */}
           <section className="space-y-5 shadow-sm border border-gold-150 rounded-2xl p-6.5 bg-white">
             <h3 className="font-display text-[9.5px] uppercase tracking-[0.2em] text-[#151515] font-black border-b border-gold-150 pb-3 mb-6">
-              2. SHIPMENT LOGISTICS DESK
+              2. Shipping Details
             </h3>
 
             {/* Pakistan Province Select */}
@@ -304,9 +304,9 @@ export default function CheckoutPage() {
             {/* Recipient Phone with direct validation error feedback */}
             <div className="flex flex-col space-y-1">
               <Input
-                label="Direct Mobile Number (COD Verification Call)"
+                label="Phone Number"
                 type="tel"
-                placeholder="e.g. 03001234567"
+                placeholder="0300XXXXXXX"
                 required
                 value={phone}
                 onChange={(e) => {
@@ -324,8 +324,8 @@ export default function CheckoutPage() {
 
             {/* Physical home address */}
             <Input
-              label="Complete Street Shipping Address"
-              placeholder="e.g. House 4-B, Sector F-7/3, Street 18"
+              label="Full Address"
+              placeholder="House address, street, area"
               required
               value={address}
               onChange={(e) => setAddress(e.target.value)}
@@ -334,7 +334,7 @@ export default function CheckoutPage() {
             {/* Order notes */}
             <div className="flex flex-col space-y-2 text-left">
               <label className="text-[10px] uppercase tracking-wider font-bold text-neutral-700">
-                Special Delivery Notes (Optional)
+                Order Notes (Optional)
               </label>
               <textarea
                 placeholder="e.g. Please deliver by afternoon, ring bell, or leave order with office reception."
@@ -351,16 +351,16 @@ export default function CheckoutPage() {
             <CheckCircle2 className="h-5 w-5 text-gold-600 mt-0.5 flex-shrink-0" />
             <div className="space-y-1.5">
               <h5 className="font-display text-[9.5px] uppercase tracking-widest font-black text-neutral-900">
-                CASH ON DELIVERY GUARANTEE
+                Cash on Delivery (COD)
               </h5>
               <p className="font-sans text-[11px] text-neutral-500 leading-relaxed">
-                By sliding to place this order, you authorize delivery tracking. Prior to shipping, our administration team will send an SMS or Call to confirm. Delivery is free and comes with real-time tracking from Leopard / TCS courier networks.
+                You will pay when your order is delivered. Our courier will contact you before delivery for confirmation. Please ensure your contact details are correct and that you have the total amount ready in cash at the time of delivery. COD orders may take slightly longer to process and deliver compared to prepaid orders. Thank you for choosing our doorstep delivery service!
               </p>
             </div>
           </section>
 
           <Button type="submit" size="lg" className="w-full h-14" isLoading={isLoading}>
-            Finalize Doorstep Cash On Delivery Order
+            Confirm Order
           </Button>
         </form>
 
@@ -368,17 +368,17 @@ export default function CheckoutPage() {
         <div className="lg:col-span-5 text-left">
           <div className="border border-gold-150 rounded-2xl p-6.5 bg-white/70 backdrop-blur-subtle shadow-sm sticky top-28 space-y-6">
             <h3 className="font-display text-[9.5px] uppercase tracking-[0.2em] text-[#151515] font-black border-b border-gold-150 pb-3">
-              YOUR SELECTED CURATIONS
+              Order Summary
             </h3>
 
             {cart.length === 0 ? (
               <div className="text-center py-12">
-                <p className="font-sans text-xs text-neutral-400">Your shopping cart holds no items.</p>
+                <p className="font-sans text-xs text-neutral-400">Your cart is empty</p>
                 <Link
                   href="/collections"
                   className="font-display text-[9px] uppercase tracking-widest font-black text-gold-600 block mt-2 hover:underline"
                 >
-                  view the collections catalog
+                  Browse products to add items to your cart
                 </Link>
               </div>
             ) : (
@@ -405,8 +405,8 @@ export default function CheckoutPage() {
             {/* Calculation summary */}
             <div className="border-t border-gold-150 pt-5 space-y-3.5 text-xs text-neutral-500">
               <p className="flex justify-between">
-                <span>Doorstep Courier Delivery fee:</span>
-                <span className="text-teal-600 font-medium uppercase text-[9px] tracking-widest bg-teal-50 border border-teal-200 px-2 rounded">Complimentary (Free)</span>
+                <span>Delivery Fee:</span>
+                <span className="text-teal-600 font-medium uppercase text-[9px] tracking-widest bg-teal-50 border border-teal-200 px-2 rounded">Free</span>
               </p>
               <p className="flex justify-between">
                 <span>Value Added Taxes / Customs:</span>
@@ -414,7 +414,7 @@ export default function CheckoutPage() {
               </p>
               <div className="border-t border-dashed border-gold-200 pt-4.5">
                 <p className="flex justify-between text-neutral-950 font-serif italic text-base font-bold">
-                  <span>Due on Delivery:</span>
+                  <span>Total Payable (COD):</span>
                   <span>${totalAmount.toLocaleString()}</span>
                 </p>
               </div>

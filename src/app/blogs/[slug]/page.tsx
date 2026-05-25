@@ -24,14 +24,14 @@ export async function generateMetadata({ params }: SingleBlogProps): Promise<Met
 
   if (!blog) {
     return {
-      title: "Journal Chronicle Not Found | Maison l'Étoile",
+      title: "Journal Chronicle Not Found | Arooj Arts",
       description: "The requested editorial chronicle is not active in our archive.",
     };
   }
 
-  const title = `${blog.seoTitle || blog.title} | Maison l'Étoile`;
-  const description = blog.seoDescription || blog.excerpt || `Read "${blog.title}" at Maison l'Étoile.`;
-  const canonicalUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/blogs/${blog.slug}`;
+  const title = `${blog.seoTitle || blog.title} | Arooj Arts`;
+  const description = blog.seoDescription || blog.excerpt || `Read "${blog.title}" at Arooj Arts.`;
+  const canonicalUrl = `${process.env.NEXT_APP_SITE_URL}/blogs/${blog.slug}`;
 
   return {
     title,
@@ -43,10 +43,10 @@ export async function generateMetadata({ params }: SingleBlogProps): Promise<Met
       title,
       description,
       url: canonicalUrl,
-      siteName: "Maison l'Étoile",
+      siteName: "Arooj Arts",
       images: [
         {
-          url: blog.coverImage || "https://picsum.photos/seed/vibrant/1920/1080",
+          url: "/meta-logo.jpg",
           width: 1200,
           height: 630,
           alt: blog.title,
@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: SingleBlogProps): Promise<Met
       card: "summary_large_image",
       title,
       description,
-      images: [blog.coverImage || ""],
+      images: ["/meta-logo.jpg"],
     },
   };
 }
@@ -119,7 +119,7 @@ export default async function SingleBlogPage({ params }: SingleBlogProps) {
     "description": blog.excerpt,
     "publisher": {
       "@type": "Organization",
-      "name": "Maison l'Étoile",
+      "name": "Arooj Arts",
       "logo": {
         "@type": "ImageObject",
         "url": "https://ais-dev-cgwlfgq4uevdr35b2ix4qe-922378778819.asia-southeast1.run.app/logo.png"

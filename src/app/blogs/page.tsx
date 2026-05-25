@@ -8,8 +8,9 @@ import { Calendar, User, Clock, ChevronLeft, ChevronRight, BookOpen } from "luci
 export const revalidate = 60; // Cash pages dynamically every minute
 
 export const metadata: Metadata = {
-  title: "Editorial Journal | Maison l'Étoile",
-  description: "Delve inside our architectural styling notes, rare scent reviews, historical clay techniques, and high-fashion textiles.",
+  title: "Fashion Blog | Arooj Arts Pakistan",
+description:
+  "Explore the latest Pakistani fashion trends, lawn collections, Eid dresses, wedding wear inspiration, styling tips, and luxury women's clothing guides by Arooj Arts.",
 };
 
 interface BlogsPageProps {
@@ -34,13 +35,13 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gold-50 border border-gold-200 text-[10px] font-display uppercase tracking-widest text-[#7c633a] font-extrabold">
             <BookOpen className="h-3 w-3" />
-            <span>Maison Editorial Journal</span>
+            <span>Arooj Arts Fashion Blog</span>
           </div>
           <h1 className="font-display text-3xl sm:text-4xl uppercase tracking-wider text-neutral-900 font-black leading-tight">
-            Curated Chronicles & Musings
+            Latest Fashion Trends & Style Guides
           </h1>
           <p className="font-sans text-xs sm:text-sm text-neutral-500 leading-relaxed font-normal">
-            Detailing textile design integrity, Swiss horology metrics, artisanal Kyoto ceramics, and organic perfume profiles.
+            Discover the latest Pakistani fashion trends, luxury lawn collections, Eid outfit ideas, wedding wear inspiration, and styling tips for modern women across Pakistan.
           </p>
         </div>
 
@@ -48,10 +49,10 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
           <div className="bg-white border border-gold-150 rounded-2xl p-12 text-center max-w-md mx-auto shadow-xs" id="empty-journal-notice">
             <BookOpen className="h-10 w-10 text-gold-300 mx-auto mb-3" />
             <h3 className="font-display text-xs uppercase tracking-widest font-bold text-neutral-800">
-              No Published Chronicles
+              No Fashion Articles Yet
             </h3>
             <p className="font-sans text-xs text-neutral-400 mt-2">
-              Our editor is currently sketching outstanding content. Please check back soon.
+              New fashion trends, styling tips, and collection updates will be published soon. Please check back soon.
             </p>
           </div>
         ) : (
@@ -84,7 +85,7 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
                         />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center bg-neutral-950 text-gold-400 font-display font-black text-[10px] uppercase tracking-widest">
-                          Maison L'Étoile
+                          Arooj Arts
                         </div>
                       )}
                       
@@ -127,7 +128,7 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
                           href={`/blogs/${post.slug}`}
                           className="text-[10px] font-display uppercase tracking-widest text-[#7c633a] font-extrabold group-hover:text-neutral-950 transition-colors flex items-center gap-1.5"
                         >
-                          <span>Explore Article</span>
+                          <span>Read More</span>
                           <Clock className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </Link>
                       </div>

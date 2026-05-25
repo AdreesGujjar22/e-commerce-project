@@ -41,10 +41,10 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ products, bypassClient
       <div className="flex flex-col items-center justify-center py-20 px-4 border border-dashed border-gold-200 rounded-3xl bg-neutral-50/50 w-full max-w-lg mx-auto mt-12 text-center">
         <Inbox className="h-10 w-10 text-neutral-300 stroke-[1.5] mb-4.5" />
         <h4 className="font-display text-xs uppercase tracking-widest text-[#151515] font-black">
-          No curations match search query
+          No products found
         </h4>
         <p className="font-sans text-xs text-neutral-400 mt-2 max-w-sm">
-          Please adjust your selected filters, categories, or inquiry search key to display Arooj items.
+          We couldn’t find anything matching your search. Try a different keyword or category.
         </p>
       </div>
     );

@@ -101,7 +101,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
     },
     "offers": {
       "@type": "Offer",
-      "priceCurrency": "USD",
+      "priceCurrency": "PKR",
       "price": product.price,
       "itemCondition": "https://schema.org/NewCondition",
       "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
