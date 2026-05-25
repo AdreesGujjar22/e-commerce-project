@@ -5,6 +5,16 @@ import { ProductSchema } from "../validations";
 import { Product, Review } from "../types";
 import { deleteFromCloudinary } from "../lib/cloudinary";
 
+function generateSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9-\s]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 /**
  * Maps a database product entry into the clean Product frontend type
  */
@@ -12,6 +22,7 @@ function mapProductDbToType(dbProduct: any): Product {
   let parsedDesc = dbProduct.long_description || dbProduct.description;
   let seoTitle = "";
   let seoDescription = "";
+  let slug = "";
 
   if (parsedDesc && parsedDesc.startsWith("{")) {
     try {
@@ -19,9 +30,14 @@ function mapProductDbToType(dbProduct: any): Product {
       parsedDesc = parsed.description || "";
       seoTitle = parsed.seoTitle || "";
       seoDescription = parsed.seoDescription || "";
+      slug = parsed.slug || "";
     } catch (_) {
       // safe fallback
     }
+  }
+
+  if (!slug && dbProduct.name) {
+    slug = generateSlug(dbProduct.name);
   }
 
   // extract product gallery images if returned in product_images
@@ -32,6 +48,7 @@ function mapProductDbToType(dbProduct: any): Product {
   return {
     id: dbProduct.id,
     name: dbProduct.name,
+    slug: slug,
     designer: dbProduct.designer,
     category: dbProduct.category_id || dbProduct.category || "apparel",
     price: Number(dbProduct.price),
@@ -177,6 +194,43 @@ export async function getProductByIdAction(id: string) {
   }
 }
 
+export async function getProductBySlugAction(slug: string) {
+  try {
+    const supabase = await getSupabaseServerClient();
+    
+    const { data: dbProducts, error } = await supabase
+      .from("products")
+      .select("*, reviews(*), product_images(*)");
+
+    if (error) {
+      return { success: false, error: error.message, product: null };
+    }
+
+    const products: Product[] = (dbProducts || []).map((p: any) => {
+      const reviews: Review[] = (p.reviews || []).map((r: any) => ({
+        author: r.author_name,
+        rating: r.rating,
+        text: r.text,
+        date: new Date(r.created_at).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric"
+        }),
+      }));
+      return mapProductDbToType({ ...p, reviews });
+    });
+
+    const product = products.find((p) => p.slug === slug);
+    if (!product) {
+      return { success: false, error: "Artifact curation not found.", product: null };
+    }
+
+    return { success: true, product };
+  } catch (err: any) {
+    return { success: false, error: err.message, product: null };
+  }
+}
+
 export async function createProductAction(formData: any) {
   try {
     const supabase = await getSupabaseServerClient();
@@ -200,10 +254,44 @@ export async function createProductAction(formData: any) {
     // 2. Validate using Zod schemas
     const parsed = ProductSchema.parse(formData);
 
+    // Enforce title/slug uniqueness on product creation in Supabase
+    const { data: existingProducts, error: selectErr } = await supabase
+      .from("products")
+      .select("name, long_description");
+
+    if (!selectErr && existingProducts) {
+      const normalizedName = parsed.name.trim().toLowerCase();
+      const newSlug = parsed.slug ? generateSlug(parsed.slug) : generateSlug(parsed.name);
+
+      for (const p of existingProducts) {
+        if (p.name.trim().toLowerCase() === normalizedName) {
+          return { success: false, error: `Product title "${parsed.name}" already exists on an exhibiting SKU. Product titles must be unique.` };
+        }
+        
+        let pSlug = "";
+        if (p.long_description && p.long_description.startsWith("{")) {
+          try {
+            const parsedMeta = JSON.parse(p.long_description);
+            pSlug = parsedMeta.slug || "";
+          } catch (_) {}
+        }
+        if (!pSlug) {
+          pSlug = generateSlug(p.name);
+        }
+
+        if (pSlug === newSlug) {
+          return { success: false, error: `Product slug collision. A similar URL slug "${newSlug}" already exists.` };
+        }
+      }
+    }
+
+    const finalSlug = parsed.slug ? generateSlug(parsed.slug) : generateSlug(parsed.name);
+
     const longDescSerialized = JSON.stringify({
       description: parsed.longDescription,
       seoTitle: parsed.seoTitle || "",
       seoDescription: parsed.seoDescription || "",
+      slug: finalSlug,
     });
 
     // 3. Insert product record
@@ -264,10 +352,46 @@ export async function updateProductAction(id: string, formData: any) {
 
     const parsed = ProductSchema.parse(formData);
 
+    // Enforce title/slug uniqueness on update in Supabase
+    const { data: existingProducts, error: selectErr } = await supabase
+      .from("products")
+      .select("id, name, long_description");
+
+    if (!selectErr && existingProducts) {
+      const normalizedName = parsed.name.trim().toLowerCase();
+      const newSlug = parsed.slug ? generateSlug(parsed.slug) : generateSlug(parsed.name);
+
+      for (const p of existingProducts) {
+        if (p.id === id) continue; // skip current product
+
+        if (p.name.trim().toLowerCase() === normalizedName) {
+          return { success: false, error: `Product title "${parsed.name}" already exists on another exhibiting SKU. Product titles must be unique.` };
+        }
+        
+        let pSlug = "";
+        if (p.long_description && p.long_description.startsWith("{")) {
+          try {
+            const parsedMeta = JSON.parse(p.long_description);
+            pSlug = parsedMeta.slug || "";
+          } catch (_) {}
+        }
+        if (!pSlug) {
+          pSlug = generateSlug(p.name);
+        }
+
+        if (pSlug === newSlug) {
+          return { success: false, error: `Product slug collision. Another product uses URL slug "${newSlug}".` };
+        }
+      }
+    }
+
+    const finalSlug = parsed.slug ? generateSlug(parsed.slug) : generateSlug(parsed.name);
+
     const longDescSerialized = JSON.stringify({
       description: parsed.longDescription,
       seoTitle: parsed.seoTitle || "",
       seoDescription: parsed.seoDescription || "",
+      slug: finalSlug,
     });
 
     const { data: updatedP, error: updateError } = await supabase

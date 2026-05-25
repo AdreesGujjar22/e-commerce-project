@@ -14,6 +14,7 @@ export const ProductSchema = z.object({
   featured: z.boolean().default(false),
   seoTitle: z.string().optional().default(""),
   seoDescription: z.string().optional().default(""),
+  slug: z.string().optional().default(""),
 });
 
 export const OrderItemSchema = z.object({

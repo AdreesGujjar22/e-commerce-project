@@ -74,17 +74,17 @@ export const Footer: React.FC = () => {
         {/* Collections Sizing Column */}
         <div>
           <h4 className="font-display text-[11px] uppercase tracking-wider font-bold text-white mb-4">
-            Shop Categories
+            Categories
           </h4>
           <ul className="space-y-3 text-sm">
             <li>
               <Link href="/collections" className="hover:text-gold-400 transition-colors text-neutral-400">
-                Premium Apparel
+                About Us
               </Link>
             </li>
             <li>
-              <Link href="/collections" className="hover:text-gold-400 transition-colors text-neutral-400">
-                Lawn & Textiles
+              <Link href="/blogs" className="hover:text-gold-400 transition-colors text-neutral-400">
+                Our Blogs
               </Link>
             </li>
             <li>

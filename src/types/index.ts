@@ -10,6 +10,7 @@ export type ProductCategory = string;
 export interface Product {
   id: string;
   name: string;
+  slug: string;
   designer: string;
   category: string;
   price: number;
@@ -55,4 +56,18 @@ export interface Order {
 export interface ChatMessage {
   role: "user" | "assistant";
   content: string;
+}
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  coverImage: string;
+  author: string;
+  publishDate: string;
+  readTime: string;
+  seoTitle?: string;
+  seoDescription?: string;
 }

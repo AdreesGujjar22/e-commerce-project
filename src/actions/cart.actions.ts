@@ -53,6 +53,25 @@ export async function fetchUserCartAction() {
       product: {
         id: item.products.id,
         name: item.products.name,
+        slug: (() => {
+          let sl = "";
+          const longDesc = item.products.long_description;
+          if (longDesc && longDesc.startsWith("{")) {
+            try {
+              sl = JSON.parse(longDesc).slug || "";
+            } catch (_) {}
+          }
+          if (!sl && item.products.name) {
+            sl = item.products.name
+              .toLowerCase()
+              .trim()
+              .replace(/[^a-z0-9-\s]/g, "")
+              .replace(/\s+/g, "-")
+              .replace(/-+/g, "-")
+              .replace(/^-+|-+$/g, "");
+          }
+          return sl;
+        })(),
         designer: item.products.designer,
         category: item.products.category_id || "apparel",
         price: Number(item.products.price),

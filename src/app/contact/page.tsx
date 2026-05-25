@@ -160,7 +160,6 @@ export default async function ContactPage() {
                     className="flex items-center gap-2 text-[10.5px] text-neutral-300 font-display uppercase tracking-widest hover:text-gold-400 transition-colors bg-neutral-800/80 px-4 py-2.5 rounded-lg border border-neutral-800 hover:border-gold-950/20"
                   >
                     <Facebook className="h-3.5 w-3.5" />
-                    <span>Facebook</span>
                   </a>
 
                   <a 
@@ -170,7 +169,6 @@ export default async function ContactPage() {
                     className="flex items-center gap-2 text-[10.5px] text-neutral-300 font-display uppercase tracking-widest hover:text-gold-400 transition-colors bg-neutral-800/80 px-4 py-2.5 rounded-lg border border-neutral-800 hover:border-gold-950/20"
                   >
                     <Instagram className="h-3.5 w-3.5" />
-                    <span>Instagram</span>
                   </a>
 
                   <a 
@@ -180,7 +178,6 @@ export default async function ContactPage() {
                     className="flex items-center gap-2 text-[10.5px] text-neutral-300 font-display uppercase tracking-widest hover:text-gold-400 transition-colors bg-neutral-800/80 px-4 py-2.5 rounded-lg border border-neutral-800 hover:border-gold-950/20"
                   >
                     <Bookmark className="h-3.5 w-3.5" />
-                    <span>Pinterest</span>
                   </a>
                 </div>
               </div>

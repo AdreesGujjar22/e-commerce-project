@@ -1,15 +1,23 @@
-import { Product, Order, ChatMessage } from "../types";
+import { Product, Order, ChatMessage, BlogPost } from "../types";
 import {
   getProductsAction,
   createProductAction,
   updateProductAction,
   deleteProductAction,
+  getProductBySlugAction,
 } from "../actions/product.actions";
 import {
   getOrdersAction,
   createOrderAction,
   updateOrderStatusAction,
 } from "../actions/order.actions";
+import {
+  getBlogsAction,
+  getBlogBySlugAction,
+  createBlogAction,
+  updateBlogAction,
+  deleteBlogAction,
+} from "../actions/blog.actions";
 
 export const apiService = {
   // Products
@@ -17,6 +25,14 @@ export const apiService = {
     const res = await getProductsAction();
     if (!res.success) throw new Error(res.error || "Failed to fetch products");
     return res.products || [];
+  },
+
+  async getProductBySlug(slug: string): Promise<Product> {
+    const res = await getProductBySlugAction(slug);
+    if (!res.success || !res.product) {
+      throw new Error(res.error || "Failed to fetch product by slug");
+    }
+    return res.product;
   },
 
   async createProduct(productData: any): Promise<Product> {
@@ -38,6 +54,43 @@ export const apiService = {
   async deleteProduct(id: string): Promise<boolean> {
     const res = await deleteProductAction(id);
     if (!res.success) throw new Error(res.error || "Failed to delete product");
+    return true;
+  },
+
+  // Blogs
+  async getBlogs(options?: { page?: number; limit?: number }) {
+    const res = await getBlogsAction(options);
+    if (!res.success) throw new Error(res.error || "Failed to fetch blogs");
+    return res;
+  },
+
+  async getBlogBySlug(slug: string): Promise<BlogPost> {
+    const res = await getBlogBySlugAction(slug);
+    if (!res.success || !res.blog) {
+      throw new Error(res.error || "Failed to fetch blog by slug");
+    }
+    return res.blog;
+  },
+
+  async createBlog(blogData: any): Promise<BlogPost> {
+    const res = await createBlogAction(blogData);
+    if (!res.success || !res.blog) {
+      throw new Error(res.error || "Failed to curate blog");
+    }
+    return res.blog;
+  },
+
+  async updateBlog(id: string, blogData: any): Promise<BlogPost> {
+    const res = await updateBlogAction(id, blogData);
+    if (!res.success || !res.blog) {
+      throw new Error(res.error || "Failed to update blog");
+    }
+    return res.blog;
+  },
+
+  async deleteBlog(id: string): Promise<boolean> {
+    const res = await deleteBlogAction(id);
+    if (!res.success) throw new Error(res.error || "Failed to delete blog");
     return true;
   },
 
