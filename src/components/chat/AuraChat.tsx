@@ -12,7 +12,7 @@ export const AuraChat: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: "assistant",
-      content: "Welcome to Arooj Arts. How can I help you today?",
+      content: "Welcome to Arooj Arts ✨ I can help you find lawn suits, Eid collections, wedding wear, luxury dresses, and fashion recommendations across Pakistan.",
     },
   ]);
   const [inputVal, setInputVal] = useState("");
@@ -20,11 +20,13 @@ export const AuraChat: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const prompts = [
-    "Recommend a fragrance overlay for a formal gala",
-    "Describe the material density of the silk trench",
-    "What home accents pair well with travertine pedestals",
-    "Tell me about Atelier Chronos craftsmanship",
-  ];
+  "Show me the latest lawn collection",
+  "What are the best wedding outfits available?",
+  "Suggest summer dresses for daily wear",
+  "Best dresses under 3000 PKR",
+  "Show me black lawn suits",
+  "Which dresses are trending?"
+];
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -50,7 +52,7 @@ export const AuraChat: React.FC = () => {
         ...prev,
         {
           role: "assistant",
-          content: "Deeply sorry, patron, I encountered a temporary friction while consulting our atelier records. Please retry your inquiry shortly.",
+          content: "Sorry, something went wrong while processing your request. Please try again in a moment.",
         },
       ]);
     } finally {
@@ -83,10 +85,10 @@ export const AuraChat: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-display text-[10px] uppercase tracking-widest text-[#faf9f6]/95 font-bold">
-                    Aura Styling Concierge
+                    Arooj Arts AI Stylist
                   </h4>
                   <p className="font-serif text-[8.5px] italic text-gold-300">
-                    Live server-side AI stylist powered by Gemini
+                    Get instant fashion recommendations & styling help
                   </p>
                 </div>
               </div>
@@ -103,7 +105,7 @@ export const AuraChat: React.FC = () => {
             {messages.length === 1 && (
               <div className="px-5 py-3 border-b border-gold-150 bg-gold-50/30 text-left">
                 <span className="font-display text-[8.5px] uppercase tracking-wider text-neutral-400 font-bold block mb-2 leading-none">
-                  PATRON SELECT SUGGESTED PROMPTS
+                  TRY ASKING
                 </span>
                 <div className="flex gap-2 overflow-x-auto pb-1.5 no-scrollbar scroll-smooth">
                   {prompts.map((p, idx) => (
@@ -157,7 +159,7 @@ export const AuraChat: React.FC = () => {
                                 </span>
 
                                 <span className="text-gold-500 font-semibold">
-                                  ${price}
+                                  PKR {price}
                                 </span>
                               </div>
 
@@ -165,7 +167,7 @@ export const AuraChat: React.FC = () => {
                                 href={url}
                                 className="text-[11px] text-blue-600 underline mt-0.5 inline-block"
                               >
-                                View Product →
+                                View Details →
                               </a>
                             </div>
                           );
@@ -206,7 +208,7 @@ export const AuraChat: React.FC = () => {
             <div className="px-5 py-4.5 border-t border-gold-150 bg-[#faf9f6]/90 flex items-center space-x-3.5">
               <input
                 type="text"
-                placeholder="Inquire about high-end couture..."
+                placeholder="Ask about suits ..."
                 value={inputVal}
                 onChange={(e) => setInputVal(e.target.value)}
                 onKeyDown={handleKeyDown}

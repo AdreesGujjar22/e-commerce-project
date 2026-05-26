@@ -43,7 +43,7 @@ export const Footer: React.FC = () => {
             </div>
           </Link>
           <p className="mt-5 font-sans text-sm text-neutral-400 leading-relaxed max-w-sm">
-            We provide high-quality clothes, linen, beautiful accents, watches, and perfumes. Our items are made with the best materials, designed to last long and look elegant. Great customer service and quick courier delivery across Pakistan!
+            Arooj Arts brings you stylish clothing, perfumes, watches, and fashion accessories with premium quality and fast delivery all across Pakistan.
           </p>
 
           {/* Social Media Section */}
@@ -74,7 +74,7 @@ export const Footer: React.FC = () => {
         {/* Collections Sizing Column */}
         <div>
           <h4 className="font-display text-[11px] uppercase tracking-wider font-bold text-white mb-4">
-            Categories
+            Quick Links
           </h4>
           <ul className="space-y-3 text-sm">
             <li>
@@ -84,7 +84,7 @@ export const Footer: React.FC = () => {
             </li>
             <li>
               <Link href="/blogs" className="hover:text-gold-400 transition-colors text-neutral-400">
-                Our Blogs
+                Fashion Blogs
               </Link>
             </li>
             <li>

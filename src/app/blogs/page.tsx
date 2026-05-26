@@ -9,8 +9,18 @@ export const revalidate = 60; // Cash pages dynamically every minute
 
 export const metadata: Metadata = {
   title: "Fashion Blog | Arooj Arts Pakistan",
-description:
-  "Explore the latest Pakistani fashion trends, lawn collections, Eid dresses, wedding wear inspiration, styling tips, and luxury women's clothing guides by Arooj Arts.",
+  description:
+    "Explore the latest Pakistani fashion trends, lawn collections, Eid dresses, wedding wear inspiration, styling tips, and luxury women's clothing guides by Arooj Arts.",
+
+  keywords: [
+    "Pakistani fashion",
+    "lawn dresses",
+    "Eid dresses",
+    "women clothing Pakistan",
+    "wedding dresses",
+    "fashion blog Pakistan",
+    "Arooj Arts",
+  ],
 };
 
 interface BlogsPageProps {
@@ -30,7 +40,7 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
   return (
     <div className="bg-[#faf9f6] min-h-screen py-16 text-left" id="blogs-index-frame">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Editorial Journal Head Banner */}
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gold-50 border border-gold-200 text-[10px] font-display uppercase tracking-widest text-[#7c633a] font-extrabold">
@@ -67,8 +77,8 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
                 });
 
                 return (
-                  <article 
-                    key={post.id} 
+                  <article
+                    key={post.id}
                     className="group bg-white border border-gold-150 rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 flex flex-col h-full"
                     id={`blog-card-${post.slug}`}
                   >
@@ -77,7 +87,7 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
                       {post.coverImage ? (
                         <Image
                           src={post.coverImage}
-                          alt={post.title}
+                          alt={`${post.title} - Arooj Arts Fashion Blog`}
                           fill
                           sizes="(max-w-768px) 100vw, 33vw"
                           className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -88,7 +98,7 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
                           Arooj Arts
                         </div>
                       )}
-                      
+
                       {/* Read Time Tag */}
                       <span className="absolute bottom-3 right-3 bg-neutral-950/85 backdrop-blur-xs text-[9px] font-display font-extrabold uppercase tracking-wide text-gold-400 px-2.5 py-1 rounded-sm border border-gold-800/25">
                         {post.readTime}
@@ -112,7 +122,11 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
 
                         {/* Title & Excerpt */}
                         <h2 className="font-display text-sm uppercase tracking-wide text-neutral-900 font-black group-hover:text-gold-700 transition-colors line-clamp-2 leading-snug">
-                          <Link href={`/blogs/${post.slug}`} className="hover:underline">
+                          <Link
+                            href={`/blogs/${post.slug}`}
+                            className="hover:underline"
+                            prefetch={true}
+                          >
                             {post.title}
                           </Link>
                         </h2>
@@ -124,7 +138,7 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
 
                       {/* Read Button */}
                       <div className="pt-2 border-t border-gold-100 flex justify-between items-center">
-                        <Link 
+                        <Link
                           href={`/blogs/${post.slug}`}
                           className="text-[10px] font-display uppercase tracking-widest text-[#7c633a] font-extrabold group-hover:text-neutral-950 transition-colors flex items-center gap-1.5"
                         >

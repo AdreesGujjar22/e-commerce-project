@@ -24,8 +24,8 @@ export async function generateMetadata({ params }: SingleBlogProps): Promise<Met
 
   if (!blog) {
     return {
-      title: "Journal Chronicle Not Found | Arooj Arts",
-      description: "The requested editorial chronicle is not active in our archive.",
+      title: "Blog Not Found | Arooj Arts",
+      description: "The requested blog article could not be found.",
     };
   }
 
@@ -36,6 +36,15 @@ export async function generateMetadata({ params }: SingleBlogProps): Promise<Met
   return {
     title,
     description,
+    keywords: [
+      "Pakistani fashion",
+      "women clothing",
+      "lawn dresses",
+      "Eid dresses",
+      "fashion blog",
+      "Arooj Arts",
+      blog.title,
+    ],
     alternates: {
       canonical: canonicalUrl,
     },
@@ -49,7 +58,7 @@ export async function generateMetadata({ params }: SingleBlogProps): Promise<Met
           url: "/meta-logo.jpg",
           width: 1200,
           height: 630,
-          alt: blog.title,
+          alt: `${blog.title} | Arooj Arts`,
         },
       ],
       type: "article",
@@ -83,17 +92,17 @@ export default async function SingleBlogPage({ params }: SingleBlogProps) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-32 text-center" id="blog-not-found-container">
         <h1 className="font-display text-2xl uppercase tracking-wider text-neutral-900 font-bold">
-          JOURNAL RECORD NOT LOCATED
+          BLOG POST NOT FOUND
         </h1>
         <p className="font-sans text-xs text-neutral-500 mt-2 mb-8">
-          The curated journal piece is not active or may have been securely filed away.
+          The blog post you are looking for is not available right now.
         </p>
         <Link
           href="/blogs"
           className="inline-flex items-center text-xs font-display uppercase tracking-widest text-gold-600 hover:text-gold-700 underline"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          <span>return to editorial chronicles</span>
+          <span>back to all blogs</span>
         </Link>
       </div>
     );
@@ -110,7 +119,7 @@ export default async function SingleBlogPage({ params }: SingleBlogProps) {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": blog.title,
-    "image": blog.coverImage || "https://picsum.photos/seed/vibrant/1920/1080",
+    "image": blog.coverImage || `${process.env.NEXT_APP_SITE_URL}/meta-logo.jpg`,
     "datePublished": blog.publishDate,
     "author": {
       "@type": "Person",
@@ -122,12 +131,12 @@ export default async function SingleBlogPage({ params }: SingleBlogProps) {
       "name": "Arooj Arts",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://ais-dev-cgwlfgq4uevdr35b2ix4qe-922378778819.asia-southeast1.run.app/logo.png"
+        "url": `${process.env.NEXT_APP_SITE_URL}/meta-logo.jpg`
       }
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://ais-dev-cgwlfgq4uevdr35b2ix4qe-922378778819.asia-southeast1.run.app/blogs/${blog.slug}`
+      "@id": `${process.env.NEXT_APP_SITE_URL}/blogs/${blog.slug}`
     }
   };
 
@@ -136,18 +145,22 @@ export default async function SingleBlogPage({ params }: SingleBlogProps) {
       <DynamicJsonLd data={jsonLd} />
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        
+
         {/* Back Link */}
         <Link
           href="/blogs"
           className="inline-flex items-center text-xs font-display uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors mb-10"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          <span>back to chronicles journal</span>
+          <span>back to fashion blogs</span>
         </Link>
 
         {/* Article Header */}
-        <header className="space-y-6 mb-10">
+        <header
+          className="space-y-6 mb-10"
+          itemScope
+          itemType="https://schema.org/BlogPosting"
+        >
           <div className="flex flex-wrap items-center gap-4 text-[11px] text-neutral-500 font-mono uppercase tracking-widest">
             <span className="flex items-center gap-1.5">
               <Calendar className="h-3.5 w-3.5 text-gold-600" />
@@ -179,7 +192,7 @@ export default async function SingleBlogPage({ params }: SingleBlogProps) {
           <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden mb-12 border border-gold-150 shadow-sm">
             <Image
               src={blog.coverImage}
-              alt={blog.title}
+              alt={`${blog.title} - Arooj Arts Fashion Blog`}
               fill
               className="object-cover"
               priority
@@ -196,7 +209,7 @@ export default async function SingleBlogPage({ params }: SingleBlogProps) {
         {/* Bottom Social Action Bar */}
         <div className="border-t border-gold-200 pt-6 flex flex-wrap items-center justify-between gap-4">
           <div className="text-[10px] font-mono text-neutral-400 uppercase tracking-widest">
-            published under luxury design reflections
+            Published by Arooj Arts Fashion Blog
           </div>
           <ShareButton slug={blog.slug} />
         </div>

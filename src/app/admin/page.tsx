@@ -894,7 +894,7 @@ export default function AdminPage() {
               <div className="py-24 text-center flex flex-col items-center justify-center space-y-4">
                 <Loader2 className="h-10 w-10 animate-spin text-gold-650" />
                 <p className="font-display text-[10px] font-bold text-neutral-500 uppercase tracking-widest">
-                  Syncing Ledger Caches...
+                  Loading...
                 </p>
               </div>
             ) : activeTab === "orders" ? (
@@ -984,7 +984,7 @@ export default function AdminPage() {
               className="inline-flex items-center bg-neutral-950 hover:bg-neutral-850 text-gold-300 font-display text-xs uppercase font-bold tracking-widest px-5.5 py-3 rounded-full shadow-md transition-all focus:outline-none cursor-pointer active:scale-95"
             >
               <Plus className="h-4 w-4 mr-1.5 text-gold-400" />
-              <span>curate new product</span>
+              <span>Add New Product</span>
             </button>
           </div>
 
@@ -1028,7 +1028,7 @@ export default function AdminPage() {
                       <button
                         onClick={() => handleEditProduct(p)}
                         className="text-neutral-500 hover:text-gold-750 transition-colors p-2 hover:bg-gold-50/30 rounded-full cursor-pointer focus:outline-none"
-                        title="Edit curated SKU"
+                        title="Edit Product"
                       >
                         <Edit className="h-4 w-4" />
                       </button>
@@ -1586,10 +1586,10 @@ export default function AdminPage() {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-gold-200 p-6 rounded-2xl shadow-xs">
             <div>
               <h4 className="font-display text-sm uppercase tracking-wider text-neutral-900 font-extrabold flex items-center gap-1.5">
-                <span>📚 MAISON EDITORIAL CHRONICLES & JOURNAL</span>
+                <span>Blog Management</span>
               </h4>
               <p className="font-sans text-stone-500 text-[11px] leading-relaxed mt-1">
-                Design and organize active blog posts, styled logs, text content, and metadata parameters.
+                Create, edit, and manage your blog posts, content, and SEO details.
               </p>
             </div>
             
@@ -1598,13 +1598,13 @@ export default function AdminPage() {
               className="bg-[#7c633a] hover:bg-neutral-900 border border-gold-800/10 text-white font-display text-[11.5px] font-black uppercase tracking-widest px-5 py-3 rounded-xl transition duration-300 cursor-pointer flex items-center gap-1.5 active:scale-95 text-center shadow-sm"
             >
               <PlusCircle className="h-4 w-4" />
-              <span>curate chronicle</span>
+              <span>Add New Blog</span>
             </button>
           </div>
 
           {blogs.length === 0 ? (
             <div className="p-12 border border-gold-150 rounded-2xl bg-white text-center text-stone-400 text-xs shadow-xs" id="admin-empty-blogs">
-              No chronicle pieces cataloged inside the active editorial vaults yet.
+              No blog posts added yet.
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="admin-blogs-grid">
@@ -1712,20 +1712,20 @@ export default function AdminPage() {
           <div className="bg-[#faf9f6]/92 border border-gold-200 rounded-2xl p-6 text-left shadow-xs">
             <h4 className="font-display text-xs uppercase tracking-wider text-[#151515] font-black mb-4 flex items-center">
               <TrendingUp className="h-4.5 w-4.5 mr-2 text-gold-650 font-bold" />
-              FINANCIAL PERFORMANCE AGGREGATION
+              Store Overview
             </h4>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="p-5.5 bg-white border border-gold-100 rounded-xl shadow-xs">
-                <span className="font-sans text-stone-500 text-xs font-semibold">Gross Invoiced Volume</span>
+                <span className="font-sans text-stone-500 text-xs font-semibold">Total Sales</span>
                 <p className="font-serif italic text-3xl font-black text-neutral-950 mt-2">${analytics.totalRevenue.toLocaleString()}</p>
               </div>
               <div className="p-5.5 bg-white border border-gold-100 rounded-xl shadow-xs">
-                <span className="font-sans text-stone-500 text-xs font-semibold">Total Courier Shipments</span>
-                <p className="font-serif italic text-3xl font-black text-neutral-950 mt-2">{analytics.orderCount} conversions</p>
+                <span className="font-sans text-stone-500 text-xs font-semibold">Total Orders</span>
+                <p className="font-serif italic text-3xl font-black text-neutral-950 mt-2">{analytics.orderCount} orders</p>
               </div>
               <div className="p-5.5 bg-white border border-gold-100 rounded-xl shadow-xs">
-                <span className="font-sans text-stone-500 text-xs font-semibold">Average Checkout ticket value</span>
+                <span className="font-sans text-stone-500 text-xs font-semibold">Average Order Value</span>
                 <p className="font-serif italic text-3xl font-black text-neutral-950 mt-2">${analytics.averageTicket.toLocaleString()}</p>
               </div>
             </div>
@@ -1734,7 +1734,7 @@ export default function AdminPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
             <div className="border border-gold-150 rounded-2xl p-6.5 bg-white shadow-xs space-y-4">
               <h5 className="font-display text-[10px] uppercase tracking-widest font-black text-neutral-900">
-                L'ÉTOILE DATABASE DISPATCH LOGS
+                Store System Status
               </h5>
               <div className="space-y-3.5 text-xs font-medium">
                 <div className="flex justify-between items-center py-2 border-b border-gold-100">
@@ -1742,12 +1742,12 @@ export default function AdminPage() {
                   <span className="text-teal-650 font-bold uppercase text-[10px]">Active (Online PostgreSQL)</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gold-100">
-                  <span className="text-neutral-500">Current SSL Configuration:</span>
+                  <span className="text-neutral-500">Security:</span>
                   <span className="text-neutral-900 font-bold font-mono">Enabled (AES-256)</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gold-100">
-                  <span className="text-neutral-500">Total Catalog SKU Density:</span>
-                  <span className="text-neutral-900 font-bold">{products.length} cataloged SKUs</span>
+                  <span className="text-neutral-500">Total Products:</span>
+                  <span className="text-neutral-900 font-bold">{products.length} products</span>
                 </div>
               </div>
             </div>
@@ -1755,10 +1755,10 @@ export default function AdminPage() {
             <div className="border border-gold-150 rounded-2xl p-6.5 bg-white shadow-xs flex flex-col justify-center text-center py-8">
               <ShieldCheck className="h-10 w-10 text-teal-650 mx-auto mb-3" />
               <h5 className="font-display text-[11px] uppercase tracking-widest font-black text-neutral-900">
-                AUDIT COMPLIANCE SECURED
+                Store Security Active
               </h5>
               <p className="font-sans text-[11px] text-neutral-400 max-w-xs mx-auto leading-relaxed mt-2 font-medium">
-                All status modifications and product curation additions are digitally signed inside profile records using PostgreSQL Row-Level-Security (RLS).
+                Your store data and product updates are protected with secure database security systems.
               </p>
             </div>
           </div>
@@ -1778,7 +1778,7 @@ export default function AdminPage() {
             <div className="flex items-center justify-between px-6 py-5 border-b border-gold-150 bg-neutral-950 text-white">
               <h3 className="font-display text-xs uppercase tracking-widest font-black text-gold-300 flex items-center">
                 <PlusCircle className="h-4.5 w-4.5 mr-2" /> 
-                {editingProduct ? "EDIT CURATED ATELIER SKU" : "CURATE NEW LAUNCH PRODUCT"}
+                {editingProduct ? "Edit Product" : "Add New Product"}
               </h3>
               <button type="button" onClick={() => setIsAddModalOpen(false)} className="text-neutral-400 hover:text-white transition-colors p-1 cursor-pointer">
                 <X className="h-5 w-5" />
@@ -1788,14 +1788,14 @@ export default function AdminPage() {
             <form onSubmit={handleCreateOrUpdateProduct} className="flex-grow overflow-y-auto p-6 md:p-8 space-y-5.5 text-left scrollbar-thin">
               <div className="grid grid-cols-2 gap-4">
                 <Input
-                  label="Designer / Textile Brand"
+                  label="Brand Name"
                   placeholder="e.g. Khaadi, Sana Safinaz"
                   required
                   value={newDesigner}
                   onChange={(e) => setNewDesigner(e.target.value)}
                 />
                 <Input
-                  label="Product Listing Title"
+                  label="Product Name"
                   placeholder="e.g. Pure Silk Embroidered Shirt"
                   required
                   value={newName}
@@ -1811,21 +1811,21 @@ export default function AdminPage() {
 
               <div className="pt-2.5 pb-2.5 border-b border-gold-150/45">
                 <Input
-                  label="Custom SEO URL Slug (Auto-generated/Editable)"
+                  label="Product URL"
                   placeholder="e.g. pure-silk-embroidered-shirt"
                   value={newSlug}
                   error={slugError}
                   onChange={(e) => setNewSlug(computeSlugFromTitle(e.target.value))}
                 />
                 <p className="text-[9px] font-mono text-neutral-400 mt-1.5 uppercase tracking-wide">
-                  Live Preview Path: <span className="text-teal-650 font-semibold font-mono">/products/{currentComputedSlug || "..."}</span>
+                  Preview URL: <span className="text-teal-650 font-semibold font-mono">/products/{currentComputedSlug || "..."}</span>
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-[10px] font-display font-semibold uppercase tracking-wider text-neutral-500 mb-1.5">
-                    Product Category Link
+                    Category
                   </label>
                   <select
                     value={newCategory}
@@ -1838,14 +1838,14 @@ export default function AdminPage() {
                   </select>
                 </div>
                 <Input
-                  label="Retail Price (USD)"
+                  label="Price"
                   type="number"
                   required
                   value={newPrice}
                   onChange={(e) => setNewPrice(Number(e.target.value))}
                 />
                 <Input
-                  label="Atelier Warehouse Stock"
+                  label="Stock"
                   type="number"
                   required
                   value={newStock}
@@ -1859,18 +1859,18 @@ export default function AdminPage() {
                   images={newImages}
                   onChange={setNewImages}
                   maxImages={5}
-                  label="Product Exhibit Images Gallery"
+                  label="Product Images"
                 />
               </div>
 
               <div className="text-left border-t border-gold-150/40 pt-4">
                 <label className="block text-[10px] font-display font-semibold uppercase tracking-widest text-[#555] mb-1.5">
-                  Small catalog description snippet
+                  Short Description
                 </label>
                 <textarea
                   required
                   rows={2}
-                  placeholder="Describe premium specs in 1-2 lines..."
+                  placeholder="Write short product details..."
                   value={newDesc}
                   onChange={(e) => setNewDesc(e.target.value)}
                   className="w-full bg-white text-neutral-950 placeholder-neutral-400 font-sans text-xs px-4 py-3 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-445 text-left font-medium"
@@ -1879,12 +1879,12 @@ export default function AdminPage() {
 
               <div className="text-left">
                 <label className="block text-[10px] font-display font-semibold uppercase tracking-widest text-[#555] mb-1.5">
-                  Full Detailed Narrative description
+                  Full Description
                 </label>
                 <textarea
                   required
                   rows={3}
-                  placeholder="Elaborate on catalog fabrics, silk weaves, patterns, cut styles..."
+                  placeholder="Write full product details..."
                   value={newLongDesc}
                   onChange={(e) => setNewLongDesc(e.target.value)}
                   className="w-full bg-white text-neutral-950 placeholder-neutral-400 font-sans text-xs px-4 py-3 border border-gold-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-gold-445 text-left font-medium"
@@ -1892,8 +1892,8 @@ export default function AdminPage() {
               </div>
 
               <Input
-                label="Tactile Specs (Comma separated checklist)"
-                placeholder="e.g. 100% Linen, Brass buttons, Hand embroidered, Cold handwash only"
+                label="Product Details"
+                placeholder="e.g. Soft Fabric, Premium Quality, Hand Wash"
                 value={newDetails}
                 onChange={(e) => setNewDetails(e.target.value)}
               />
@@ -1901,7 +1901,7 @@ export default function AdminPage() {
               {/* SEO inputs */}
               <div className="border-t border-gold-150/70 pt-5 space-y-4">
                 <h4 className="font-display text-[10px] uppercase tracking-widest font-black text-neutral-800">
-                  🎨 SEARCH ENGINE (SEO) COGNITIVE DATA
+                  SEO SETTINGS
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Input
@@ -1912,7 +1912,7 @@ export default function AdminPage() {
                   />
                   <Input
                     label="Custom SEO Meta Description"
-                    placeholder="Synthesize search summary for premium discoverability..."
+                    placeholder="Short description for Google search..."
                     value={newSeoDescription}
                     onChange={(e) => setNewSeoDescription(e.target.value)}
                   />
@@ -1924,7 +1924,7 @@ export default function AdminPage() {
                   Cancel
                 </Button>
                 <Button variant="primary" type="submit" isLoading={isSubmittingProduct} className="cursor-pointer bg-neutral-950 hover:bg-neutral-850">
-                  {editingProduct ? "Save Curated SKU" : "Register Curated Product"}
+                  {editingProduct ? "Save Changes" : "Add Product"}
                 </Button>
               </div>
             </form>
@@ -2094,14 +2094,14 @@ export default function AdminPage() {
 
               <div className="pt-2.5 pb-2.5 border-b border-gold-150/45">
                 <Input
-                  label="Custom SEO URL Slug (Auto-generated/Editable)"
+                  label="Product URL"
                   placeholder="e.g. ceramics-of-kyoto"
                   value={blogSlug}
                   error={blogSlugError}
                   onChange={(e) => setBlogSlug(e.target.value)}
                 />
                 <p className="text-[9px] font-mono text-neutral-400 mt-1.5 uppercase tracking-wide">
-                  Live Preview Path: <span className="text-teal-650 font-semibold font-mono">/blogs/{currentComputedBlogSlug || "..."}</span>
+                  Preview URL: <span className="text-teal-650 font-semibold font-mono">/blogs/{currentComputedBlogSlug || "..."}</span>
                 </p>
               </div>
 

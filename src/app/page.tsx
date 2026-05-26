@@ -28,11 +28,11 @@ export default async function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 text-left">
         <h2 className="font-display text-[10px] uppercase tracking-[0.3em] text-neutral-400 font-bold mb-4 flex items-center">
           <Sparkle className="h-3 w-3 mr-2 text-gold-500 fill-gold-500/20" />
-          Arooj Curator's Spotlight
+          Featured Collections
         </h2>
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12.5 text-left">
           <h3 className="font-serif text-3xl md:text-4.5xl text-neutral-950 font-normal leading-tight max-w-xl">
-            Selected products featuring <span className="font-sans font-bold tracking-tight text-gold-700">organic lines</span> and premium quality.
+            Discover elegant dresses, <span className="font-sans font-bold tracking-tight text-gold-700">premium fabrics,</span> and stylish collections designed for modern fashion lovers.
           </h3>
           <Link
             href="/collections"
@@ -60,13 +60,13 @@ export default async function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-r from-neutral-950 to-transparent" />
             <div className="absolute bottom-10 left-10 max-w-sm">
               <span className="font-display text-[8.5px] uppercase tracking-widest text-gold-400 font-bold">
-                Atelier Spaces
+                Premium Fashion
               </span>
               <h4 className="font-display text-lg uppercase font-black text-white mt-2 leading-snug">
-                Studio Kanso Travertines
+                Elegant Women's Collection
               </h4>
               <p className="font-sans text-xs text-neutral-400 mt-2 leading-relaxed">
-                Sculptured travertine modules with classic finishes. Simple and clean.
+                Premium dresses and fashion pieces designed with comfort, elegance, and modern trends in mind.
               </p>
             </div>
           </div>
@@ -74,7 +74,7 @@ export default async function HomePage() {
           {/* Value propositions */}
           <div className="flex flex-col space-y-8">
             <h3 className="font-serif text-3.5xl md:text-5xl text-white font-light leading-none">
-              The Code of <span className="font-sans font-bold text-gold-400 tracking-tight">Arooj Arts</span>
+              Why Customers Choose <span className="font-sans font-bold text-gold-400 tracking-tight">Arooj Arts</span>
             </h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-4">
@@ -86,7 +86,7 @@ export default async function HomePage() {
                   Guaranteed Quality
                 </h4>
                 <p className="font-sans text-xs text-neutral-400 leading-relaxed">
-                  We verify each clothing article, premium watch, and fragrance before shipping to make sure you get pristine, fresh products.
+                  Every product is carefully checked before delivery to ensure premium quality, comfort, and customer satisfaction.
                 </p>
               </div>
 
@@ -95,10 +95,10 @@ export default async function HomePage() {
                   <Award className="h-4 w-4 text-gold-400" />
                 </div>
                 <h4 className="font-display text-[11px] uppercase tracking-wider font-bold text-neutral-150">
-                  Ethic Selection
+                  Trusted Fashion Store
                 </h4>
                 <p className="font-sans text-xs text-neutral-400 leading-relaxed">
-                  Our cashmere wraps and clothes are made ethically using finest fibers, helping workers and preserving traditional weaving arts.
+                  We focus on stylish fashion, trusted quality, and designs that match modern trends and everyday elegance.
                 </p>
               </div>
             </div>
