@@ -415,7 +415,7 @@ export default function CheckoutPage() {
               <div className="border-t border-dashed border-gold-200 pt-4.5">
                 <p className="flex justify-between text-neutral-950 font-serif italic text-base font-bold">
                   <span>Total Payable (COD):</span>
-                  <span>${totalAmount.toLocaleString()}</span>
+                  <span>RS {totalAmount.toLocaleString()}</span>
                 </p>
               </div>
             </div>

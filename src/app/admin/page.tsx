@@ -81,6 +81,7 @@ import {
   Calendar,
   BookOpen,
 } from "lucide-react";
+import Loading from "@/src/components/ui/Loading";
 
 export default function AdminPage() {
   const { triggerNotification } = useStore();
@@ -891,12 +892,7 @@ export default function AdminPage() {
 
           <div>
             {isLoading ? (
-              <div className="py-24 text-center flex flex-col items-center justify-center space-y-4">
-                <Loader2 className="h-10 w-10 animate-spin text-gold-650" />
-                <p className="font-display text-[10px] font-bold text-neutral-500 uppercase tracking-widest">
-                  Loading...
-                </p>
-              </div>
+              <Loading />
             ) : activeTab === "orders" ? (
         
         /* Orders queue visual dashboard */

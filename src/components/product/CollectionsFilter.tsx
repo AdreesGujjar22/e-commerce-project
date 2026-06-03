@@ -6,6 +6,7 @@ import { useStore } from "../../store";
 import { ProductGrid } from "./ProductGrid";
 import { SlidersHorizontal } from "lucide-react";
 import { getProductsAction } from "../../actions/product.actions";
+import Loading from "../ui/Loading";
 
 interface CollectionsFilterProps {
   initialProducts: Product[];
@@ -180,14 +181,7 @@ export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({
         <ProductGrid products={products} bypassClientFiltering={true} />
         
         {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-white/20 z-10 backdrop-blur-[1px]">
-            <div className="flex flex-col items-center space-y-2 bg-white/80 p-6 rounded-2xl shadow-md border border-gold-100">
-              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gold-600"></div>
-              <span className="font-display text-[9px] uppercase tracking-wider text-neutral-500 font-bold">
-                Loading products...
-              </span>
-            </div>
-          </div>
+          <Loading content="Loading products..." />
         )}
       </div>
 

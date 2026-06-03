@@ -235,7 +235,7 @@ export const HeroSection: React.FC = () => {
 
           <button
             onClick={() => setChatOpen(true)}
-            className="inline-flex items-center justify-center bg-neutral-950/40 hover:bg-neutral-950/70 border border-gold-400/35 hover:border-gold-400/75 text-[#faf9f6] font-display text-[10px] uppercase font-bold tracking-[0.2em] px-8 py-4 rounded-full backdrop-blur-subtle transition-all duration-300 shadow-md active:scale-97"
+            className="inline-flex items-center justify-center bg-neutral-950/40 hover:bg-neutral-950/70 border border-gold-400/35 hover:border-gold-400/75 text-[#faf9f6] font-display text-[10px] uppercase font-bold tracking-[0.2em] px-8 py-4 rounded-full backdrop-blur-subtle transition-all duration-300 shadow-md active:scale-97 cursor-pointer"
           >
             <Sparkles className="h-3.5 w-3.5 mr-2 text-gold-400" />
             <span>Ask Stylist AI</span>

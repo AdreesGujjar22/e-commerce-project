@@ -8,6 +8,7 @@ import { ProductDetailModal } from "../components/product/ProductDetailModal";
 import WhatsAppChatWidget from "../components/WhatsAppChatWidget";
 
 import { Metadata } from "next";
+import RouteLoadingProvider from "../components/RouteLoadingProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -101,7 +102,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <ProductDetailModal />
 
         {/* Primary Page viewport */}
-        <main className="flex-grow flex flex-col">{children}</main>
+        <main className="flex-grow flex flex-col">
+          <RouteLoadingProvider>{children}</RouteLoadingProvider>
+        </main>
 
         {/* Dynamic footholds page footer */}
         <Footer />
