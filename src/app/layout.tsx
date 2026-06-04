@@ -101,7 +101,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <ProductDetailModal />
 
         {/* Primary Page viewport */}
-        <main className="flex-grow flex flex-col">
+        <main className="flex-grow flex flex-col min-h-[calc(100vh-120px)]">
           {children}
         </main>
 
