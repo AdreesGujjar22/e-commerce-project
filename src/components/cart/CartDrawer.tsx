@@ -46,7 +46,7 @@ export const CartDrawer: React.FC = () => {
                 </div>
                 <button
                   onClick={() => setCartOpen(false)}
-                  className="text-neutral-400 hover:text-neutral-900 transition-colors p-1"
+                  className="text-neutral-400 hover:text-neutral-900 transition-colors p-1 cursor-pointer"
                 >
                   <X className="h-5.5 w-5.5" />
                 </button>
@@ -105,21 +105,21 @@ export const CartDrawer: React.FC = () => {
                           <div className="flex items-center border border-gold-200 rounded-lg overflow-hidden bg-white/50">
                             <button
                               onClick={() => updateCartQuantity(item.product.id, item.size, -1)}
-                              className="px-2 py-1 text-neutral-500 hover:bg-neutral-50 text-xs focus:outline-none"
+                              className="px-2 py-1 text-neutral-500 hover:bg-neutral-50 text-xs focus:outline-none cursor-pointer"
                             >
                               -
                             </button>
                             <span className="px-3 text-xs font-sans text-neutral-900">{item.quantity}</span>
                             <button
                               onClick={() => updateCartQuantity(item.product.id, item.size, 1)}
-                              className="px-2 py-1 text-neutral-500 hover:bg-neutral-50 text-xs focus:outline-none"
+                              className="px-2 py-1 text-neutral-500 hover:bg-neutral-50 text-xs focus:outline-none cursor-pointer"
                             >
                               +
                             </button>
                           </div>
                           
                           <span className="font-serif italic text-xs font-semibold text-neutral-950">
-                            ${(item.product.price * item.quantity).toLocaleString()}
+                            RS {(item.product.price * item.quantity).toLocaleString()}
                           </span>
                         </div>
                       </div>
@@ -127,7 +127,7 @@ export const CartDrawer: React.FC = () => {
                       {/* Remove absolute node */}
                       <button
                         onClick={() => removeFromCart(item.product.id, item.size)}
-                        className="absolute top-2 right-2 text-neutral-300 hover:text-red-500 transition-colors p-1"
+                        className="absolute top-2 right-2 text-neutral-300 hover:text-red-500 transition-colors p-1 cursor-pointer"
                         aria-label="Remove item"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
@@ -150,7 +150,7 @@ export const CartDrawer: React.FC = () => {
                       </span>
                     </div>
                     <span className="font-serif italic text-lg font-black text-neutral-950">
-                      ${totalAmount.toLocaleString()}
+                      RS {totalAmount.toLocaleString()}
                     </span>
                   </div>
 
@@ -165,7 +165,7 @@ export const CartDrawer: React.FC = () => {
                     
                     <button
                       onClick={() => setCartOpen(false)}
-                      className="w-full text-center text-[10px] font-display uppercase tracking-widest font-semibold text-neutral-500 hover:text-neutral-900 py-1"
+                      className="w-full text-center text-[10px] font-display uppercase tracking-widest font-semibold text-neutral-500 hover:text-neutral-900 py-1 cursor-pointer"
                     >
                       continue exploring showroom
                     </button>

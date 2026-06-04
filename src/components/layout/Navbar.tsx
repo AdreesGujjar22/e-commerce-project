@@ -90,7 +90,7 @@ export const Navbar: React.FC = () => {
               className={`font-display text-sm uppercase tracking-[0.15em] font-extrabold transition-colors hover:text-gold-600 ${isSelected("/collections") ? "text-gold-700 font-black" : "text-neutral-700"
                 }`}
             >
-              Browse Products
+              Shop Collections
             </Link>
             <button
               onClick={() => setChatOpen(true)}
@@ -122,7 +122,7 @@ export const Navbar: React.FC = () => {
           <div className={`relative hidden sm:flex items-center transition-all duration-300 ${isSearchOpen ? "w-64" : "w-10"}`}>
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="text-neutral-700 hover:text-neutral-950 p-2 focus:outline-none"
+              className="text-neutral-700 hover:text-neutral-950 p-2 focus:outline-none cursor-pointer"
               aria-label="Toggle search bar"
             >
               <Search className="h-5 w-5" />
@@ -130,7 +130,7 @@ export const Navbar: React.FC = () => {
             {isSearchOpen && (
               <input
                 type="text"
-                placeholder="Search clothing, scents..."
+                placeholder="Search clothing..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-transparent border-b border-gold-300 focus:outline-none py-1 px-2 font-sans text-xs sm:text-sm text-neutral-900 placeholder-neutral-400"
@@ -182,7 +182,7 @@ export const Navbar: React.FC = () => {
                     <div className="pt-2">
                       <button
                         onClick={handleLogout}
-                        className="w-full text-left flex items-center space-x-2.5 font-display text-xs uppercase tracking-wider font-bold text-red-500 hover:text-red-750 py-2.5 transition-colors focus:outline-none"
+                        className="w-full text-left flex items-center space-x-2.5 font-display text-xs uppercase tracking-wider font-bold text-red-500 hover:text-red-750 py-2.5 transition-colors focus:outline-none cursor-pointer"
                       >
                         <LogOut className="h-4 w-4" />
                         <span>Logout</span>
@@ -194,7 +194,7 @@ export const Navbar: React.FC = () => {
             ) : (
               <Link
                 href="/auth"
-                className="text-neutral-700 hover:text-neutral-950 p-2 focus:outline-none transition-colors"
+                className="text-neutral-700 hover:text-neutral-950 p-2 focus:outline-none transition-colors cursor-pointer"
                 title="Sign In / Register"
               >
                 <User className="h-5 w-5" />
@@ -205,7 +205,7 @@ export const Navbar: React.FC = () => {
           {/* Shopping Bag Drawer Action Trigger */}
           <button
             onClick={() => setCartOpen(true)}
-            className="text-neutral-700 hover:text-neutral-950 p-2 relative focus:outline-none transition-colors"
+            className="text-neutral-700 hover:text-neutral-950 p-2 relative focus:outline-none transition-colors cursor-pointer"
             aria-label="Toggle shopping bag"
           >
             <ShoppingBag className="h-5 w-5" />

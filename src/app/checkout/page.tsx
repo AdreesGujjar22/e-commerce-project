@@ -209,7 +209,7 @@ export default function CheckoutPage() {
       </Link>
 
       <div className="max-w-xl">
-        <div className="inline-flex items-center space-x-2 bg-neutral-900 text-gold-350 text-[8px] font-display font-medium uppercase tracking-[0.2em] px-3.5 py-1.5 rounded mb-4">
+        <div className="inline-flex items-center space-x-2 bg-neutral-900 text-gold-400 text-[8px] font-display font-medium uppercase tracking-[0.2em] px-3.5 py-1.5 rounded mb-4">
           <Truck className="h-2.5 w-2.5 text-gold-400" />
           <span>Pakistan Cash On Delivery Enabled</span>
         </div>
@@ -359,7 +359,7 @@ export default function CheckoutPage() {
             </div>
           </section>
 
-          <Button type="submit" size="lg" className="w-full h-14" isLoading={isLoading}>
+          <Button type="submit" size="lg" className="w-full h-14 cursor-pointer" isLoading={isLoading}>
             Confirm Order
           </Button>
         </form>

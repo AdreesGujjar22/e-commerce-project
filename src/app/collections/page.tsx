@@ -24,13 +24,13 @@ export default async function CollectionsPage() {
         <div className="max-w-xl">
           <div className="inline-flex items-center space-x-2 bg-neutral-900 text-gold-300 text-[8px] font-display font-medium uppercase tracking-[0.2em] px-3.5 py-1.5 rounded mb-4">
             <Compass className="h-2.5 w-2.5" />
-            <span>Arooj catalogue index</span>
+            <span>New Season Collection</span>
           </div>
           <h1 className="font-display text-3xl md:text-5xl uppercase tracking-tight font-black text-neutral-950">
             THE GALLERY <span className="font-serif italic text-gold-600 font-light">Showroom</span>
           </h1>
           <p className="font-sans text-xs text-neutral-500 leading-relaxed mt-4">
-            Explore our curated items catalog. Every single piece is meticulously cataloged, boasting premium grade materials, certificates, and private brass masterwork engravings.
+            Explore our latest collection. Each item is carefully selected for quality and style.
           </p>
         </div>
       </div>

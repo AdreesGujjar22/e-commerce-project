@@ -36,9 +36,6 @@ export async function POST(req: Request) {
     const settingsRes = await getSettingsAction();
     const settings = settingsRes.settings;
 
-    const baseInstruction =
-      settings?.chatbot_instruction || "You are a fashion assistant.";
-
     // =========================
     // INTENT DETECTION
     // =========================
@@ -94,7 +91,7 @@ export async function POST(req: Request) {
     // SYSTEM PROMPT (STRICT)
     // =========================
     const systemInstruction = `
-You are a STRICT SHOPIFY AI ASSISTANT.
+${settings?.chatbot_instruction}
 
 RULES:
 - Keep answers VERY SHORT (max 5 lines)

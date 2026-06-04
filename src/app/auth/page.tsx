@@ -134,7 +134,7 @@ function AuthForm() {
         </div>
         
         <h1 className="font-display text-2.5xl md:text-3xl uppercase tracking-tight text-neutral-950 font-black mb-2">
-          {isLogin ? "CUSTOMER SIGN IN" : "CREATE NEW ACCOUNT"}
+          {isLogin ? "SIGN IN" : "CREATE NEW ACCOUNT"}
         </h1>
         <p className="font-sans text-xs text-neutral-500 max-w-xs mx-auto text-center">
           {isLogin
@@ -185,7 +185,7 @@ function AuthForm() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <Button type="submit" size="lg" className="w-full mt-2" isLoading={isLoading}>
+        <Button type="submit" size="lg" className="w-full mt-2 cursor-pointer" isLoading={isLoading}>
           {isLogin ? "Sign In" : "Register Account"}
         </Button>
 
@@ -198,7 +198,7 @@ function AuthForm() {
               setPasswordError("");
               setFullNameError("");
             }}
-            className="text-neutral-500 hover:text-neutral-950 font-display text-[9.5px] uppercase tracking-widest font-black transition-colors focus:outline-none"
+            className="text-neutral-500 hover:text-neutral-950 font-display text-[9.5px] uppercase tracking-widest font-black transition-colors focus:outline-none cursor-pointer"
           >
             {isLogin ? "Don't have an account? Register here" : "Already have an account? Sign In"}
           </button>
