@@ -1,12 +1,12 @@
-// components/ui/Loading.tsx
+// components/ui/GlobalLoading.tsx
 
 import React from "react";
 
-interface LoadingProps {
+interface GlobalLoadingProps {
   content?: React.ReactNode;
 }
 
-const Loading: React.FC<LoadingProps> = ({ content }) => {
+const GlobalLoading: React.FC<GlobalLoadingProps> = ({ content }) => {
   return (
     <div className="absolute inset-0 flex items-center justify-center bg-white/20 z-10 backdrop-blur-[1px]">
       <div className="flex flex-col items-center space-y-2 bg-white/80 p-6 rounded-2xl shadow-md border border-gold-100">
@@ -22,4 +22,4 @@ const Loading: React.FC<LoadingProps> = ({ content }) => {
   );
 };
 
-export default Loading;
+export default GlobalLoading;

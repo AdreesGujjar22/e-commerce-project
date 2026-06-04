@@ -81,7 +81,7 @@ import {
   Calendar,
   BookOpen,
 } from "lucide-react";
-import Loading from "@/src/components/ui/Loading";
+import GlobalLoading from "@/src/components/ui/GlobalLoading";
 
 export default function AdminPage() {
   const { triggerNotification } = useStore();
@@ -892,7 +892,7 @@ export default function AdminPage() {
 
           <div>
             {isLoading ? (
-              <Loading />
+              <GlobalLoading />
             ) : activeTab === "orders" ? (
         
         /* Orders queue visual dashboard */

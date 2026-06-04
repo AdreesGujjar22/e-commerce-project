@@ -6,7 +6,7 @@ import { useStore } from "../../store";
 import { ProductGrid } from "./ProductGrid";
 import { SlidersHorizontal } from "lucide-react";
 import { getProductsAction } from "../../actions/product.actions";
-import Loading from "../ui/Loading";
+import GlobalLoading from "../ui/GlobalLoading";
 
 interface CollectionsFilterProps {
   initialProducts: Product[];
@@ -181,7 +181,7 @@ export const CollectionsFilter: React.FC<CollectionsFilterProps> = ({
         <ProductGrid products={products} bypassClientFiltering={true} />
         
         {isLoading && (
-          <Loading content="Loading products..." />
+          <GlobalLoading content="Loading products..." />
         )}
       </div>
 
