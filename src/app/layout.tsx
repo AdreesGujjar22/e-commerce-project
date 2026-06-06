@@ -11,21 +11,21 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_APP_SITE_URL || "https://e-commerce-project-kappa-lovat.vercel.app"
+    process.env.NEXT_APP_SITE_URL || "https://https://www.aroojarts.store"
   ),
 
   title: {
-    default: "Arooj Arts — Premium Fashion Store",
+    default: "Arooj Arts | Premium Clothing Store Pakistan",
     template: "%s | Arooj Arts",
   },
 
   description:
-    "Arooj Arts is a premium fashion showroom offering elegant ladies clothing, luxury fabrics, and modern curated styles.",
+    "Arooj Arts is a premium clothing store in Pakistan offering trendy women's fashion, lawn suits, pret wear, embroidered dresses, and stylish outfits. Shop the latest collections online with nationwide delivery.",
 
   openGraph: {
-    title: "Arooj Arts — Premium Fashion Store",
+    title: "Arooj Arts | Premium Clothing Store Pakistan",
     description:
-      "Elegant ladies fashion, curated collections, and premium styles by Arooj Arts.",
+      "Arooj Arts is a premium clothing store in Pakistan. Shop beautiful dresses, lawn collections, pret wear, and the latest women’s fashion online. ",
     siteName: "Arooj Arts",
     locale: "en_US",
     type: "website",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Arooj Arts — Premium Fashion Store",
+    title: "Arooj Arts | Premium Clothing Store Pakistan",
     description:
       "Elegant ladies fashion and curated collections by Arooj Arts.",
     images: ["/meta-logo.jpg"],
