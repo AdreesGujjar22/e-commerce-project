@@ -159,8 +159,6 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
           <div className="space-y-6">
             
             {/* Custom attributes for Pakistan Apparel products */}
-            {product.category === "apparel" && (
-              <>
                 {/* 1. SUIT TYPE SELECTION */}
                 <div className="space-y-2">
                   <span className="block font-sans text-[11px] tracking-wider text-neutral-600 font-light select-none">
@@ -256,8 +254,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
                     </div>
                   )}
                 </div>
-              </>
-            )}
+
 
             {/* Custom Monograms options for watches, fragrances, decor */}
             {!["apparel"].includes(product.category) && (

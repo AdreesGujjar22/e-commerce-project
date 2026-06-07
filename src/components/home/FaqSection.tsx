@@ -28,7 +28,7 @@ export const FaqSection: React.FC = () => {
           </p>
           <p className="font-sans text-xs text-neutral-500 flex items-center gap-1.5">
             <span>Featured item highlight:</span>
-            <Link href="/products/550e8400-e29b-41d4-a716-446655440001" className="text-gold-650 font-medium hover:underline inline-flex items-center gap-0.5">
+            <Link href="/products/leternel-silk-trench-coat/550e8400-e29b-41d4-a716-446655440001" className="text-gold-650 font-medium hover:underline inline-flex items-center gap-0.5">
               L'Éternel Silk Trench Coat <ExternalLink className="h-2.5 w-2.5" />
             </Link>
           </p>
@@ -53,7 +53,7 @@ export const FaqSection: React.FC = () => {
             Arooj operations are entirely centered around **Cash on Delivery (COD)**. No advance payment or escrow cards are required during checkout. Simply remit the cash sum directly to our courier agent upon door-station handoff.
           </p>
           <p className="font-sans text-xs text-neutral-500">
-            For premium timepiece details, view our <Link href="/products/550e8400-e29b-41d4-a716-446655440007" className="text-gold-650 font-bold hover:underline">Arooj Chronosphere Wristwatch</Link>.
+            For premium timepiece details, view our <Link href="/products/arooj-chronosphere-wristwatch/550e8400-e29b-41d4-a716-446655440007" className="text-gold-650 font-bold hover:underline">Arooj Chronosphere Wristwatch</Link>.
           </p>
         </div>
       ),

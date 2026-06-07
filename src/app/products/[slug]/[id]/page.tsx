@@ -1,15 +1,15 @@
 import React from "react";
 import { Metadata } from "next";
 import Link from "next/link";
-import { getProductByIdAction, getProductsAction } from "../../../actions/product.actions";
+import { getProductByIdAction } from "../../../../actions/product.actions";
 import { ArrowLeft } from "lucide-react";
-import { DynamicJsonLd } from "../../../components/seo/DynamicJsonLd";
-import { ProductDetailClient } from "../../../components/product/ProductDetailClient";
+import { DynamicJsonLd } from "../../../../components/seo/DynamicJsonLd";
+import { ProductDetailClient } from "../../../../components/product/ProductDetailClient";
 
 export const dynamic = 'force-dynamic'; // Force dynamic rendering on Vercel
 
 interface PageProps {
-  params: Promise<{ id: string }> | { id: string };
+  params: Promise<{ slug: string; id: string }> | { slug: string; id: string };
 }
 
 // 1. Next.js Dynamic Metadata generation for Product Page
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = `${product.name} — ${product.designer} | Arooj Arts`;
   const description = product.description || `Explore the exquisite ${product.name} by designer ${product.designer} at Arooj Arts.`;
-  const canonicalUrl = `${process.env.NEXT_APP_SITE_URL}/products/${product.id}`;
+  const canonicalUrl = `${process.env.NEXT_APP_SITE_URL}/products/${product.slug}/${product.id}`;
 
   return {
     title,
@@ -105,7 +105,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
       "price": product.price,
       "itemCondition": "https://schema.org/NewCondition",
       "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-      "url": `${process.env.NEXT_APP_SITE_URL}/products/${product.id}`,
+      "url": `${process.env.NEXT_APP_SITE_URL}/products/${product.slug}/${product.id}`,
     },
     "aggregateRating": {
       "@type": "AggregateRating",

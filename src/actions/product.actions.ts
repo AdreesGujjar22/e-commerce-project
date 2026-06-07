@@ -22,7 +22,7 @@ function mapProductDbToType(dbProduct: any): Product {
   let parsedDesc = dbProduct.long_description || dbProduct.description;
   let seoTitle = "";
   let seoDescription = "";
-  let slug = "";
+  let slug = dbProduct.slug || "";
 
   if (parsedDesc && parsedDesc.startsWith("{")) {
     try {
@@ -30,7 +30,6 @@ function mapProductDbToType(dbProduct: any): Product {
       parsedDesc = parsed.description || "";
       seoTitle = parsed.seoTitle || "";
       seoDescription = parsed.seoDescription || "";
-      slug = parsed.slug || "";
     } catch (_) {
       // safe fallback
     }
@@ -257,7 +256,7 @@ export async function createProductAction(formData: any) {
     // Enforce title/slug uniqueness on product creation in Supabase
     const { data: existingProducts, error: selectErr } = await supabase
       .from("products")
-      .select("name, long_description");
+      .select("name, slug");
 
     if (!selectErr && existingProducts) {
       const normalizedName = parsed.name.trim().toLowerCase();
@@ -268,16 +267,7 @@ export async function createProductAction(formData: any) {
           return { success: false, error: `Product title "${parsed.name}" already exists on an exhibiting SKU. Product titles must be unique.` };
         }
         
-        let pSlug = "";
-        if (p.long_description && p.long_description.startsWith("{")) {
-          try {
-            const parsedMeta = JSON.parse(p.long_description);
-            pSlug = parsedMeta.slug || "";
-          } catch (_) {}
-        }
-        if (!pSlug) {
-          pSlug = generateSlug(p.name);
-        }
+        const pSlug = p.slug || generateSlug(p.name);
 
         if (pSlug === newSlug) {
           return { success: false, error: `Product slug collision. A similar URL slug "${newSlug}" already exists.` };
@@ -291,7 +281,6 @@ export async function createProductAction(formData: any) {
       description: parsed.longDescription,
       seoTitle: parsed.seoTitle || "",
       seoDescription: parsed.seoDescription || "",
-      slug: finalSlug,
     });
 
     // 3. Insert product record
@@ -299,6 +288,7 @@ export async function createProductAction(formData: any) {
       .from("products")
       .insert({
         name: parsed.name,
+        slug: finalSlug,
         designer: parsed.designer,
         category_id: parsed.category,
         price: parsed.price,
@@ -355,7 +345,7 @@ export async function updateProductAction(id: string, formData: any) {
     // Enforce title/slug uniqueness on update in Supabase
     const { data: existingProducts, error: selectErr } = await supabase
       .from("products")
-      .select("id, name, long_description");
+      .select("id, name, slug");
 
     if (!selectErr && existingProducts) {
       const normalizedName = parsed.name.trim().toLowerCase();
@@ -368,16 +358,7 @@ export async function updateProductAction(id: string, formData: any) {
           return { success: false, error: `Product title "${parsed.name}" already exists on another exhibiting SKU. Product titles must be unique.` };
         }
         
-        let pSlug = "";
-        if (p.long_description && p.long_description.startsWith("{")) {
-          try {
-            const parsedMeta = JSON.parse(p.long_description);
-            pSlug = parsedMeta.slug || "";
-          } catch (_) {}
-        }
-        if (!pSlug) {
-          pSlug = generateSlug(p.name);
-        }
+        const pSlug = p.slug || generateSlug(p.name);
 
         if (pSlug === newSlug) {
           return { success: false, error: `Product slug collision. Another product uses URL slug "${newSlug}".` };
@@ -391,13 +372,13 @@ export async function updateProductAction(id: string, formData: any) {
       description: parsed.longDescription,
       seoTitle: parsed.seoTitle || "",
       seoDescription: parsed.seoDescription || "",
-      slug: finalSlug,
     });
 
     const { data: updatedP, error: updateError } = await supabase
       .from("products")
       .update({
         name: parsed.name,
+        slug: finalSlug,
         designer: parsed.designer,
         category_id: parsed.category,
         price: parsed.price,

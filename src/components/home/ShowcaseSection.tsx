@@ -81,7 +81,7 @@ export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({
 
   const handleShopNow = (product: Product | undefined) => {
     if (product) {
-      window.location.href = `/products/${product.id}`;
+      window.location.href = `/products/${product.slug}/${product.id}`;
     } else {
       console.warn("No functional product available to navigate to.");
     }

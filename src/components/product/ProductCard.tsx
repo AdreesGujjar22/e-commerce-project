@@ -18,7 +18,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <Link
-      href={`/products/${product.id}`}
+      href={`/products/${product.slug}/${product.id}`}
       className="group cursor-pointer flex flex-col w-full bg-white border-0 p-0 overflow-hidden relative text-center select-none"
     >
       {/* Product Image Panel with 2:3 Portrait Aspect Ratio */}

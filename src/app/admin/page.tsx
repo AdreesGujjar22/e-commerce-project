@@ -1013,7 +1013,7 @@ export default function AdminPage() {
                       <Badge variant="gold">{p.category}</Badge>
                     </td>
                     <td className="p-5 font-serif italic font-bold text-neutral-900 text-sm">
-                      ${p.price.toLocaleString()}
+                      Rs{p.price.toLocaleString()}
                     </td>
                     <td className="p-5">
                       <span className={`font-mono text-xs font-bold ${p.stock <= 3 ? "text-red-650" : "text-neutral-700"}`}>
@@ -1814,7 +1814,7 @@ export default function AdminPage() {
                   onChange={(e) => setNewSlug(computeSlugFromTitle(e.target.value))}
                 />
                 <p className="text-[9px] font-mono text-neutral-400 mt-1.5 uppercase tracking-wide">
-                  Preview URL: <span className="text-teal-650 font-semibold font-mono">/products/{currentComputedSlug || "..."}</span>
+                  Preview URL: <span className="text-teal-650 font-semibold font-mono">/products/{currentComputedSlug || "..."}/[id]</span>
                 </p>
               </div>
 

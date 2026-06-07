@@ -84,7 +84,7 @@ export async function POST(req: Request) {
     // PRODUCT FORMAT
     // =========================
     const productText = products
-      .map((p: any) => `• ${p.name} - $${p.price}\n  /products/${p.id}`)
+      .map((p: any) => `• ${p.name} - ${p.price}\n  /products/${p.slug}/${p.id}`)
       .join("\n");
 
     // =========================
