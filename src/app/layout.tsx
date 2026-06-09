@@ -11,9 +11,11 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_APP_SITE_URL || "https://https://www.aroojarts.store"
+    process.env.NEXT_APP_SITE_URL || "https://www.aroojarts.store"
   ),
-
+  verification: {
+    google: "ndUTc0wNMZMCJ9MHWLlT4rTxjezpfe-W2RYu2GWpKVs",
+  },
   title: {
     default: "Arooj Arts | Premium Clothing Store Pakistan",
     template: "%s | Arooj Arts",
@@ -47,7 +49,9 @@ export const metadata: Metadata = {
       "Elegant ladies fashion and curated collections by Arooj Arts.",
     images: ["/meta-logo.jpg"],
   },
-
+  alternates: {
+    canonical: "/",
+  },
   icons: {
     icon: "/fav-icon.png",
   },

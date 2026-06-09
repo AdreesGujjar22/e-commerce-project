@@ -11,7 +11,9 @@ export const metadata: Metadata = {
   title: "Fashion Blog | Arooj Arts Pakistan",
   description:
     "Explore the latest Pakistani fashion trends, lawn collections, Eid dresses, wedding wear inspiration, styling tips, and luxury women's clothing guides by Arooj Arts.",
-
+  alternates: {
+    canonical: `${process.env.NEXT_APP_SITE_URL}/blogs`,
+  },
   keywords: [
     "Pakistani fashion",
     "lawn dresses",

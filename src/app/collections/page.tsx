@@ -4,21 +4,59 @@ import { getCategoriesAction } from "../../actions/category.actions";
 import { ProductGrid } from "../../components/product/ProductGrid";
 import { Sparkles, Tag, Layers, Compass } from "lucide-react";
 import { CollectionsFilter } from "../../components/product/CollectionsFilter";
+import { Metadata } from "next";
 
 export const revalidate = 0;
+
+// 1. Next.js  Metadata  for collections Page
+export async function generateMetadata(): Promise<Metadata> {
+  const title = `Collections | Arooj Arts`;
+  const description =
+  "Explore Arooj Arts for beautiful lawn suits, pret wear, and stylish women's clothing. Shop the latest fashion collections with quality designs and nationwide delivery in Pakistan.";
+  const canonicalUrl = `${process.env.NEXT_APP_SITE_URL}/products/collections`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: "Arooj Arts",
+      images: [
+        {
+          url: `${process.env.NEXT_APP_SITE_URL}/logo.png`,
+          width: 1200,
+          height: 630,
+          alt: "Arooj Arts Collection",
+        },
+      ],
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [`${process.env.NEXT_APP_SITE_URL}/logo.png`],
+    },
+  };
+}
 
 export default async function CollectionsPage() {
   const res = await getProductsAction({ page: 1, limit: 8 });
   const initialProducts = res.products || [];
   const initialTotalCount = res.totalCount || 0;
   const initialTotalPages = res.totalPages || 1;
-  
+
   const catRes = await getCategoriesAction();
   const initialCategories = catRes.categories || [];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-left" id="collections-showroom-root">
-      
+
       {/* 1. Header Hero Segment */}
       <div className="border-b border-gold-200 pb-10 mb-12.5 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 text-left">
         <div className="max-w-xl">
@@ -36,8 +74,8 @@ export default async function CollectionsPage() {
       </div>
 
       {/* 2. Interactive Filtering controls and Product Grid */}
-      <CollectionsFilter 
-        initialProducts={initialProducts} 
+      <CollectionsFilter
+        initialProducts={initialProducts}
         initialCategories={initialCategories}
         initialTotalCount={initialTotalCount}
         initialTotalPages={initialTotalPages}
