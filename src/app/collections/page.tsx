@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = `Collections | Arooj Arts`;
   const description =
   "Explore Arooj Arts for beautiful lawn suits, pret wear, and stylish women's clothing. Shop the latest fashion collections with quality designs and nationwide delivery in Pakistan.";
-  const canonicalUrl = `${process.env.NEXT_APP_SITE_URL}/products/collections`;
+  const canonicalUrl = `${process.env.NEXT_APP_SITE_URL}/collections`;
 
   return {
     title,
