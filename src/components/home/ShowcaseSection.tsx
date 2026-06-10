@@ -3,7 +3,8 @@
 import React from "react";
 import { Product } from "../../types";
 import { useStore } from "../../store";
-import { ProductImage } from "../ui/ProductImage";
+import { OptimizedImage } from "../ui/OptimizedImage";
+import { RESPONSIVE_IMAGE_SIZES, PRODUCT_IMAGE_QUALITY } from "../../lib/imageConfig";
 
 interface ShowcaseSectionProps {
   categories: {
@@ -121,17 +122,21 @@ export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({
             {showcaseCards.map((card, idx) => (
               <div
                 key={card.categoryId || idx}
-                className="group relative flex flex-col w-full aspect-[2/3] overflow-hidden bg-neutral-50 shadow-sm hover:shadow-xl transition-all duration-700 hover:-translate-y-2 rounded-none cursor-pointer"
+                className="group relative flex flex-col w-full overflow-hidden bg-neutral-50 shadow-sm hover:shadow-xl transition-all duration-700 hover:-translate-y-2 rounded-none cursor-pointer"
                 onClick={() => handleShopNow(card.product)}
                 id={`showcase-card-${card.categoryId || idx}`}
+                style={{ aspectRatio: "2/3" }}
               >
-                {/* Embedded Large Portrait Image */}
+                {/* Embedded Large Portrait Image - Fixed Aspect Ratio to Prevent CLS */}
                 <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
-                  <ProductImage
-                    src={card.image}
+                  <OptimizedImage
+                    src={card.image || fallbackCategories[idx % 4].bannerUrl}
                     alt={card.categoryName}
-                    className="w-full h-full object-cover object-center transform scale-100 group-hover:scale-103 transition-transform duration-1000 ease-out"
-                    fallbackSrc={fallbackCategories[idx % 4].bannerUrl}
+                    fill
+                    sizes={RESPONSIVE_IMAGE_SIZES.showcase}
+                    quality={PRODUCT_IMAGE_QUALITY.showcase}
+                    loading="lazy"
+                    className="object-cover object-center transform scale-100 group-hover:scale-103 transition-transform duration-1000 ease-out"
                   />
                   {/* Gentle shadow gradient base for maximum label legibility */}
                   <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-neutral-950/20 to-transparent opacity-90 transition-opacity duration-500 group-hover:from-neutral-950/85" />

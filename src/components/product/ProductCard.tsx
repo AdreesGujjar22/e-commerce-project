@@ -4,7 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { Product } from "../../types";
 import { useStore } from "../../store";
-import { ProductImage } from "../ui/ProductImage";
+import { OptimizedImage } from "../ui/OptimizedImage";
+import { RESPONSIVE_IMAGE_SIZES, PRODUCT_IMAGE_QUALITY } from "../../lib/imageConfig";
 import { Eye, Plus } from "lucide-react";
 
 interface ProductCardProps {
@@ -21,12 +22,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       href={`/products/${product.slug}/${product.id}`}
       className="group cursor-pointer flex flex-col w-full bg-white border-0 p-0 overflow-hidden relative text-center select-none"
     >
-      {/* Product Image Panel with 2:3 Portrait Aspect Ratio */}
-      <div className="w-full relative aspect-[2/3] overflow-hidden bg-neutral-50 mb-4 rounded-none">
-        <ProductImage
+      {/* Product Image Panel with 2:3 Portrait Aspect Ratio - Fixed Height to Prevent CLS */}
+      <div className="w-full relative overflow-hidden bg-neutral-50 mb-4 rounded-none" style={{ aspectRatio: "2/3" }}>
+        <OptimizedImage
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-cover object-center transform scale-100 transition-transform duration-700 ease-out group-hover:scale-102"
+          fill
+          sizes={RESPONSIVE_IMAGE_SIZES.productCard}
+          quality={PRODUCT_IMAGE_QUALITY.productCard}
+          loading="lazy"
+          className="object-cover object-center transform scale-100 transition-transform duration-700 ease-out group-hover:scale-102"
         />
 
         {/* Dynamic Premium Hover Overlay carrying two interactive buttons */}
@@ -55,12 +60,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
       </div>
 
-      {/* Info Panel Centered Underneath */}
-      <div className="w-full flex flex-col items-center mt-1">
+      {/* Info Panel Centered Underneath - Fixed Height to Prevent CLS */}
+      <div className="w-full flex flex-col items-center mt-1" style={{ minHeight: "52px" }}>
         <h3 className="font-sans text-[10px] sm:text-[11px] tracking-[0.22em] text-neutral-900 font-medium uppercase text-center line-clamp-1 leading-relaxed">
           {product.name}
         </h3>
-        
+
         <p className="font-sans text-[9px] sm:text-[10px] tracking-[0.15em] text-stone-500 font-light text-center mt-1 uppercase">
           {formattedPrice}
         </p>
@@ -68,4 +73,3 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     </Link>
   );
 };
-

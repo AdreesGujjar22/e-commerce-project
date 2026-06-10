@@ -1,23 +1,41 @@
 import React from "react";
 import { Metadata } from "next";
 import Link from "next/link";
-import { getProductByIdAction } from "../../../../actions/product.actions";
+import { getProductsAction } from "../../../../actions/product.actions";
+import { getCachedProductById } from "../../../../lib/cacheConfig";
 import { ArrowLeft } from "lucide-react";
 import { DynamicJsonLd } from "../../../../components/seo/DynamicJsonLd";
 import { ProductDetailClient } from "../../../../components/product/ProductDetailClient";
+import { Product } from "../../../../types";
 
-export const dynamic = 'force-dynamic'; // Force dynamic rendering on Vercel
+export const revalidate = 3600; // ISR: cache for 1 hour
 
 interface PageProps {
   params: Promise<{ slug: string; id: string }> | { slug: string; id: string };
 }
 
-// 1. Next.js Dynamic Metadata generation for Product Page
+// 1. Generate static params for popular products (ISR)
+export async function generateStaticParams() {
+  try {
+    const res = await getProductsAction({ limit: 100 });
+    const products = res.products || [];
+
+    return products.map((product: Product) => ({
+      slug: product.slug,
+      id: product.id,
+    }));
+  } catch (error) {
+    console.error("Error generating static params:", error);
+    return [];
+  }
+}
+
+// 2. Next.js Dynamic Metadata generation for Product Page
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const id = resolvedParams.id;
-  
-  const res = await getProductByIdAction(id);
+
+  const res = await getCachedProductById(id);
   const product = res.product;
 
   if (!product) {
@@ -65,7 +83,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
   const resolvedParams = await params;
   const id = resolvedParams.id;
 
-  const res = await getProductByIdAction(id);
+  const res = await getCachedProductById(id);
   const product = res.product;
 
   if (!product) {

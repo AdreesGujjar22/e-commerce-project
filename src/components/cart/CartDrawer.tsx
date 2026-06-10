@@ -5,9 +5,10 @@ import Link from "next/link";
 import { useStore } from "../../store";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Trash2, ShoppingBag, Sparkles, AlertCircle } from "lucide-react";
-import { ProductImage } from "../ui/ProductImage";
+import { OptimizedImage } from "../ui/OptimizedImage";
+import { RESPONSIVE_IMAGE_SIZES, PRODUCT_IMAGE_QUALITY } from "../../lib/imageConfig";
 
-export const CartDrawer: React.FC = () => {
+const CartDrawer: React.FC = () => {
   const { isCartOpen, setCartOpen, cart, updateCartQuantity, removeFromCart } = useStore();
 
   const totalAmount = cart.reduce((acc, curr) => acc + curr.product.price * curr.quantity, 0);
@@ -70,11 +71,15 @@ export const CartDrawer: React.FC = () => {
                       key={`${item.product.id}-${item.size}-${idx}`}
                       className="flex items-center space-x-4 border border-gold-100 rounded-xl bg-white p-3.5 relative shadow-sm"
                     >
-                      <div className="w-16 h-20 rounded-lg overflow-hidden flex-shrink-0 border border-gold-100 bg-neutral-50">
-                        <ProductImage
+                      <div className="relative flex-shrink-0 border border-gold-100 bg-neutral-50 rounded-lg overflow-hidden" style={{ width: "64px", height: "80px" }}>
+                        <OptimizedImage
                           src={item.product.image}
                           alt={item.product.name}
-                          className="w-full h-full object-cover"
+                          fill
+                          sizes={RESPONSIVE_IMAGE_SIZES.cartItem}
+                          quality={PRODUCT_IMAGE_QUALITY.thumbnail}
+                          loading="lazy"
+                          className="object-cover"
                         />
                       </div>
 
@@ -179,3 +184,5 @@ export const CartDrawer: React.FC = () => {
     </AnimatePresence>
   );
 };
+
+export default CartDrawer;

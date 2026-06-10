@@ -7,7 +7,8 @@ import {
   Settings,
   RefreshCw,
 } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { apiService } from "../../services/api";
 import { Product, Order, BlogPost } from "../../types";
@@ -16,7 +17,16 @@ import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
 import { Badge } from "../../components/ui/Badge";
 import { ImageUpload } from "../../components/ImageUpload";
-import JoditEditorWrapper from "../../components/blog/JoditEditorWrapper";
+import { SkeletonLoader } from "../../components/ui/SkeletonLoader";
+
+const JoditEditorWrapper = dynamic(() => import("../../components/blog/JoditEditorWrapper"), {
+  ssr: false,
+  loading: () => (
+    <div className="animate-pulse bg-white border border-gold-200 rounded-xl p-8 text-center text-[#7c633a] text-xs font-mono">
+      Initializing premium editor tools...
+    </div>
+  ),
+});
 import {
   getUsersListAction,
   getAllReviewsAction,

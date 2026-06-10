@@ -5,7 +5,8 @@ import { Product } from "../../types";
 import { useStore } from "../../store";
 import { Star, ShieldAlert, Award, MessageSquarePlus, ChevronDown, ChevronUp } from "lucide-react";
 import { createReviewAction } from "../../actions/product.actions";
-import { ProductImage } from "../ui/ProductImage";
+import { OptimizedImage } from "../ui/OptimizedImage";
+import { RESPONSIVE_IMAGE_SIZES, PRODUCT_IMAGE_QUALITY } from "../../lib/imageConfig";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -112,32 +113,45 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
         {/* Left Column: Vertical Thumbnails Strip + Central portrait frame */}
         <div className="lg:col-span-7 flex flex-row space-x-4 h-full">
           
-          {/* Vertical thumbnails strip */}
+          {/* Vertical thumbnails strip - Fixed Height to Prevent CLS */}
           {productImagesList.length > 1 && (
-            <div className="flex flex-col space-y-3 w-16 sm:w-20 overflow-y-auto max-h-[500px] sm:max-h-[600px] pr-1 flex-shrink-0 scrollbar-none">
+            <div className="flex flex-col space-y-3 overflow-y-auto max-h-[500px] sm:max-h-[600px] pr-1 flex-shrink-0 scrollbar-none" style={{ width: "64px" }}>
               {productImagesList.map((url, idx) => (
                 <button
                   key={idx + url}
                   type="button"
                   onClick={() => setActiveImage(url)}
-                  className={`relative w-full aspect-[2/3] overflow-hidden border transition-all duration-300 flex-shrink-0 cursor-pointer rounded-none bg-neutral-50 ${
+                  className={`relative overflow-hidden border transition-all duration-300 flex-shrink-0 cursor-pointer rounded-none bg-neutral-50 ${
                     activeImage === url
                       ? "border-stone-900 ring-1 ring-stone-900"
                       : "border-stone-200 hover:border-stone-400"
                   }`}
+                  style={{ width: "64px", height: "96px" }}
                 >
-                  <ProductImage src={url} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover" />
+                  <OptimizedImage
+                    src={url}
+                    alt={`Gallery ${idx + 1}`}
+                    fill
+                    sizes={RESPONSIVE_IMAGE_SIZES.productThumbnail}
+                    quality={PRODUCT_IMAGE_QUALITY.thumbnail}
+                    loading="lazy"
+                    className="object-cover"
+                  />
                 </button>
               ))}
             </div>
           )}
 
-          {/* Large portrait focused image */}
-          <div className="flex-1 relative aspect-[2/3] overflow-hidden bg-[#fbfbfb]">
-            <ProductImage
+          {/* Large portrait focused image - Fixed Aspect Ratio to Prevent CLS */}
+          <div className="flex-1 relative overflow-hidden bg-[#fbfbfb]" style={{ aspectRatio: "2/3" }}>
+            <OptimizedImage
               src={activeImage}
               alt={product.name}
-              className="w-full h-full object-cover object-center transition-all duration-700 ease-out"
+              fill
+              sizes={RESPONSIVE_IMAGE_SIZES.productDetail}
+              quality={PRODUCT_IMAGE_QUALITY.productDetail}
+              loading="eager"
+              className="object-cover object-center transition-all duration-700 ease-out"
             />
           </div>
         </div>

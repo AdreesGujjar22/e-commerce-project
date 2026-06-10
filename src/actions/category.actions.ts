@@ -1,6 +1,6 @@
 "use server";
 
-import { getSupabaseServerClient } from "../lib/supabase/server";
+import { getSupabaseServerClient, getSupabaseStatelessClient } from "../lib/supabase/server";
 import { deleteFromCloudinary } from "../lib/cloudinary";
 
 // Helpers to parse SEO metadata stored inside the banner_url column
@@ -39,7 +39,7 @@ function verifyAdminRole(profile: any) {
 
 export async function getCategoriesAction() {
   try {
-    const supabase = await getSupabaseServerClient();
+    const supabase = getSupabaseStatelessClient();
     const { data: categories, error } = await supabase
       .from("categories")
       .select("*")

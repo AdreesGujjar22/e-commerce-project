@@ -2,10 +2,10 @@ import React from "react";
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { getBlogsAction } from "../../actions/blog.actions";
+import { getCachedBlogs } from "../../lib/cacheConfig";
 import { Calendar, User, Clock, ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
 
-export const revalidate = 60; // Cash pages dynamically every minute
+export const revalidate = 1800; // Cache for 30 minutes
 
 export const metadata: Metadata = {
   title: "Fashion Blog | Arooj Arts Pakistan",
@@ -34,7 +34,7 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
   const currentPage = Number(resolvedParams?.page || "1");
   const limit = 6;
 
-  const result = await getBlogsAction({ page: currentPage, limit });
+  const result = await getCachedBlogs({ page: currentPage, limit });
   const blogs = result.blogs || [];
   const total = result.total || 0;
   const pageCount = result.pageCount || 1;

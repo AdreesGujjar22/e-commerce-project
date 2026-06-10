@@ -1,26 +1,39 @@
-import React from "react";
-import { getProductsAction } from "../actions/product.actions";
-import { getCategoriesAction } from "../actions/category.actions";
+import React, { Suspense } from "react";
+import { getCachedProducts, getCachedCategories, getCachedHeroSlides } from "../lib/cacheConfig";
 import { HeroSection } from "../components/hero/HeroSection";
 import { ProductGrid } from "../components/product/ProductGrid";
 import { ShowcaseSection } from "../components/home/ShowcaseSection";
+import { HeroImagePreloader } from "../components/hero/HeroImagePreloader";
 import Link from "next/link";
 import { ArrowLeftRight, Sparkles, Shield, Award, Sparkle } from "lucide-react";
 import { FaqSection } from "../components/home/FaqSection";
 
-export const revalidate = 0; // Fresh load on each request
+function optimizeImageUrl(url: string): string {
+  if (!url || !url.includes("cloudinary.com")) return url;
+  if (url.includes("/image/upload/")) {
+    return url.replace("/image/upload/", "/image/upload/f_auto,q_auto/");
+  }
+  return url;
+}
+
+export const revalidate = 300; // Cache for 5 minutes
 
 export default async function HomePage() {
-  const res = await getProductsAction();
+  const res = await getCachedProducts();
   const products = res.products || [];
   const featuredProducts = products.filter((p) => p.featured);
 
-  const catRes = await getCategoriesAction();
+  const catRes = await getCachedCategories();
   const categories = catRes.categories || [];
+
+  const heroRes = await getCachedHeroSlides();
+  const heroSlides = heroRes.slides || [];
+  const firstHeroImage = heroSlides[0]?.image ? optimizeImageUrl(heroSlides[0].image) : "";
 
   return (
     <div className="flex flex-col w-full pb-20">
-      
+      {firstHeroImage && <HeroImagePreloader imageUrl={firstHeroImage} />}
+
       {/* 1. Dramatic Brand Hero */}
       <HeroSection />
 
@@ -107,10 +120,14 @@ export default async function HomePage() {
       </section>
 
       {/* 4. Luxury Curated Exhibition Showcase */}
-      <ShowcaseSection categories={categories} products={products} />
+      <Suspense fallback={<div className="h-96 bg-neutral-100 animate-pulse" />}>
+        <ShowcaseSection categories={categories} products={products} />
+      </Suspense>
 
       {/* 5. Interactive Details Modal loader */}
-      <FaqSection />
+      <Suspense fallback={<div className="h-96 bg-neutral-100 animate-pulse" />}>
+        <FaqSection />
+      </Suspense>
     </div>
   );
 }

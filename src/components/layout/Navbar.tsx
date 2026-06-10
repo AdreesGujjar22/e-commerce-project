@@ -101,19 +101,19 @@ export const Navbar: React.FC = () => {
             </button>
           </nav>
 
-          {/* Luxury Brand Logo Centered */}
-<div className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
-  <Link href="/" className="flex items-center justify-center">
-    <div className="relative h-20 w-[140px]">
-      <Image
-        src="/logo.png"
-        alt="Logo"
-        fill
-        className="object-contain"
-      />
-    </div>
-  </Link>
-</div>
+          {/* Luxury Brand Logo Centered - Fixed Dimensions to Prevent CLS */}
+          <div className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
+            <Link href="/" className="flex items-center justify-center">
+              <Image
+                src="/logo.png"
+                alt="Arooj Arts Logo"
+                width={140}
+                height={80}
+                priority
+                className="object-contain"
+              />
+            </Link>
+          </div>
 
         {/* Custom Action Group - Right Side */}
         <div className="flex items-center space-x-4 sm:space-x-6">

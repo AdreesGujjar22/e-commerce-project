@@ -6,7 +6,8 @@ import { useStore } from "../../store";
 import { Sparkles, Compass, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { getHeroSlidesAction, HeroSlide } from "../../actions/hero.actions";
-import { ProductImage, optimizeCloudinaryUrl } from "../ui/ProductImage";
+import { OptimizedImage } from "../ui/OptimizedImage";
+import { RESPONSIVE_IMAGE_SIZES, PRODUCT_IMAGE_QUALITY } from "../../lib/imageConfig";
 
 export const HeroSection: React.FC = () => {
   const { setChatOpen } = useStore();
@@ -37,26 +38,27 @@ export const HeroSection: React.FC = () => {
     let isCancelled = false;
 
     const preloadNextSlides = async () => {
-      // Start preloading from index 1, since index 0 is immediately requested by active render
       for (let i = 1; i < slides.length; i++) {
         if (isCancelled) break;
         const rawUrl = slides[i].image;
         if (!rawUrl) continue;
 
-        const optimizedUrl = optimizeCloudinaryUrl(rawUrl);
+        const optimizedUrl = rawUrl;
 
         await new Promise<void>((resolve) => {
-          const img = new Image();
-          img.src = optimizedUrl;
-          img.onload = () => {
-            // Use 400ms interval cooldown to keep bandwidth fully clear for critical interactions
+          const link = document.createElement("link");
+          link.rel = "preload";
+          link.as = "image";
+          link.href = optimizedUrl;
+          link.onload = () => {
             setTimeout(() => {
               resolve();
             }, 400);
           };
-          img.onerror = () => {
+          link.onerror = () => {
             resolve();
           };
+          document.head.appendChild(link);
         });
       }
     };
@@ -162,13 +164,18 @@ export const HeroSection: React.FC = () => {
             exit="exit"
             className="absolute inset-0 w-full h-full"
           >
-            <ProductImage
+            <OptimizedImage
               src={activeSlide.image}
               alt={activeSlide.title}
-              className="w-full h-full object-cover object-center transform scale-103"
+              fill
+              priority={currentIndex === 0}
+              quality={PRODUCT_IMAGE_QUALITY.hero}
+              sizes={RESPONSIVE_IMAGE_SIZES.hero}
+              className="object-cover object-center transform scale-103"
+              loading={currentIndex === 0 ? "eager" : "lazy"}
             />
             {/* Deep atmospheric overlay customizable by the dynamic slide configuration */}
-            <div 
+            <div
               className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/45 to-neutral-900/10 transition-all duration-500"
               style={{
                 opacity: (activeSlide.overlay_opacity ?? 35) / 100,

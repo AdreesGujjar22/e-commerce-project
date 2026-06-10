@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
+export type { ImageOptimizeOptions } from "./cloudinaryUrl";
 
 let isConfigured = false;
 
@@ -44,24 +45,29 @@ export function extractPublicIdFromUrl(url: string): string | null {
   }
 }
 
-/**
- * Uploads an image either as a base64 string or image buffer, returning the secure URL.
- */
-export async function uploadToCloudinary(base64String: string, folderName = "Arooj_letoile"): Promise<string> {
+export async function uploadToCloudinary(
+  base64String: string,
+  folderName = "Arooj_letoile"
+): Promise<string> {
   ensureCloudinaryConfigured();
-  
-  // Clean prefix if present
-  let cleanBase64 = base64String;
-  if (base64String.startsWith("data:image")) {
-    // Leave prefix as cloudinary accepts data url natively, but format is correct
-  }
 
-  const res = await cloudinary.uploader.upload(cleanBase64, {
+  const res = await cloudinary.uploader.upload(base64String, {
     folder: folderName,
     allowed_formats: ["jpg", "jpeg", "png", "webp"],
+    resource_type: "auto",
     transformation: [
-      { quality: "auto:good", fetch_format: "auto" }
-    ]
+      {
+        quality: "auto:good",
+        fetch_format: "auto",
+        flags: "progressive",
+      },
+      {
+        width: 2000,
+        height: 2000,
+        crop: "limit",
+        quality: "auto:good",
+      },
+    ],
   });
 
   return res.secure_url;

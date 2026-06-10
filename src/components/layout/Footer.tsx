@@ -5,15 +5,18 @@ import Link from "next/link";
 import { Sparkles, Facebook, Instagram, Youtube, MessageCircle, Music, Phone, Mail, MapPin } from "lucide-react";
 import { getSettingsAction, StoreSettings } from "../../actions/settings.actions";
 import Image from "next/image";
+import { SkeletonLoader } from "../ui/SkeletonLoader";
 
 export const Footer: React.FC = () => {
   const [settings, setSettings] = useState<StoreSettings | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getSettingsAction().then((res) => {
       if (res.success) {
         setSettings(res.settings);
       }
+      setIsLoading(false);
     });
   }, []);
 
@@ -33,14 +36,13 @@ export const Footer: React.FC = () => {
         {/* Brand Mission Column */}
         <div className="md:col-span-2">
           <Link href="/" className="group inline-block">
-            <div className="relative h-20 w-[140px]">
-              <Image
-                src="/logo-white.png"
-                alt="Logo"
-                fill
-                className="object-contain"
-              />
-            </div>
+            <Image
+              src="/logo-white.png"
+              alt="Arooj Arts Logo"
+              width={140}
+              height={80}
+              className="object-contain"
+            />
           </Link>
           <p className="mt-5 font-sans text-sm text-neutral-400 leading-relaxed max-w-sm">
             Arooj Arts brings you stylish clothing, perfumes, watches, and fashion accessories with premium quality and fast delivery all across Pakistan.
@@ -76,28 +78,32 @@ export const Footer: React.FC = () => {
           <h4 className="font-display text-[11px] uppercase tracking-wider font-bold text-white mb-4">
             Quick Links
           </h4>
-          <ul className="space-y-3 text-sm">
-            <li>
-              <Link href="/collections" className="hover:text-gold-400 transition-colors text-neutral-400">
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link href="/blogs" className="hover:text-gold-400 transition-colors text-neutral-400">
-                Fashion Blogs
-              </Link>
-            </li>
-            <li>
-              <Link href="/collections" className="hover:text-gold-400 transition-colors text-neutral-400">
-                Watches & Accessories
-              </Link>
-            </li>
-            <li>
-              <Link href="/collections" className="hover:text-gold-400 transition-colors text-neutral-400">
-                Perfumes & Sprays
-              </Link>
-            </li>
-          </ul>
+          {isLoading ? (
+            <SkeletonLoader variant="footer-item" count={4} />
+          ) : (
+            <ul className="space-y-3 text-sm">
+              <li>
+                <Link href="/collections" className="hover:text-gold-400 transition-colors text-neutral-400">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/blogs" className="hover:text-gold-400 transition-colors text-neutral-400">
+                  Fashion Blogs
+                </Link>
+              </li>
+              <li>
+                <Link href="/collections" className="hover:text-gold-400 transition-colors text-neutral-400">
+                  Watches & Accessories
+                </Link>
+              </li>
+              <li>
+                <Link href="/collections" className="hover:text-gold-400 transition-colors text-neutral-400">
+                  Perfumes & Sprays
+                </Link>
+              </li>
+            </ul>
+          )}
         </div>
 
         {/* Support & Contact Details */}
@@ -105,30 +111,34 @@ export const Footer: React.FC = () => {
           <h4 className="font-display text-[11px] uppercase tracking-wider font-bold text-white mb-4">
             Customer Help
           </h4>
-          <ul className="space-y-3 text-sm">
-            <li>
-              <Link href="/contact" className="hover:text-gold-400 transition-colors text-neutral-400 flex items-center gap-1.5">
-                <Phone className="h-3.5 w-3.5 text-neutral-500" />
-                <span>Contact Us / Support</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/privacy" className="hover:text-gold-400 transition-colors text-neutral-400">
-                Our Privacy Guarantee
-              </Link>
-            </li>
-            <li>
-              <Link href="/terms" className="hover:text-gold-400 transition-colors text-neutral-400">
-                Shipping & Delivery Terms
-              </Link>
-            </li>
-            <li>
-              <a href={waFormatted} target="_blank" rel="noreferrer" className="hover:text-gold-400 transition-colors text-neutral-400 flex items-center gap-1.5">
-                <MessageCircle className="h-3.5 w-3.5 text-green-500 animate-bounce" />
-                <span>Chat on WhatsApp</span>
-              </a>
-            </li>
-          </ul>
+          {isLoading ? (
+            <SkeletonLoader variant="footer-item" count={4} />
+          ) : (
+            <ul className="space-y-3 text-sm">
+              <li>
+                <Link href="/contact" className="hover:text-gold-400 transition-colors text-neutral-400 flex items-center gap-1.5">
+                  <Phone className="h-3.5 w-3.5 text-neutral-500" />
+                  <span>Contact Us / Support</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="hover:text-gold-400 transition-colors text-neutral-400">
+                  Our Privacy Guarantee
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-gold-400 transition-colors text-neutral-400">
+                  Shipping & Delivery Terms
+                </Link>
+              </li>
+              <li>
+                <a href={waFormatted} target="_blank" rel="noreferrer" className="hover:text-gold-400 transition-colors text-neutral-400 flex items-center gap-1.5">
+                  <MessageCircle className="h-3.5 w-3.5 text-green-500 animate-bounce" />
+                  <span>Chat on WhatsApp</span>
+                </a>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
 

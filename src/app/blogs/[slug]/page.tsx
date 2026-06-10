@@ -2,13 +2,14 @@ import React from "react";
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { getBlogBySlugAction, getBlogsAction } from "../../../actions/blog.actions";
+import { getBlogsAction } from "../../../actions/blog.actions";
+import { getCachedBlogBySlug } from "../../../lib/cacheConfig";
 import { ArrowLeft, Calendar, Clock, User, Share2 } from "lucide-react";
 import JoditViewer from "../../../components/blog/JoditViewer";
 import ShareButton from "../../../components/blog/ShareButton";
 import { DynamicJsonLd } from "../../../components/seo/DynamicJsonLd";
 
-export const revalidate = 60; // Cash individual pages dynamically
+export const revalidate = 3600; // Cache for 1 hour
 
 interface SingleBlogProps {
   params: Promise<{ slug: string }> | { slug: string };
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: SingleBlogProps): Promise<Met
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
 
-  const res = await getBlogBySlugAction(slug, { stateless: true });
+  const res = await getCachedBlogBySlug(slug);
   const blog = res.blog;
 
   if (!blog) {
@@ -85,7 +86,7 @@ export default async function SingleBlogPage({ params }: SingleBlogProps) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
 
-  const res = await getBlogBySlugAction(slug, { stateless: true });
+  const res = await getCachedBlogBySlug(slug);
   const blog = res.blog;
 
   if (!blog) {

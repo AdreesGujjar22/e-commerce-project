@@ -5,10 +5,12 @@ import { useStore } from "../../store";
 import { Modal } from "../ui/Modal";
 import { Badge } from "../ui/Badge";
 import { Button } from "../ui/Button";
+import { OptimizedImage } from "../ui/OptimizedImage";
+import { RESPONSIVE_IMAGE_SIZES, PRODUCT_IMAGE_QUALITY } from "../../lib/imageConfig";
 import { Star, ShieldAlert, BadgeCheck, MessageSquarePlus, Award, Zap } from "lucide-react";
 import { createReviewAction } from "../../actions/product.actions";
 
-export const ProductDetailModal: React.FC = () => {
+const ProductDetailModal: React.FC = () => {
   const { activeProduct, setActiveProduct, addToCart, triggerNotification } = useStore();
   const [selectedSize, setSelectedSize] = useState("M");
   const [engravingText, setEngravingText] = useState("");
@@ -97,18 +99,22 @@ export const ProductDetailModal: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
         {/* Left Column: Premium Zoom Image & Miniature Gallery */}
         <div className="flex flex-col space-y-4">
-          <div className="aspect-[4/5] w-full rounded-xl overflow-hidden bg-neutral-100 border border-gold-150 relative group">
-            <img
+          <div className="w-full rounded-xl overflow-hidden bg-neutral-100 border border-gold-150 relative group" style={{ aspectRatio: "4/5" }}>
+            <OptimizedImage
               src={activeImage}
               alt={activeProduct.name}
-              className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.22] cursor-zoom-in"
+              fill
+              sizes={RESPONSIVE_IMAGE_SIZES.productDetail}
+              quality={PRODUCT_IMAGE_QUALITY.productDetail}
+              loading="eager"
+              className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.22] cursor-zoom-in"
             />
             <div className="absolute bottom-3 right-3 bg-black/60 text-white font-mono text-[9px] px-2.5 py-1 rounded-md backdrop-blur-xs uppercase tracking-wider select-none pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
               Hover to Zoom
             </div>
           </div>
 
-          {/* Gallery Thumbnails List */}
+          {/* Gallery Thumbnails List - Fixed Height for No CLS */}
           {productImagesList.length > 1 && (
             <div className="flex space-x-2.5 overflow-x-auto py-1 scrollbar-thin">
               {productImagesList.map((url, idx) => (
@@ -116,13 +122,22 @@ export const ProductDetailModal: React.FC = () => {
                   key={idx + url}
                   type="button"
                   onClick={() => setActiveImage(url)}
-                  className={`w-14.5 h-18 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
+                  className={`rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
                     activeImage === url
                       ? "border-gold-550 ring-1 ring-gold-450"
                       : "border-gold-100 opacity-60 hover:opacity-100 hover:border-gold-250"
                   }`}
+                  style={{ width: "58px", height: "72px" }}
                 >
-                  <img src={url} className="w-full h-full object-cover" />
+                  <OptimizedImage
+                    src={url}
+                    alt={`Product thumbnail ${idx + 1}`}
+                    fill
+                    sizes={RESPONSIVE_IMAGE_SIZES.productThumbnail}
+                    quality={PRODUCT_IMAGE_QUALITY.thumbnail}
+                    loading="lazy"
+                    className="object-cover"
+                  />
                 </button>
               ))}
             </div>
@@ -390,3 +405,5 @@ export const ProductDetailModal: React.FC = () => {
     </Modal>
   );
 };
+
+export default ProductDetailModal;

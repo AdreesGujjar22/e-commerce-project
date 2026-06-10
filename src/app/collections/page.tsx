@@ -1,12 +1,11 @@
 import React from "react";
-import { getProductsAction } from "../../actions/product.actions";
-import { getCategoriesAction } from "../../actions/category.actions";
+import { getCachedProducts, getCachedCategories } from "../../lib/cacheConfig";
 import { ProductGrid } from "../../components/product/ProductGrid";
 import { Sparkles, Tag, Layers, Compass } from "lucide-react";
 import { CollectionsFilter } from "../../components/product/CollectionsFilter";
 import { Metadata } from "next";
 
-export const revalidate = 0;
+export const revalidate = 300; // Cache for 5 minutes
 
 // 1. Next.js  Metadata  for collections Page
 export async function generateMetadata(): Promise<Metadata> {
@@ -46,12 +45,12 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function CollectionsPage() {
-  const res = await getProductsAction({ page: 1, limit: 8 });
+  const res = await getCachedProducts({ page: 1, limit: 8 });
   const initialProducts = res.products || [];
   const initialTotalCount = res.totalCount || 0;
   const initialTotalPages = res.totalPages || 1;
 
-  const catRes = await getCategoriesAction();
+  const catRes = await getCachedCategories();
   const initialCategories = catRes.categories || [];
 
   return (

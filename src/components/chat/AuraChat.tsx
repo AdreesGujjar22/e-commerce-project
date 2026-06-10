@@ -7,7 +7,7 @@ import { ChatMessage } from "../../types";
 import { motion, AnimatePresence } from "motion/react";
 import { Sparkles, X, Send, ArrowRight, User, Compass, HelpCircle } from "lucide-react";
 
-export const AuraChat: React.FC = () => {
+const AuraChat: React.FC = () => {
   const { isChatOpen, setChatOpen, triggerNotification } = useStore();
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -229,3 +229,5 @@ export const AuraChat: React.FC = () => {
     </AnimatePresence>
   );
 };
+
+export default AuraChat;

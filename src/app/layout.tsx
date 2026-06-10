@@ -1,13 +1,26 @@
 import React, { ReactNode } from "react";
+import dynamic from "next/dynamic";
 import "../index.css";
 import { Navbar } from "../components/layout/Navbar";
 import { Footer } from "../components/layout/Footer";
-import { CartDrawer } from "../components/cart/CartDrawer";
-import { AuraChat } from "../components/chat/AuraChat";
-import { ProductDetailModal } from "../components/product/ProductDetailModal";
 import WhatsAppChatWidget from "../components/WhatsAppChatWidget";
 
 import { Metadata } from "next";
+
+const CartDrawer = dynamic(() => import("../components/cart/CartDrawer"), {
+  loading: () => null,
+});
+
+const AuraChat = dynamic(() => import("../components/chat/AuraChat"), {
+  loading: () => null,
+});
+
+const ProductDetailModal = dynamic(
+  () => import("../components/product/ProductDetailModal"),
+  {
+    loading: () => null,
+  }
+);
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -65,6 +78,23 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <head>
+        <link
+          rel="preconnect"
+          href="https://res.cloudinary.com"
+        />
+        <link
+          rel="dns-prefetch"
+          href="https://res.cloudinary.com"
+        />
+        <link
+          rel="preconnect"
+          href="https://fonts.googleapis.com"
+        />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Grotesk:wght@300..700&display=swap"

@@ -1,6 +1,6 @@
 "use server";
 
-import { getSupabaseServerClient } from "../lib/supabase/server";
+import { getSupabaseServerClient, getSupabaseStatelessClient } from "../lib/supabase/server";
 import { ProductSchema } from "../validations";
 import { Product, Review } from "../types";
 import { deleteFromCloudinary } from "../lib/cloudinary";
@@ -74,7 +74,7 @@ export async function getProductsAction(options?: {
   limit?: number;
 }) {
   try {
-    const supabase = await getSupabaseServerClient();
+    const supabase = getSupabaseStatelessClient();
     
     let query = supabase.from("products").select("*, reviews(*), product_images(*)", { count: "exact" });
 
@@ -159,7 +159,7 @@ export async function getProductsAction(options?: {
 
 export async function getProductByIdAction(id: string) {
   try {
-    const supabase = await getSupabaseServerClient();
+    const supabase = getSupabaseStatelessClient();
     
     const { data: p, error } = await supabase
       .from("products")
@@ -195,7 +195,7 @@ export async function getProductByIdAction(id: string) {
 
 export async function getProductBySlugAction(slug: string) {
   try {
-    const supabase = await getSupabaseServerClient();
+    const supabase = getSupabaseStatelessClient();
     
     const { data: dbProducts, error } = await supabase
       .from("products")
