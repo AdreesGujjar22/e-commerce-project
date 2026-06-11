@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Product } from "../../types";
 import { useStore } from "../../store";
 import { Star, ShieldAlert, Award, MessageSquarePlus, ChevronDown, ChevronUp } from "lucide-react";
@@ -12,6 +13,7 @@ interface ProductDetailClientProps {
 }
 
 export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product }) => {
+  const router = useRouter();
   const { addToCart, triggerNotification } = useStore();
 
   // Selected state management matching Pakistan apparel specs
@@ -68,12 +70,14 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
     addToCart(product, quantity, selectedSize, bespokeTag);
   };
 
-  const handleDirectCheckout = () => {
+  const handleDirectCheckout = async () => {
     setIsBuying(true);
-    handleAddToCart(true);
-    setTimeout(() => {
-      window.location.href = "/checkout";
-    }, 500);
+    const bespokeTag = product.category === "apparel"
+      ? `Type: ${selectedType} | Lining: ${selectedLining}`
+      : engravingText;
+
+    await addToCart(product, quantity, selectedSize, bespokeTag);
+    router.push("/checkout");
   };
 
   const handleAddReview = async (e: React.FormEvent) => {
