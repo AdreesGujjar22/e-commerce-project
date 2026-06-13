@@ -202,7 +202,7 @@ export default async function SingleBlogPage({ params }: SingleBlogProps) {
         )}
 
         {/* Render blog body with rich HTML content via Jodit React */}
-        <div className="bg-white border border-gold-150 rounded-2xl p-6 sm:p-8 shadow-xs mb-12">
+        <div className="border border-gold-150 rounded-2xl py-6 sm:py-8 shadow-xs mb-12">
           <JoditViewer content={blog.content} />
         </div>
 
