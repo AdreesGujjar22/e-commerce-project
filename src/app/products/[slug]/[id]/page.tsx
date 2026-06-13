@@ -5,6 +5,7 @@ import { getProductByIdAction } from "../../../../actions/product.actions";
 import { ArrowLeft } from "lucide-react";
 import { DynamicJsonLd } from "../../../../components/seo/DynamicJsonLd";
 import { ProductDetailClient } from "../../../../components/product/ProductDetailClient";
+import ShareButton from "../../../../components/blog/ShareButton";
 
 export const dynamic = 'force-dynamic'; // Force dynamic rendering on Vercel
 
@@ -16,7 +17,7 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const id = resolvedParams.id;
-  
+
   const res = await getProductByIdAction(id);
   const product = res.product;
 
@@ -119,15 +120,17 @@ export default async function ProductDetailPage({ params }: PageProps) {
       {/* Inject Structured Metadata schema via dynamic helper component */}
       <DynamicJsonLd data={jsonLd} />
 
-      {/* Back button */}
-      <Link
-        href="/collections"
-        className="inline-flex items-center text-xs font-display uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors mb-10"
-      >
-        <ArrowLeft className="h-4 w-4 mr-2" />
-        <span>back to collections showroom</span>
-      </Link>
-
+      {/* Back button with Share Link */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10">
+        <Link
+          href="/collections"
+          className="inline-flex items-center text-xs font-display uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors"
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          <span>back to collections showroom</span>
+        </Link>
+        <ShareButton slug={`${product['slug']}/${product['id']}`} isProduct />
+      </div>
       {/* Dynamic Product Client View */}
       <ProductDetailClient product={product} />
     </div>
