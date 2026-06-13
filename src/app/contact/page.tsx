@@ -140,7 +140,7 @@ export default async function ContactPage() {
                 href={waFormatted}
                 target="_blank"
                 rel="noreferrer"
-                className="w-full inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-display text-[11px] uppercase tracking-widest font-black py-4 px-6 rounded-xl transition-all shadow-sm group"
+                className="w-full inline-flex items-center justify-center bg-[#075E54] hover:bg-[#097467] text-white font-display text-[11px] uppercase tracking-widest font-black py-4 px-6 rounded-xl transition-all shadow-sm group"
               >
                 <MessageCircle className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform" />
                 <span>Instant WhatsApp assistance</span>

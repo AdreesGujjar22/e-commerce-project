@@ -17,17 +17,17 @@ export const metadata: Metadata = {
     google: "ndUTc0wNMZMCJ9MHWLlT4rTxjezpfe-W2RYu2GWpKVs",
   },
   title: {
-    default: "Arooj Arts | Premium Clothing Store Pakistan",
+    default: "Arooj Arts | Premium Online Clothing Store in Pakistan",
     template: "%s | Arooj Arts",
   },
 
   description:
-    "Arooj Arts is a premium clothing store in Pakistan offering trendy women's fashion, lawn suits, pret wear, embroidered dresses, and stylish outfits. Shop the latest collections online with nationwide delivery.",
+    "Arooj Arts is a premium online clothing store in Pakistan offering trendy women's fashion, designer lawn suits, pret wear, embroidered dresses & more styles.",
 
   openGraph: {
-    title: "Arooj Arts | Premium Clothing Store Pakistan",
+    title: "Arooj Arts | Premium Online Clothing Store in Pakistan",
     description:
-      "Arooj Arts is a premium clothing store in Pakistan. Shop beautiful dresses, lawn collections, pret wear, and the latest women’s fashion online. ",
+      "Arooj Arts is a premium online clothing store in Pakistan offering trendy women's fashion, designer lawn suits, pret wear, embroidered dresses & more styles.",
     siteName: "Arooj Arts",
     locale: "en_US",
     type: "website",
@@ -44,9 +44,9 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Arooj Arts | Premium Clothing Store Pakistan",
+    title: "Arooj Arts | Premium Online Clothing Store in Pakistan",
     description:
-      "Elegant ladies fashion and curated collections by Arooj Arts.",
+      "Arooj Arts is a premium online clothing store in Pakistan offering trendy women's fashion, designer lawn suits, pret wear, embroidered dresses & more styles.",
     images: ["/meta-logo.jpg"],
   },
   alternates: {

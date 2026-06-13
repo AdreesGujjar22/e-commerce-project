@@ -1537,9 +1537,9 @@ export default function AdminPage() {
                       <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-grow min-w-0 space-y-1">
-                      <h5 className="font-display font-black text-xs text-neutral-950 uppercase truncate">
+                      <h1 className="font-display font-black text-xs text-neutral-950 uppercase truncate">
                         {slide.title || "Untitled slide Title"}
-                      </h5>
+                      </h1>
                       <p className="font-sans text-[10.5px] text-neutral-400 line-clamp-2 leading-relaxed font-semibold">
                         {slide.subtitle || "No subtitle statement added."}
                       </p>
