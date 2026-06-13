@@ -49,7 +49,7 @@ export const ProductDetailModal: React.FC = () => {
     setIsBuying(true);
     // Add to cart silently
     handleAddToCart(true);
-    // Redirect immediately to checkout ledger
+    // Redirect to checkout
     setTimeout(() => {
       window.location.href = "/checkout";
     }, 300);
@@ -71,7 +71,7 @@ export const ProductDetailModal: React.FC = () => {
         setLocalReviews([res.review, ...localReviews]);
         setReviewAuthor("");
         setReviewText("");
-        triggerNotification("Your patron review has been verified and cataloged.");
+        triggerNotification("Thank you! Your review has been posted.");
       } else {
         triggerNotification(res.error || "Failed to submit review.");
       }
@@ -132,7 +132,7 @@ export const ProductDetailModal: React.FC = () => {
           <div className="border-t border-gold-100/60 pt-6">
             <h4 className="font-display text-[9px] uppercase tracking-widest font-black text-neutral-800 mb-3 flex items-center">
               <Award className="h-3.5 w-3.5 text-gold-600 mr-2" />
-              ATELIER CRAFTSMANSHIP SPECIFICATION
+              Product Details
             </h4>
             <ul className="space-y-2">
               {activeProduct.details && activeProduct.details.length > 0 ? (
@@ -143,7 +143,7 @@ export const ProductDetailModal: React.FC = () => {
                   </li>
                 ))
               ) : (
-                <li className="font-sans text-xs text-neutral-400 italic">Authentic craft details dynamically certified by designer.</li>
+                <li className="font-sans text-xs text-neutral-400 italic">Product details will appear here.</li>
               )}
             </ul>
           </div>
@@ -167,7 +167,7 @@ export const ProductDetailModal: React.FC = () => {
             </h2>
 
             <div className="font-serif italic text-lg text-neutral-800 mt-2 font-bold">
-              ${activeProduct.price.toLocaleString()}
+              RS {activeProduct.price.toLocaleString()}
             </div>
 
             {/* Warehouse Stock Availability Indicator badge */}
@@ -176,7 +176,7 @@ export const ProductDetailModal: React.FC = () => {
                 activeProduct.stock > 3 ? "bg-teal-500" : activeProduct.stock > 0 ? "bg-amber-500 animate-pulse" : "bg-red-500"
               }`} />
               <span className="text-[10px] font-mono tracking-wider uppercase font-bold text-neutral-500">
-                {activeProduct.stock > 3 ? `${activeProduct.stock} units available in showroom` : activeProduct.stock > 0 ? `Atelier limitation: ${activeProduct.stock} items available` : "Out Of Stock"}
+                {activeProduct.stock > 3 ? `${activeProduct.stock} units in stock` : activeProduct.stock > 0 ? `Only ${activeProduct.stock} left` : "Out Of Stock"}
               </span>
             </div>
 
@@ -188,7 +188,7 @@ export const ProductDetailModal: React.FC = () => {
             {activeProduct.category === "apparel" && (
               <div className="mt-5.5">
                 <label className="block text-[10px] font-display font-bold uppercase tracking-widest text-[#555] mb-2">
-                  Atelier Fitting Size
+                  Size
                 </label>
                 <div className="flex space-x-2">
                   {["XS", "S", "M", "L", "XL"].map((size) => (
@@ -213,7 +213,7 @@ export const ProductDetailModal: React.FC = () => {
             {["watches", "fragrances", "decor"].includes(activeProduct.category) && (
               <div className="mt-5.5">
                 <label className="block text-[10px] font-display font-semibold uppercase tracking-widest text-neutral-500 mb-2">
-                  Bespoke Monogram / Brass Engraving (Complimentary)
+                  Personalize with Initials (Free)
                 </label>
                 <input
                   type="text"
@@ -229,7 +229,7 @@ export const ProductDetailModal: React.FC = () => {
             {/* Quantity control */}
             <div className="mt-5.5">
               <label className="block text-[10px] font-display font-semibold uppercase tracking-wide text-neutral-500 mb-2">
-                Quantity Count
+                Quantity
               </label>
               <div className="inline-flex items-center border border-gold-200 rounded-xl overflow-hidden bg-white">
                 <button
@@ -270,7 +270,7 @@ export const ProductDetailModal: React.FC = () => {
                   }, 400);
                 }}
               >
-                add to collection bag
+                Add to Cart
               </Button>
               <Button
                 variant="primary"
@@ -281,7 +281,7 @@ export const ProductDetailModal: React.FC = () => {
                 onClick={handleDirectCheckout}
               >
                 <Zap className="h-3.5 w-3.5 fill-white text-white mr-1" />
-                <span>buy it now (checkout)</span>
+                <span>Buy Now</span>
               </Button>
             </div>
             
@@ -298,19 +298,19 @@ export const ProductDetailModal: React.FC = () => {
       {/* Review Section */}
       <div className="border-t border-gold-150 mt-12 pt-8 text-left">
         <h3 className="font-display text-xs uppercase tracking-widest text-[#151515] font-black mb-6">
-          PATRON SATISFACTION REVIEW LOGS ({localReviews.length})
+          Reviews ({localReviews.length})
         </h3>
 
         {/* Form to leave a review */}
         <form onSubmit={handleAddReview} className="bg-[#faf9f6]/80 border border-gold-150 rounded-2xl p-5 mb-8">
           <h4 className="font-display text-[10px] uppercase tracking-wider font-bold text-neutral-800 mb-4 flex items-center">
             <MessageSquarePlus className="h-3.5 w-3.5 text-gold-500 mr-2" />
-            LEAVE AN ATELIER TESTIMONIAL
+            Write a Review
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-[8px] font-display uppercase tracking-widest text-neutral-400 mb-1.5">
-                Patron/Guest Name
+                Your Name
               </label>
               <input
                 type="text"
@@ -340,12 +340,12 @@ export const ProductDetailModal: React.FC = () => {
           </div>
           <div className="mb-4">
             <label className="block text-[8px] font-display uppercase tracking-widest text-neutral-400 mb-1.5">
-              Patron Testimonial
+              Your Review
             </label>
             <textarea
               required
               rows={2}
-              placeholder="Describe your tactile observation of this curated artifact..."
+              placeholder="Tell us what you think about this product..."
               value={reviewText}
               onChange={(e) => setReviewText(e.target.value)}
               className="w-full bg-white text-neutral-950 placeholder-neutral-400 font-sans text-xs px-3.5 py-2.5 border border-gold-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-gold-450 text-left"
@@ -356,14 +356,14 @@ export const ProductDetailModal: React.FC = () => {
             disabled={isSubmittingReview}
             className="bg-neutral-900 hover:bg-neutral-800 disabled:opacity-40 text-[#faf9f6]/95 font-display text-[9px] uppercase tracking-widest font-black px-5.5 py-3 rounded-full transition-all focus:outline-none shadow-xs active:scale-95 flex items-center gap-1 cursor-pointer"
           >
-            {isSubmittingReview ? "publishing feedback..." : "publish review to registry"}
+            {isSubmittingReview ? "Posting..." : "Post Review"}
           </button>
         </form>
 
         {/* Existing reviews */}
         <div className="space-y-5 max-h-64 overflow-y-auto pr-2 scrollbar-thin">
           {localReviews.length === 0 ? (
-            <p className="font-sans text-xs italic text-neutral-400">Be the first patron to share a feedback on this curation.</p>
+            <p className="font-sans text-xs italic text-neutral-400">No reviews yet. Be the first to share your thoughts!</p>
           ) : (
             localReviews.map((review, rIdx) => (
               <div key={rIdx} className="border-b border-neutral-100 last:border-b-0 pb-4.5 last:pb-0">

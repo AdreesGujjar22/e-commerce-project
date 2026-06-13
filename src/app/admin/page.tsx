@@ -123,7 +123,7 @@ export default function AdminPage() {
 
   const blogTitleError = blogTitle.trim()
     ? blogs.some(b => b.title.trim().toLowerCase() === blogTitle.trim().toLowerCase() && b.id !== (editingBlog?.id || ""))
-      ? "This blog title already exists inside the active chronicles archives."
+      ? "A blog post with this title already exists."
       : undefined
     : undefined;
 
@@ -385,7 +385,7 @@ export default function AdminPage() {
         const res = await deleteBlogAction(deleteTargetId);
         if (res.success) {
           setBlogs((prev) => prev.filter((b) => b.id !== deleteTargetId));
-          triggerNotification("Editorial blog post and Cover image deleted from vaults.");
+          triggerNotification("Blog post deleted successfully.");
         } else {
           throw new Error(res.error);
         }
@@ -465,7 +465,7 @@ export default function AdminPage() {
           setIsBlogModalOpen(false);
           loadData();
         } else {
-          triggerNotification(res.error || "Failed to update blog curated item.");
+          triggerNotification(res.error || "Failed to save blog post.");
         }
       } else {
         const res = await createBlogAction(payload);
@@ -716,7 +716,7 @@ export default function AdminPage() {
         );
         if (res.success && res.category) {
           setCategories((prev) => [...prev, res.category]);
-          triggerNotification(`Brand Catalog Category "${res.category.name}" curated.`);
+          triggerNotification(`Category "${res.category.name}" added successfully.`);
           setIsCategoryModalOpen(false);
         } else {
           throw new Error(res.error);
@@ -804,13 +804,13 @@ export default function AdminPage() {
             {/* Seller Deck Brand/Title Section */}
             <div className="border-b border-gold-250 pb-5 mb-5 hidden lg:block">
               <h1 className="font-display text-lg uppercase tracking-wider font-black text-neutral-950">
-                ATELIER Arooj
+                Admin Panel
               </h1>
               <span className="font-serif italic font-light text-gold-650 text-sm block mt-0.5">
-                Seller Deck
+                Store Management
               </span>
               <p className="font-sans text-[9px] text-[#666] leading-relaxed mt-2 uppercase tracking-widest font-semibold">
-                Pakistani Retail Console
+                Manage your store
               </p>
             </div>
 
@@ -973,7 +973,7 @@ export default function AdminPage() {
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-left gap-4">
             <h3 className="font-display text-sm uppercase tracking-wider text-[#151515] font-black">
-              CURATED ARTISAN CATALOG ({products.length})
+              Products ({products.length})
             </h3>
             <button
               onClick={offerCreateProduct}
@@ -1097,7 +1097,7 @@ export default function AdminPage() {
                       <button
                         onClick={() => handleEditCategory(c)}
                         className="text-neutral-500 hover:text-gold-750 transition-colors p-2 hover:bg-gold-50/30 rounded-full cursor-pointer focus:outline-none"
-                        title="Edit curated category"
+                        title="Edit category"
                       >
                         <Edit className="h-4 w-4" />
                       </button>
@@ -1120,7 +1120,7 @@ export default function AdminPage() {
         /* Account registration base directory */
         <div className="space-y-6">
           <h3 className="font-display text-sm uppercase tracking-wider text-[#151515] font-black">
-            REGISTERED ATELIER USERS BASE ({customers.length})
+            Customers ({customers.length})
           </h3>
 
           <div className="overflow-x-auto border border-gold-150 rounded-2xl bg-white shadow-sm scrollbar-thin">
@@ -1160,7 +1160,7 @@ export default function AdminPage() {
         /* Reviews moderation panel */
         <div className="space-y-6">
           <h3 className="font-display text-sm uppercase tracking-wider text-[#151515] font-black">
-            PATRON TESTIMONIAL MODERATION LOGS ({reviews.length})
+            Customer Reviews ({reviews.length})
           </h3>
 
           <div className="overflow-x-auto border border-gold-150 rounded-2xl bg-white shadow-sm scrollbar-thin">
@@ -2074,8 +2074,8 @@ export default function AdminPage() {
                   onChange={(e) => setBlogAuthor(e.target.value)}
                 />
                 <Input
-                  label="Chronicle Title Name"
-                  placeholder="e.g. Ceramics of Kyoto"
+                  label="Blog Post Title"
+                  placeholder="e.g. New Collection Launch"
                   required
                   value={blogTitle}
                   error={blogTitleError}
@@ -2134,7 +2134,7 @@ export default function AdminPage() {
 
               <div className="text-left">
                 <label className="block text-[10px] font-display font-semibold uppercase tracking-wider text-neutral-500 mb-1.5">
-                  Chronicle Content Body (Supports Rich Text, Tables, Images, Alignment)
+                  Blog Post Content (Supports Rich Text, Tables, Images, Alignment)
                 </label>
                 <JoditEditorWrapper
                   value={blogContent}
@@ -2183,7 +2183,7 @@ export default function AdminPage() {
                   Cancel
                 </Button>
                 <Button variant="primary" type="submit" isLoading={isSubmittingBlog} className="cursor-pointer bg-neutral-950 hover:bg-neutral-850">
-                  {editingBlog ? "Save Chronicle Changes" : "Publish to Editorial Journal"}
+                  {editingBlog ? "Save Changes" : "Publish Blog Post"}
                 </Button>
               </div>
             </form>

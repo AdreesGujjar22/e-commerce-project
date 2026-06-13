@@ -89,12 +89,7 @@ export const Footer: React.FC = () => {
             </li>
             <li>
               <Link href="/collections" className="hover:text-gold-400 transition-colors text-neutral-400">
-                Watches & Accessories
-              </Link>
-            </li>
-            <li>
-              <Link href="/collections" className="hover:text-gold-400 transition-colors text-neutral-400">
-                Perfumes & Sprays
+                Collections
               </Link>
             </li>
           </ul>
@@ -121,12 +116,6 @@ export const Footer: React.FC = () => {
               <Link href="/terms" className="hover:text-gold-400 transition-colors text-neutral-400">
                 Shipping & Delivery Terms
               </Link>
-            </li>
-            <li>
-              <a href={waFormatted} target="_blank" rel="noreferrer" className="hover:text-gold-400 transition-colors text-neutral-400 flex items-center gap-1.5">
-                <MessageCircle className="h-3.5 w-3.5 text-green-500 animate-bounce" />
-                <span>Chat on WhatsApp</span>
-              </a>
             </li>
           </ul>
         </div>

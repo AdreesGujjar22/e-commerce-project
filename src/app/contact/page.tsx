@@ -8,7 +8,7 @@ export const revalidate = 0; // Fresh load
 
 // Define SEO metadata for Contact Page
 export const metadata: Metadata = {
-  title: "Contact Our Lead Curators | Arooj Arts",
+  title: "Contact Us | Arooj Arts",
   description: "Connect with our design, tailoring, and COD courier assistance desk. M.M. Alam Road Showroom, Lahore, Pakistan.",
   alternates: {
     canonical: `${process.env.NEXT_APP_SITE_URL}/contact`,
@@ -33,13 +33,13 @@ export default async function ContactPage() {
         <div className="mb-14 max-w-2xl border-b border-gold-150 pb-8">
           <div className="inline-flex items-center space-x-1.5 bg-neutral-900 text-gold-300 text-[8px] font-display font-medium uppercase tracking-[0.25em] px-3.5 py-1.5 rounded mb-4">
             <Sparkles className="h-3 w-3 text-gold-400" />
-            <span>Arooj Communication Deck</span>
+            <span>Get in Touch</span>
           </div>
           <h1 className="font-display text-3xl sm:text-5xl font-black text-neutral-950 uppercase tracking-tight mb-4">
-            Assistance Desk <span className="font-serif italic text-gold-600 font-light">& Support</span>
+            Contact Us <span className="font-serif italic text-gold-600 font-light">& Support</span>
           </h1>
           <p className="font-sans text-xs text-neutral-500 leading-relaxed">
-            Have queries regarding Cash on Delivery courier details, sizing adaptations, or masterwork certificates? Our dedicated curator board is standing by to assist with your inquiries.
+            Questions about your order, sizing, or delivery? We're here to help. Contact us anytime.
           </p>
         </div>
 
@@ -52,7 +52,7 @@ export default async function ContactPage() {
             {/* Direct Coordinates Container */}
             <div className="bg-white border border-gold-150 p-6 sm:p-7 rounded-3xl shadow-sm space-y-6">
               <h3 className="font-display text-[10px] uppercase tracking-widest font-black text-neutral-950 border-b border-neutral-100 pb-3 block">
-                Official Channels
+                Contact Information
               </h3>
 
               <div className="space-y-5">
@@ -63,7 +63,7 @@ export default async function ContactPage() {
                   </div>
                   <div className="space-y-0.5">
                     <span className="text-[9.5px] uppercase font-bold text-neutral-400 tracking-wider block">
-                      HELPLINE COORDINATE
+                      Phone
                     </span>
                     <a href={`tel:${phone}`} className="font-sans text-xs font-semibold text-neutral-950 hover:underline">{phone}</a>
                   </div>
@@ -76,7 +76,7 @@ export default async function ContactPage() {
                   </div>
                   <div className="space-y-0.5">
                     <span className="text-[9.5px] uppercase font-bold text-neutral-400 tracking-wider block">
-                      EMAIL LEDGER
+                      Email
                     </span>
                     <a href={`mailto:${email}`} className="font-sans text-xs font-semibold text-neutral-950 hover:underline">{email}</a>
                   </div>
@@ -89,7 +89,7 @@ export default async function ContactPage() {
                   </div>
                   <div className="space-y-0.5">
                     <span className="text-[9.5px] uppercase font-bold text-neutral-400 tracking-wider block">
-                      Physical Showyard
+                      Store Address
                     </span>
                     <p className="font-sans text-xs text-neutral-700 leading-relaxed font-semibold">{address}</p>
                   </div>
@@ -109,14 +109,14 @@ export default async function ContactPage() {
                   <span className="text-neutral-950 font-semibold">10:00 AM — 8:00 PM</span>
                 </div>
                 <div className="flex justify-between items-center text-neutral-650 font-sans pt-1">
-                  <span className="font-medium">Sunday Sanctuary:</span>
+                  <span className="font-medium">Sunday:</span>
                   <span className="text-amber-800 bg-amber-50 border border-amber-100 px-2 rounded-full text-[9px] font-black uppercase tracking-wider">Closed</span>
                 </div>
               </div>
 
               <div className="bg-stone-50 border border-gold-100/50 p-4 rounded-xl flex items-start space-x-2 text-neutral-500 text-[11px] font-sans leading-relaxed mt-4">
                 <Clock className="h-4 w-4 text-gold-600 mr-2 flex-shrink-0 mt-0.5" />
-                <span>Our courier dispatch department processes COD parcels from Monday through Saturday. All orders booked on Sunday transit beginning Monday morning.</span>
+                <span>We process orders Monday through Saturday. Orders placed on Sunday will ship Monday morning.</span>
               </div>
             </div>
 
@@ -125,13 +125,13 @@ export default async function ContactPage() {
               
               <div className="space-y-2">
                 <span className="font-display text-[8.5px] uppercase tracking-widest text-gold-400 font-bold block">
-                  instant customer connection
+                  Quick Help
                 </span>
                 <h3 className="font-display text-lg uppercase font-black tracking-tight text-white">
                   Social Networks & WhatsApp
                 </h3>
                 <p className="font-sans text-[11px] text-neutral-400 leading-relaxed">
-                  Connect on WhatsApp with our on-duty coordinator for rapid responses, custom sizing consultation, and fabric recommendations.
+                  Chat with us on WhatsApp for fast replies and help with sizing and product questions.
                 </p>
               </div>
 

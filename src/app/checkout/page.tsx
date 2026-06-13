@@ -57,7 +57,7 @@ export default function CheckoutPage() {
   const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     if (cart.length === 0) {
-      triggerNotification("Your checkout cart holds no artifacts.");
+      triggerNotification("Your cart is empty. Please add items before checking out.");
       return;
     }
 
@@ -111,10 +111,10 @@ export default function CheckoutPage() {
         notes: orderNotes
       });
       clearCart();
-      triggerNotification(`COD Order #${registeredOrder.id} successfully queued!`);
+      triggerNotification(`Order #${registeredOrder.id} placed successfully!`);
     } catch (error: any) {
       console.error(error);
-      triggerNotification("Error finalizing shipping ledger. Please retry.");
+      triggerNotification("Error placing order. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -139,37 +139,37 @@ export default function CheckoutPage() {
 
         <div className="bg-[#faf9f6] border border-gold-150 rounded-2xl p-6.5 my-10 text-left">
           <h4 className="font-display text-[9.5px] uppercase tracking-widest text-neutral-900 font-black border-b border-gold-150 pb-3 mb-4 flex items-center justify-between">
-            <span>OFFICIAL ORDER SUMMARY</span>
+            <span>Order Summary</span>
             <span className="text-gold-600 text-[8.5px] font-mono tracking-normal bg-gold-100/60 px-2 py-0.5 rounded font-bold">Status: Processing</span>
           </h4>
           <div className="space-y-2.5 text-xs">
             <p className="text-neutral-500 flex justify-between">
-              <span>Delivery Recipient:</span>
+              <span>Recipient Name:</span>
               <span className="text-neutral-950 font-medium">{placedOrder.customerName}</span>
             </p>
             <p className="text-neutral-500 flex justify-between">
-              <span>Receipt Contact Email:</span>
+              <span>Email:</span>
               <span className="text-neutral-950 font-medium">{placedOrder.customerEmail}</span>
             </p>
             <p className="text-neutral-500 flex justify-between">
-              <span>Recipient Phone:</span>
+              <span>Phone:</span>
               <span className="text-neutral-950 font-mono font-medium">{placedOrder.phone || phone}</span>
             </p>
             <p className="text-neutral-500 flex justify-between">
-              <span>Delivery Details:</span>
+              <span>Delivery Location:</span>
               <span className="text-neutral-950 font-medium text-right font-display text-[11px] uppercase tracking-wider">
                 {placedOrder.city || city}, {placedOrder.province || province}
               </span>
             </p>
             <p className="text-neutral-500 flex flex-col pt-1.5">
-              <span>Exact Shipping Address:</span>
+              <span>Full Address:</span>
               <span className="text-neutral-800 font-medium mt-1 bg-white border border-gold-100 p-2.5 rounded-lg text-[11px] leading-relaxed whitespace-pre-line font-mono">
                 {address}
               </span>
             </p>
             {placedOrder.notes && (
               <p className="text-neutral-500 flex justify-between pt-1">
-                <span>Special Instructions:</span>
+                <span>Order Notes:</span>
                 <span className="text-neutral-700 italic font-medium max-w-[200px] text-right truncate">{placedOrder.notes}</span>
               </p>
             )}
@@ -205,7 +205,7 @@ export default function CheckoutPage() {
         className="inline-flex items-center text-xs font-display uppercase tracking-widest text-neutral-500 hover:text-neutral-950 transition-colors mb-10"
       >
         <ArrowLeft className="h-4 w-4 mr-2" />
-        <span>Return to collections showroom</span>
+        <span>Back to collections shop</span>
       </Link>
 
       <div className="max-w-xl">
@@ -257,7 +257,7 @@ export default function CheckoutPage() {
             {/* Pakistan Province Select */}
             <div className="flex flex-col space-y-2 text-left">
               <label className="text-[10px] uppercase tracking-wider font-bold text-neutral-700">
-                Province / Region
+                Province
               </label>
               <select
                 value={province}
@@ -275,7 +275,7 @@ export default function CheckoutPage() {
             {/* Pakistan City Selection */}
             <div className="flex flex-col space-y-2 text-left">
               <label className="text-[10px] uppercase tracking-wider font-bold text-neutral-700">
-                City / Settlement
+                City
               </label>
               <select
                 value={city}
@@ -293,8 +293,8 @@ export default function CheckoutPage() {
             {/* Custom City text input, if "other" is selected */}
             {city === "other" && (
               <Input
-                label="Custom City Name"
-                placeholder="Type your city/town name here"
+                label="Your City"
+                placeholder="Enter your city or town"
                 required
                 value={customCity}
                 onChange={(e) => setCustomCity(e.target.value)}
@@ -324,8 +324,8 @@ export default function CheckoutPage() {
 
             {/* Physical home address */}
             <Input
-              label="Full Address"
-              placeholder="House address, street, area"
+              label="Delivery Address"
+              placeholder="House number, street, area/neighborhood"
               required
               value={address}
               onChange={(e) => setAddress(e.target.value)}
@@ -334,10 +334,10 @@ export default function CheckoutPage() {
             {/* Order notes */}
             <div className="flex flex-col space-y-2 text-left">
               <label className="text-[10px] uppercase tracking-wider font-bold text-neutral-700">
-                Order Notes (Optional)
+                Special Instructions (Optional)
               </label>
               <textarea
-                placeholder="e.g. Please deliver by afternoon, ring bell, or leave order with office reception."
+                placeholder="e.g. Deliver by afternoon, ring doorbell, call before arrival"
                 value={orderNotes}
                 onChange={(e) => setOrderNotes(e.target.value)}
                 rows={3}

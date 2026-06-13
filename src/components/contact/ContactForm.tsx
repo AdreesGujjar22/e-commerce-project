@@ -67,7 +67,7 @@ export const ContactForm: React.FC = () => {
           <input
             type="text"
             required
-            placeholder="e.g. Lady Evelyn Sterling"
+            placeholder="John Smith"
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="bg-neutral-50 border border-gold-200 rounded-xl px-4 py-3 font-sans text-xs text-neutral-800 placeholder-neutral-400 focus:outline-none focus:ring-1 focus:ring-gold-450 focus:bg-white transition-all"
@@ -81,7 +81,7 @@ export const ContactForm: React.FC = () => {
           <input
             type="email"
             required
-            placeholder="e.g. evelyn@sterling-hall.co"
+            placeholder="john@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="bg-neutral-50 border border-gold-200 rounded-xl px-4 py-3 font-sans text-xs text-neutral-800 placeholder-neutral-400 focus:outline-none focus:ring-1 focus:ring-gold-450 focus:bg-white transition-all"
@@ -97,10 +97,10 @@ export const ContactForm: React.FC = () => {
             onChange={(e) => setSubject(e.target.value)}
             className="bg-neutral-50 border border-gold-200 rounded-xl px-4 py-3 font-sans text-xs text-neutral-800 focus:outline-none focus:ring-1 focus:ring-gold-450 focus:bg-white cursor-pointer"
           >
-            <option value="general">General Showroom Query</option>
-            <option value="delivery">COD Delivery Logistics</option>
-            <option value="certificate">Masterwork Certificate Verification</option>
-            <option value="bespoke">Bespoke Fitting & Tailoring</option>
+            <option value="general">General Question</option>
+            <option value="delivery">Delivery & Shipping</option>
+            <option value="certificate">Product Verification</option>
+            <option value="bespoke">Sizing & Customization</option>
           </select>
         </div>
 

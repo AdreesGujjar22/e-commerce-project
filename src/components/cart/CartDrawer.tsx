@@ -41,7 +41,7 @@ export const CartDrawer: React.FC = () => {
                 <div className="flex items-center space-x-2">
                   <ShoppingBag className="h-5 w-5 text-neutral-800" />
                   <span className="font-display text-xs uppercase tracking-widest font-black text-neutral-900">
-                    Collection bag ({cart.length})
+                    Shopping Bag ({cart.length})
                   </span>
                 </div>
                 <button
@@ -61,7 +61,7 @@ export const CartDrawer: React.FC = () => {
                       Your bag is empty
                     </h4>
                     <p className="font-sans text-xs text-neutral-400 mt-2 max-w-xs leading-relaxed">
-                      Wander across our gallery showroom catalog to find exceptional masterworks.
+                      Browse our products to add items to your cart.
                     </p>
                   </div>
                 ) : (
@@ -143,7 +143,7 @@ export const CartDrawer: React.FC = () => {
                   <div className="flex items-center justify-between text-left">
                     <div className="flex flex-col">
                       <span className="font-display text-[9px] uppercase tracking-widest text-[#666]">
-                        ESTIMATED CART TOTAL
+                        Total
                       </span>
                       <span className="text-[10px] text-teal-600 font-sans mt-0.5 flex items-center leading-none">
                         <Sparkles className="h-2.5 w-2.5 mr-1" /> Custom fees & duty included
@@ -160,14 +160,14 @@ export const CartDrawer: React.FC = () => {
                       onClick={() => setCartOpen(false)}
                       className="w-full inline-flex items-center justify-center bg-neutral-950 hover:bg-neutral-900 text-[#faf9f6]/95 text-xs font-display uppercase tracking-widest font-black py-4 rounded-full shadow-lg transition-all active:scale-[0.98]"
                     >
-                      proceed to checkout courier
+                      Proceed to Checkout
                     </Link>
                     
                     <button
                       onClick={() => setCartOpen(false)}
                       className="w-full text-center text-[10px] font-display uppercase tracking-widest font-semibold text-neutral-500 hover:text-neutral-900 py-1 cursor-pointer"
                     >
-                      continue exploring showroom
+                      Continue Shopping
                     </button>
                   </div>
                 </div>

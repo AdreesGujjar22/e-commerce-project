@@ -24,7 +24,7 @@ export const FaqSection: React.FC = () => {
       answer: (
         <div className="space-y-2">
           <p className="font-sans text-xs sm:text-sm text-neutral-600 leading-relaxed">
-            It is simple! Browse through our curated catalogs, such as <Link href="/collections" className="text-gold-700 font-bold hover:underline">Apparel & Outerwear</Link> or <Link href="/collections" className="text-gold-700 font-bold hover:underline">Geologic Decors</Link>, configure your adjustments, and add the artifacts to your bag. Run checkout inside our checkout station, define your Pakistan dynamic delivery metrics (province, city, telephone contact), and submit.
+            It's simple! Browse our products, such as <Link href="/collections" className="text-gold-700 font-bold hover:underline">Apparel</Link> or <Link href="/collections" className="text-gold-700 font-bold hover:underline">Decor</Link>, choose your options, and add items to your cart. Go to checkout, enter your province, city, and phone number, then submit your order.
           </p>
           <p className="font-sans text-xs text-neutral-500 flex items-center gap-1.5">
             <span>Featured item highlight:</span>
@@ -40,7 +40,7 @@ export const FaqSection: React.FC = () => {
       question: "How long does shipping delivery take across Pakistan?",
       answer: (
         <p className="font-sans text-xs sm:text-sm text-neutral-600 leading-relaxed">
-          Orders are validated and processed from our headquarters within 24 to 48 hours. Secure transit routes through premium national courier links (TCS, Leopards) deliver packages directly to major centers (Karachi, Lahore, Islamabad, Faisalabad) in 2 to 3 corporate working days. Custom out-of-boundary regions may require 4 to 5 working days.
+          We process orders within 24 to 48 hours. Packages are delivered to major cities (Karachi, Lahore, Islamabad, Faisalabad) in 2 to 3 working days. Remote areas may take 4 to 5 working days.
         </p>
       ),
     },
@@ -50,7 +50,7 @@ export const FaqSection: React.FC = () => {
       answer: (
         <div className="space-y-2">
           <p className="font-sans text-xs sm:text-sm text-neutral-600 leading-relaxed">
-            Arooj operations are entirely centered around **Cash on Delivery (COD)**. No advance payment or escrow cards are required during checkout. Simply remit the cash sum directly to our courier agent upon door-station handoff.
+            We only offer Cash on Delivery (COD). No advance payment is needed. Just pay the courier in cash when your order arrives at your door.
           </p>
           <p className="font-sans text-xs text-neutral-500">
             For premium timepiece details, view our <Link href="/products/arooj-chronosphere-wristwatch/550e8400-e29b-41d4-a716-446655440007" className="text-gold-650 font-bold hover:underline">Arooj Chronosphere Wristwatch</Link>.
@@ -64,7 +64,7 @@ export const FaqSection: React.FC = () => {
       answer: (
         <div className="space-y-2">
           <p className="font-sans text-xs sm:text-sm text-neutral-600 leading-relaxed">
-            All fine items are accompanied by an authenticated masterwork registry certificate. We respect customer satisfaction as our highest virtue, extending a <strong>7-day exchange and returns coverage window</strong> for undamaged, unwashed, tagging-intact items.
+            All items come with an authenticity certificate. We offer a <strong>7-day return and exchange policy</strong> for items that are unwashed, unused, and in original condition.
           </p>
           <p className="font-sans text-xs text-neutral-500">
             Read complete details in our <Link href="/terms" className="text-gold-700 font-bold hover:underline">Bespoke Terms Sheet</Link>.
@@ -78,14 +78,14 @@ export const FaqSection: React.FC = () => {
       answer: (
         <div className="space-y-2">
           <p className="font-sans text-xs sm:text-sm text-neutral-600 leading-relaxed">
-            Yes, our collection includes olfactory scents and structural room-accent travertine blocks crafted in small batches. Explore our dedicated curation sections:
+            Yes, we offer premium fragrances and home decor items. Browse our collections:
           </p>
           <div className="flex flex-wrap gap-2 pt-1">
             <Link href="/collections" className="bg-gold-50 border border-gold-200 text-gold-900 rounded-md px-2.5 py-1 text-[10px] uppercase font-display font-black hover:bg-gold-100 transition-all">
-              Prestige Fragrances
+              Fragrances
             </Link>
             <Link href="/collections" className="bg-gold-50 border border-gold-200 text-gold-900 rounded-md px-2.5 py-1 text-[10px] uppercase font-display font-black hover:bg-gold-100 transition-all">
-              Geologic Accents
+              Home Decor
             </Link>
           </div>
         </div>
@@ -104,7 +104,7 @@ export const FaqSection: React.FC = () => {
         <div>
           <h2 className="font-display text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-bold mb-2 flex items-center justify-center sm:justify-start">
             <HelpCircle className="h-4 w-4 mr-1.5 text-gold-500" />
-            Curator Knowledge Base
+            Help & Support
           </h2>
           <h3 className="font-display text-2xl uppercase tracking-tight text-neutral-950 font-black">
             Frequently Asked Questions
@@ -115,7 +115,7 @@ export const FaqSection: React.FC = () => {
           className="inline-flex items-center space-x-2 bg-neutral-900 hover:bg-neutral-800 text-gold-300 px-4 py-2.5 rounded-full text-[10px] uppercase tracking-wider font-bold transition-all shadow-sm"
         >
           <MessageCircle className="h-3.5 w-3.5" />
-          <span>Inquire Spec Desk</span>
+          <span>Contact Us</span>
         </Link>
       </div>
 

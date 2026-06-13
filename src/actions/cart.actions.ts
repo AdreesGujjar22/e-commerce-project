@@ -112,7 +112,7 @@ export async function addToCartAction(productId: string, quantity = 1, size = "M
       .single();
 
     if (findError || !product) {
-      return { success: false, error: "Product curation lookup unsuccessful." };
+      return { success: false, error: "Product not found." };
     }
 
     if (product.stock < quantity) {

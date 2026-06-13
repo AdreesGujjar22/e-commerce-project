@@ -247,7 +247,7 @@ export async function createProductAction(formData: any) {
       .single();
 
     if (profile?.role !== "admin") {
-      return { success: false, error: "Atelier access restricted to administration." };
+      return { success: false, error: "Admin access required." };
     }
 
     // 2. Validate using Zod schemas
@@ -448,7 +448,7 @@ export async function deleteProductAction(id: string) {
       .single();
 
     if (profile?.role !== "admin") {
-      return { success: false, error: "Atelier admin permission required." };
+      return { success: false, error: "Admin access required." };
     }
 
     // Fetch product display photo & its other images records for automatic deletion from Cloudinary

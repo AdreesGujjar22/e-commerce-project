@@ -36,7 +36,7 @@ function mapCategoryToBlogPost(cat: any): BlogPost {
 
   return {
     id: cat.id,
-    title: cat.name || fields.title || "Untitled Exhibition Piece",
+    title: cat.name || fields.title || "Untitled Blog Post",
     slug: slug,
     excerpt: fields.excerpt || "",
     content: fields.content || "",
@@ -128,13 +128,13 @@ export async function getBlogBySlugAction(slug: string, options?: { stateless?: 
     }
 
     if (!data) {
-      return { success: false, error: "Journal curation piece not found.", blog: null };
+      return { success: false, error: "Blog post not found.", blog: null };
     }
 
     return { success: true, blog: mapCategoryToBlogPost(data) };
   } catch (err: any) {
     console.error("getBlogBySlugAction error:", err);
-    return { success: false, error: err.message || "Error reading journal piece.", blog: null };
+    return { success: false, error: err.message || "Error reading blog post.", blog: null };
   }
 }
 
@@ -281,7 +281,7 @@ export async function updateBlogAction(id: string, blogData: Partial<BlogPost>) 
     return { success: true, blog: mapCategoryToBlogPost(updatedRecord) };
   } catch (err: any) {
     console.error("updateBlogAction error:", err);
-    return { success: false, error: err.message || "Failed to update blog curated item." };
+    return { success: false, error: err.message || "Failed to save blog post." };
   }
 }
 

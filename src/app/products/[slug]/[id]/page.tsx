@@ -23,8 +23,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!product) {
     return {
-      title: "Curation Not Found | Arooj Arts",
-      description: "The requested exhibition piece is not active in our catalog.",
+      title: "Product Not Found | Arooj Arts",
+      description: "The product you're looking for is not available.",
     };
   }
 
@@ -73,17 +73,17 @@ export default async function ProductDetailPage({ params }: PageProps) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-32 text-center" id="product-not-found-container">
         <h1 className="font-display text-2xl uppercase tracking-wider text-neutral-900 font-bold">
-          EXHIBIT ITEM NOT SPECIFIED
+          Product Not Found
         </h1>
         <p className="font-sans text-xs text-neutral-500 mt-2 mb-8">
-          The curated artifact is not present in our vaults or may have been securely transferred.
+          This product is no longer available or may have been sold out.
         </p>
         <Link
           href="/collections"
           className="inline-flex items-center text-xs font-display uppercase tracking-widest text-gold-600 hover:text-gold-700 underline"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          <span>return to complete catalog</span>
+          <span>back to shop</span>
         </Link>
       </div>
     );
